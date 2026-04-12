@@ -14,7 +14,7 @@ interface Props {
 }
 
 const LatestSystem: FunctionComponent<Props> = ({ className }) => {
-  const { data, isLoading } = useResource<System>("system/last-updated");
+  const { data, isLoading } = useResource<System>("systems/last-updated");
   const system = useMemo(() => (data ? new SystemMap(data) : undefined), [data]);
 
   if (isLoading) {

@@ -83,7 +83,7 @@ const SystemsTable: FunctionComponent<Props> = ({ className = "", systems }) => 
       }
     }
 
-    const response = await getCollection<System>("system/search/information", { params });
+    const response = await getCollection<System>("systems/search/information", { params });
 
     if (response) {
       setPage(response);

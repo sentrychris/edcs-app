@@ -26,7 +26,7 @@ export default function RoutePlotterView({ initialFrom, initialTo, initialLy }: 
     setRoute(null);
 
     try {
-      const { data } = await getResource<SystemRouteWaypoint[]>("system/search/route", {
+      const { data } = await getResource<SystemRouteWaypoint[]>("systems/search/route", {
         params: { from, to, ly },
       });
       setRoute(data);

@@ -523,7 +523,7 @@ export default function GalaxyMapCanvas() {
     const diskTex = makeGalaxyTexture(gl);
     const disk    = buildDisk(gl);
 
-    fetch(`${settings.api.url}/system/id64s`)
+    fetch(`${settings.api.url}/systems/id64s`)
       .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json() as Promise<number[]>; })
       .then((data) => {
         const positions: number[] = [];

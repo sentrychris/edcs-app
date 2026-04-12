@@ -28,7 +28,7 @@ export default function DistanceSearchView({ initialSlug, initialLy }: Props) {
     setError(null);
 
     try {
-      const data = await getCollection<SystemDistance>("system/search/distance", {
+      const data = await getCollection<SystemDistance>("systems/search/distance", {
         params: { slug, ly, limit: 10, page },
       });
       setPagination(data);

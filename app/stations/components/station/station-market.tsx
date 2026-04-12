@@ -53,7 +53,7 @@ const StationMarket: FunctionComponent<Props> = ({ slug }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
-    getResource<MarketData>(`station/${slug}/market`)
+    getResource<MarketData>(`stations/${slug}/market`)
       .then((response) =>
         setMarket(
           Array.isArray(response.data)
