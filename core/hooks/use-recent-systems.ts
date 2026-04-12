@@ -5,9 +5,9 @@ export interface RecentSystem {
   slug: string;
 }
 
-const STORAGE_KEY = "edcts_recent_systems";
+const STORAGE_KEY = "edcs_recent_systems";
 const MAX_RECENT = 8;
-const UPDATE_EVENT = "edcts:system-tracked";
+const UPDATE_EVENT = "edcs:system-tracked";
 
 function readFromStorage(): RecentSystem[] {
   if (typeof window === "undefined") return [];

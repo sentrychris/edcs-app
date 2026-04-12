@@ -103,7 +103,7 @@ const BootSequence: FunctionComponent = () => {
 
       {/* HUD chrome — top */}
       <div className="pointer-events-none absolute left-5 top-5 space-y-0.5 text-[0.45rem] uppercase tracking-[0.45em] text-orange-900/50">
-        <div>EDCTS / BUILD 4.7.2</div>
+        <div>ED:CS / BUILD 4.7.2</div>
         <div>PILOTS FEDERATION AUTH</div>
       </div>
       <div className="pointer-events-none absolute right-5 top-5 space-y-0.5 text-right text-[0.45rem] uppercase tracking-[0.45em] text-orange-900/50">

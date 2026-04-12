@@ -15,7 +15,7 @@ interface Props {
   user: SessionUser | null;
 }
 
-const STORAGE_KEY = "edcts_sidebar_collapsed";
+const STORAGE_KEY = "edcs_sidebar_collapsed";
 
 const Sidebar: FunctionComponent<Props> = ({ articles, user }) => {
   const [collapsed, setCollapsed] = useState(false);

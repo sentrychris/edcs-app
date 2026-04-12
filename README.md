@@ -1,21 +1,21 @@
-# ED:CTS
+# ED:CS
 
-![ED:CTS System Page](./public/images/edcts.png)
+![ED:CS System Page](./public/images/edcts.png)
 
 ## Development
 
-ED:CTS is built with [nextJS](https://nextjs.org/) and [Typescript](https://www.typescriptlang.org/).
+ED:CS is built with [nextJS](https://nextjs.org/) and [Typescript](https://www.typescriptlang.org/).
 
 
 ## Requirements
 
-- ED:CTS backend services: https://github.com/sentrychris/edcts.
+- ED:CS backend services: https://github.com/sentrychris/edcs.
 
 ### Quick Start
 
 Clone this repository:
 ```sh
-git clone git@github.com:sentrychris/edcts-frontend.git
+git clone git@github.com:sentrychris/edcs-app.git
 ```
 
 Copy `.env.example` to `.env` and update you environment variables:
@@ -50,12 +50,11 @@ npm run prettier:fix
 
 ### Credits
 
-ED:CTS wouldn't be possible without the work of hundreds of talented members of the Elite: Dangerous community.
+ED:CS wouldn't be possible without the work of hundreds of talented members of the Elite: Dangerous community.
 
 _"Standing on the shoulders of giants"_.
 
 Special thanks to:
-
 
 - [ED:CD](https://edcd.github.io/)  - for all of their projects, data, guidance and more.
 - [EDSM](https://github.com/EDSM-NET) - for the wonderful data and API.
@@ -69,4 +68,4 @@ Special thanks to:
 
 Site assets are used in accordance with their respective licensing conditions or with the owner's permission, third party licenses can be found [here](./THIRD_PARTY_LICENSES).
 
-ED:CTS is free, open source software released under the ISC License.
+ED:CS is free, open source software released under the ISC License.

@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   title,
   description,
   keywords: [
-    "EDCTS",
+    "EDCS",
     "Elite Dangerous",
     "Frontier Developments",
     "EDSM",

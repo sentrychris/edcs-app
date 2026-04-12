@@ -76,7 +76,7 @@ interface SettingsContextValue {
   reset: () => void;
 }
 
-const STORAGE_KEY = "edcts_ui_settings";
+const STORAGE_KEY = "edcs_ui_settings";
 
 export const DEFAULT_SETTINGS: Settings = {
   themeId: "pioneer",
