@@ -1,6 +1,6 @@
 # ED:CS
 
-![ED:CS System Page](./public/images/edcts.png)
+![ED:CS System Page](./public/images/edcs.png)
 
 ## Development
 

@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     description,
     images: [
       {
-        url: `${settings.app.url}/images/edcts.png`,
+        url: `${settings.app.url}/images/edcs.png`,
       },
     ],
     url: settings.app.url,
