@@ -3,6 +3,7 @@ import type { CAPIProfile } from "@/core/interfaces/CAPIProfile";
 import { redirect } from "next/navigation";
 import { settings } from "@/core/config";
 import { auth } from "@/core/auth";
+import { getResource, request } from "@/core/api";
 import Panel from "@/components/panel";
 import CommanderHero from "./components/commander-hero";
 import CommanderRanksBar from "./components/commander-ranks-bar";
@@ -27,38 +28,22 @@ export async function generateMetadata(
   };
 }
 
+const authOptions = (accessToken: string) => ({
+  headers: { Authorization: `Bearer ${accessToken}`, Accept: "application/json" },
+  cache: "no-store" as RequestCache,
+});
+
 async function getCAPIProfile(accessToken: string): Promise<CAPIProfile> {
-  const response = await fetch(`${settings.api.url}/frontier/capi/profile`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      Accept: "application/json",
-    },
-    cache: "no-store",
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch CAPI profile");
-  }
-
-  const { data } = await response.json();
-  return data as CAPIProfile;
+  const { data } = await getResource<CAPIProfile>("frontier/capi/profile", authOptions(accessToken));
+  return data;
 }
 
 async function getCommanderApiKeyStatus(accessToken: string): Promise<{ hasInaraKey: boolean; hasEdsmKey: boolean }> {
   try {
-    const response = await fetch(`${settings.api.url}/auth/me`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        Accept: "application/json",
-      },
-      cache: "no-store",
-    });
-
-    if (!response.ok) {
-      return { hasInaraKey: false, hasEdsmKey: false };
-    }
-
-    const { commander } = await response.json();
+    const { commander } = await request<{ commander: { api: { inara: string | null; edsm: string | null } } | null }>(
+      "auth/me",
+      authOptions(accessToken),
+    );
     return {
       hasInaraKey: !!commander?.api?.inara,
       hasEdsmKey: !!commander?.api?.edsm,

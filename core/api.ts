@@ -22,20 +22,23 @@ export function isAbsoluteUrl(url: string) {
   return url.indexOf("http://") === 0 || url.indexOf("https://") === 0;
 }
 
-export async function request(
-  uri: string,
-  params?: Record<string, string | number | boolean>,
-  tags: string[] | null = null,
-) {
+export async function request<T = unknown>(uri: string, options?: RequestOptions): Promise<T> {
   const url = !isAbsoluteUrl(uri) ? `${settings.api.url}/${uri}` : uri;
-  const query: string = params ? "?" + new URLSearchParams(params as Record<string, string>) : "";
-  const response = tags
-    ? await fetch(`${url}${query}`, {
-        next: {
-          tags: tags,
-        },
-      })
-    : await fetch(`${url}${query}`);
+  const query = options?.params ? "?" + new URLSearchParams(options.params as Record<string, string>) : "";
+
+  const fetchOptions: RequestInit = {};
+
+  if (options?.tags?.length) {
+    (fetchOptions as RequestInit & { next?: { tags: string[] } }).next = { tags: options.tags };
+  }
+  if (options?.headers) {
+    fetchOptions.headers = options.headers;
+  }
+  if (options?.cache) {
+    fetchOptions.cache = options.cache;
+  }
+
+  const response = await fetch(`${url}${query}`, fetchOptions);
 
   if (!response.ok) {
     throw new Error("Failed to fetch data");
@@ -47,15 +50,17 @@ export async function request(
 interface RequestOptions {
   params?: Record<string, string | number | boolean>;
   tags?: string[];
+  headers?: Record<string, string>;
+  cache?: RequestCache;
 }
 
 export async function getCollection<T>(
   uri: string,
   options?: RequestOptions,
 ): Promise<Pagination<T>> {
-  return await request(uri, options?.params, options?.tags);
+  return await request(uri, options);
 }
 
 export async function getResource<T>(uri: string, options?: RequestOptions): Promise<{ data: T }> {
-  return await request(uri, options?.params, options?.tags);
+  return await request(uri, options);
 }
