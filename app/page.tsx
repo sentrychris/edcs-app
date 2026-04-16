@@ -74,7 +74,7 @@ export default async function Home() {
 
         {/* ── Systems Panel ── */}
         <div className="col-span-1 pt-3 lg:col-span-2">
-          <SystemsStatisticsBar className="fx-fade-in" callInterval={10000} flushCache={1} />
+          <SystemsStatisticsBar className="fx-fade-in" callInterval={10000} flushCache={0} />
           <SystemsTable systems={systems} />
         </div>
       </div>
