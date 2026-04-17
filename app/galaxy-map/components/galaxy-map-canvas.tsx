@@ -11,9 +11,15 @@ const BASE_Y = 41280;
 const BASE_Z = 50240;
 
 // Sol id64 — used to give it a distinct appearance regardless of coordinate origin
-const SOL_ID64 = 10477373803;
+const SOL_ID64 = 10477373803n;
 
-function id64ToCoords(id64: number): [number, number, number] | null {
+// LOD selection thresholds (camera radius in ly).
+// Below 8000 ly we use full-detail per-sector tiles; above 60000 ly we serve
+// only the single sampled global tile. The mid-zoom band uses LOD 1.
+const LOD0_MIN_RADIUS = 60000;
+const LOD1_MIN_RADIUS = 8000;
+
+function id64ToCoords(id64: bigint): [number, number, number] | null {
   try {
     const { sector, boxel } = getBoxelDataFromId64(id64);
     const half = boxel.size / 2;
@@ -180,8 +186,8 @@ function hashFloat(n: number): number {
   return x - Math.floor(x);
 }
 
-function starAppearance(id64: number): [number, number, number, number] {
-  const h1 = hashFloat(id64), h2 = hashFloat(id64 * 1.3 + 7.5), h3 = hashFloat(id64 * 2.7 + 13.1);
+function starAppearance(seed: number): [number, number, number, number] {
+  const h1 = hashFloat(seed), h2 = hashFloat(seed * 1.3 + 7.5), h3 = hashFloat(seed * 2.7 + 13.1);
   for (let i = 0; i < STAR_CLASSES.length; i++) {
     const [thr, r, g, b, sz] = STAR_CLASSES[i];
     if (h1 < thr) {
@@ -321,6 +327,152 @@ function buildDisk(gl: WebGLRenderingContext): { posBuf: WebGLBuffer; uvBuf: Web
   return { posBuf, uvBuf };
 }
 
+// ── Tile manifest + binary decoding ──
+
+interface Manifest {
+  version: number;
+  generated_at: string;
+  sector_size: number;
+  lod1_size: number;
+  lod0: { url: string; count: number };
+  lod1_url_template: string;
+  lod2_url_template: string;
+  lod1_tiles: string[];
+  lod2_tiles: string[];
+}
+
+interface DecodedTile {
+  positions: Float32Array;
+  colors: Float32Array;
+  sizes: Float32Array;
+  count: number;
+}
+
+interface TileBuffers {
+  posBuf: WebGLBuffer;
+  colBuf: WebGLBuffer;
+  sizeBuf: WebGLBuffer;
+  count: number;
+}
+
+/**
+ * Decode a binary tile: [uint32 LE count][uint64 LE id64 × count].
+ * Each id64 is converted to galactic coordinates via the boxel encoding,
+ * and given a deterministic colour/size based on its low bits.
+ */
+function decodeTile(buffer: ArrayBuffer): DecodedTile {
+  const view = new DataView(buffer);
+  const count = view.getUint32(0, true);
+
+  const positions = new Float32Array(count * 3);
+  const colors    = new Float32Array(count * 3);
+  const sizes     = new Float32Array(count);
+
+  let written = 0;
+  for (let i = 0; i < count; i++) {
+    const offset = 4 + i * 8;
+    const id64 = view.getBigUint64(offset, true);
+    const coords = id64ToCoords(id64);
+    if (!coords) continue;
+
+    const isSol = id64 === SOL_ID64;
+    // starAppearance only needs deterministic floats; use the low 32 bits
+    const seed = Number(id64 & 0xffffffffn);
+    const [r, g, b, sz] = isSol ? [1.0, 0.95, 0.75, 5.0] : starAppearance(seed);
+
+    positions[written * 3]     = coords[0];
+    positions[written * 3 + 1] = coords[1];
+    positions[written * 3 + 2] = coords[2];
+    colors[written * 3]     = r;
+    colors[written * 3 + 1] = g;
+    colors[written * 3 + 2] = b;
+    sizes[written] = sz;
+    written++;
+  }
+
+  return {
+    positions: positions.subarray(0, written * 3),
+    colors:    colors.subarray(0, written * 3),
+    sizes:     sizes.subarray(0, written),
+    count: written,
+  };
+}
+
+function uploadTile(gl: WebGLRenderingContext, decoded: DecodedTile): TileBuffers {
+  const posBuf = gl.createBuffer()!;
+  gl.bindBuffer(gl.ARRAY_BUFFER, posBuf);
+  gl.bufferData(gl.ARRAY_BUFFER, decoded.positions, gl.STATIC_DRAW);
+
+  const colBuf = gl.createBuffer()!;
+  gl.bindBuffer(gl.ARRAY_BUFFER, colBuf);
+  gl.bufferData(gl.ARRAY_BUFFER, decoded.colors, gl.STATIC_DRAW);
+
+  const sizeBuf = gl.createBuffer()!;
+  gl.bindBuffer(gl.ARRAY_BUFFER, sizeBuf);
+  gl.bufferData(gl.ARRAY_BUFFER, decoded.sizes, gl.STATIC_DRAW);
+
+  return { posBuf, colBuf, sizeBuf, count: decoded.count };
+}
+
+function deleteTile(gl: WebGLRenderingContext, t: TileBuffers): void {
+  gl.deleteBuffer(t.posBuf);
+  gl.deleteBuffer(t.colBuf);
+  gl.deleteBuffer(t.sizeBuf);
+}
+
+/**
+ * Resolve a manifest tile URL against the API origin. The manifest carries
+ * absolute paths like `/galaxy-tiles/v1/...`; tiles are served from the same
+ * host as the API but outside the `/api` prefix.
+ */
+function resolveTileUrl(path: string): string {
+  return new URL(path, settings.api.url).toString();
+}
+
+function pickLod(radius: number): 0 | 1 | 2 {
+  if (radius >= LOD0_MIN_RADIUS) return 0;
+  if (radius >= LOD1_MIN_RADIUS) return 1;
+  return 2;
+}
+
+/**
+ * Compute the set of tile keys that should be loaded for the current camera.
+ * Deliberately uses an axis-aligned box around the camera target rather than
+ * a true frustum — over-fetches a little but keeps the math trivial and the
+ * tile set stable as the user orbits in place.
+ *
+ * Tile keys are BASE-shifted on every axis (so Sgr A* sits at sector
+ * (39,32,39) at LOD 2 / (9,8,9) at LOD 1) — matching the bake-side encoding.
+ */
+function tileKeysForView(
+  target: { x: number; y: number; z: number },
+  radius: number,
+  tileSize: number,
+  populated: Set<string>,
+): Set<string> {
+  // ~half the camera radius approximates the visible volume around the target
+  // for a 45° FOV. The +tileSize buffer keeps tiles loaded just outside view.
+  const reach = radius * 0.6 + tileSize;
+
+  const xMin = Math.floor((target.x - reach + BASE_X) / tileSize);
+  const xMax = Math.floor((target.x + reach + BASE_X) / tileSize);
+  const yMin = Math.floor((target.y - reach + BASE_Y) / tileSize);
+  const yMax = Math.floor((target.y + reach + BASE_Y) / tileSize);
+  const zMin = Math.floor((target.z - reach + BASE_Z) / tileSize);
+  const zMax = Math.floor((target.z + reach + BASE_Z) / tileSize);
+
+  const out = new Set<string>();
+  for (let x = xMin; x <= xMax; x++) {
+    for (let y = yMin; y <= yMax; y++) {
+      for (let z = zMin; z <= zMax; z++) {
+        const key = `${x}_${y}_${z}`;
+        if (populated.has(key)) out.add(key);
+      }
+    }
+  }
+  return out;
+}
+
 // ── Types ──
 
 type Status = "loading" | "error" | "ready";
@@ -332,8 +484,9 @@ interface GlState {
   uMvp: WebGLUniformLocation;
   uFixed: WebGLUniformLocation;
   aPos: number; aColor: number; aSize: number;
-  posBuf: WebGLBuffer; colBuf: WebGLBuffer; sizeBuf: WebGLBuffer;
-  pointCount: number;
+  // Tile registries — keyed by `lod{N}:{tileKey}` (or `lod0:global`)
+  tiles: Map<string, TileBuffers>;
+  inflight: Set<string>;
   // Starfield
   sfPos: WebGLBuffer; sfCol: WebGLBuffer; sfCount: number;
   // Galaxy disk
@@ -350,6 +503,9 @@ interface GlState {
 export default function GalaxyMapCanvas() {
   const canvasRef  = useRef<HTMLCanvasElement>(null);
   const glRef      = useRef<GlState | null>(null);
+  const manifestRef= useRef<Manifest | null>(null);
+  const lod1Pop    = useRef<Set<string>>(new Set());
+  const lod2Pop    = useRef<Set<string>>(new Set());
   const rafRef     = useRef<number>(0);
   const thetaRef   = useRef(0.5);
   const phiRef     = useRef(0.45);
@@ -359,10 +515,92 @@ export default function GalaxyMapCanvas() {
   const autoRef    = useRef(true);
   const pausedRef  = useRef(false);
   const autoTimer  = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const tileTimer  = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const [status, setStatus] = useState<Status>("loading");
   const [count,  setCount]  = useState(0);
   const [paused, setPaused] = useState(false);
+
+  const recountVisible = () => {
+    const s = glRef.current;
+    if (!s) return;
+    let n = 0;
+    for (const t of s.tiles.values()) n += t.count;
+    setCount(n);
+  };
+
+  // ── Tile fetcher ──
+  // Computes the desired tile set for the current LOD/camera and reconciles
+  // the in-memory cache against it. Out-of-view tiles get evicted; missing
+  // tiles get fetched in parallel (capped). LOD 0 is loaded once and kept.
+  const reconcileTiles = async () => {
+    const s = glRef.current;
+    const m = manifestRef.current;
+    if (!s || !m) return;
+
+    const lod = pickLod(radiusRef.current);
+
+    // Single-LOD-at-a-time. Mixing LODs would double-render systems via the
+    // sampled tiles (LOD 0/1 are subsets of LOD 2's id64 list).
+    const desired = new Set<string>();
+    if (lod === 0) {
+      desired.add("lod0:global");
+    } else if (lod === 1) {
+      const keys = tileKeysForView(targetRef.current, radiusRef.current, m.lod1_size, lod1Pop.current);
+      for (const k of keys) desired.add(`lod1:${k}`);
+    } else {
+      const keys = tileKeysForView(targetRef.current, radiusRef.current, m.sector_size, lod2Pop.current);
+      for (const k of keys) desired.add(`lod2:${k}`);
+    }
+
+    // Evict tiles not in the desired set
+    for (const [key, buf] of s.tiles) {
+      if (!desired.has(key)) {
+        deleteTile(s.gl, buf);
+        s.tiles.delete(key);
+      }
+    }
+
+    // Fetch missing
+    const toFetch: string[] = [];
+    for (const key of desired) {
+      if (!s.tiles.has(key) && !s.inflight.has(key)) toFetch.push(key);
+    }
+
+    const CONCURRENCY = 8;
+    let cursor = 0;
+    const workers = Array.from({ length: Math.min(CONCURRENCY, toFetch.length) }, async () => {
+      while (cursor < toFetch.length) {
+        const key = toFetch[cursor++];
+        s.inflight.add(key);
+        try {
+          const url = tileUrlFor(key, m);
+          const resp = await fetch(url);
+          if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+          const buf = await resp.arrayBuffer();
+          const decoded = decodeTile(buf);
+          // Tile may have been evicted again before we returned; check membership.
+          if (key === "lod0:global" || desired.has(key)) {
+            s.tiles.set(key, uploadTile(s.gl, decoded));
+          }
+        } catch (err) {
+          // 404 means an empty/missing tile — silently ignore so we don't retry.
+          console.warn(`tile fetch failed for ${key}:`, err);
+        } finally {
+          s.inflight.delete(key);
+        }
+      }
+    });
+
+    await Promise.all(workers);
+    recountVisible();
+  };
+
+  /** Trailing-edge debounce so panning/zooming bursts only fire one reconcile. */
+  const scheduleReconcile = (delay = 120) => {
+    if (tileTimer.current) clearTimeout(tileTimer.current);
+    tileTimer.current = setTimeout(() => { void reconcileTiles(); }, delay);
+  };
 
   // ── Draw one frame ──
   const draw = () => {
@@ -422,20 +660,34 @@ export default function GalaxyMapCanvas() {
     gl.vertexAttrib1f(s.aSize, 1.0);
     gl.drawArrays(gl.POINTS, 0, s.sfCount);
 
-    // Pass 2: galaxy systems at depth-scaled size
+    // Pass 2: galaxy systems at depth-scaled size — one drawArrays per loaded tile
     gl.uniform1f(s.uFixed, -1.0);
-    gl.bindBuffer(gl.ARRAY_BUFFER, s.posBuf);
-    gl.vertexAttribPointer(s.aPos, 3, gl.FLOAT, false, 0, 0);
-    bindCol(s.colBuf);
-    gl.bindBuffer(gl.ARRAY_BUFFER, s.sizeBuf);
     gl.enableVertexAttribArray(s.aSize);
-    gl.vertexAttribPointer(s.aSize, 1, gl.FLOAT, false, 0, 0);
-    gl.drawArrays(gl.POINTS, 0, s.pointCount);
+    for (const tile of s.tiles.values()) {
+      gl.bindBuffer(gl.ARRAY_BUFFER, tile.posBuf);
+      gl.vertexAttribPointer(s.aPos, 3, gl.FLOAT, false, 0, 0);
+      bindCol(tile.colBuf);
+      gl.bindBuffer(gl.ARRAY_BUFFER, tile.sizeBuf);
+      gl.vertexAttribPointer(s.aSize, 1, gl.FLOAT, false, 0, 0);
+      gl.drawArrays(gl.POINTS, 0, tile.count);
+    }
   };
 
   const startLoop = () => {
+    let lastRadius = radiusRef.current;
+    let lastTarget = { ...targetRef.current };
     const loop = () => {
       if (autoRef.current) thetaRef.current += 0.0003;
+      // Trigger tile reconcile if camera moved enough to matter
+      const r = radiusRef.current;
+      const dx = targetRef.current.x - lastTarget.x;
+      const dy = targetRef.current.y - lastTarget.y;
+      const dz = targetRef.current.z - lastTarget.z;
+      if (Math.abs(r - lastRadius) > 200 || dx*dx + dy*dy + dz*dz > 200*200) {
+        lastRadius = r;
+        lastTarget = { ...targetRef.current };
+        scheduleReconcile();
+      }
       draw();
       rafRef.current = requestAnimationFrame(loop);
     };
@@ -523,58 +775,32 @@ export default function GalaxyMapCanvas() {
     const diskTex = makeGalaxyTexture(gl);
     const disk    = buildDisk(gl);
 
-    fetch(`${settings.api.url}/systems/id64s`)
-      .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json() as Promise<number[]>; })
-      .then((data) => {
-        const positions: number[] = [];
-        const colors:    number[] = [];
-        const sizes:     number[] = [];
-        let plotted = 0;
+    glRef.current = {
+      gl, prog,
+      uMvp:   gl.getUniformLocation(prog, "u_mvp")!,
+      uFixed: gl.getUniformLocation(prog, "u_fixedSize")!,
+      aPos:   gl.getAttribLocation(prog, "a_position"),
+      aColor: gl.getAttribLocation(prog, "a_color"),
+      aSize:  gl.getAttribLocation(prog, "a_size"),
+      tiles: new Map(),
+      inflight: new Set(),
+      sfPos: sf.posBuf, sfCol: sf.colBuf, sfCount: sf.count,
+      diskProg,
+      diskUMvp: gl.getUniformLocation(diskProg, "u_mvp")!,
+      diskUTex: gl.getUniformLocation(diskProg, "u_tex")!,
+      diskAPos: gl.getAttribLocation(diskProg, "a_position"),
+      diskAUv:  gl.getAttribLocation(diskProg, "a_uv"),
+      diskPosBuf: disk.posBuf, diskUvBuf: disk.uvBuf, diskTex,
+    };
 
-        for (const id64 of data) {
-          if (!id64) continue;
-          const coords = id64ToCoords(id64);
-          if (!coords) continue;
-
-          const isSol = id64 === SOL_ID64;
-          const [r, g, b, sz] = isSol ? [1.0, 0.95, 0.75, 5.0] : starAppearance(id64);
-
-          positions.push(...coords);
-          colors.push(r, g, b);
-          sizes.push(sz);
-          plotted++;
-        }
-
-        setCount(plotted);
-
-        const upload = (data: number[]) => {
-          const buf = gl.createBuffer()!;
-          gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-          gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data), gl.STATIC_DRAW);
-          return buf;
-        };
-
-        const posBuf  = upload(positions);
-        const colBuf  = upload(colors);
-        const sizeBuf = upload(sizes);
-
-        glRef.current = {
-          gl, prog,
-          uMvp:   gl.getUniformLocation(prog, "u_mvp")!,
-          uFixed: gl.getUniformLocation(prog, "u_fixedSize")!,
-          aPos:   gl.getAttribLocation(prog, "a_position"),
-          aColor: gl.getAttribLocation(prog, "a_color"),
-          aSize:  gl.getAttribLocation(prog, "a_size"),
-          posBuf, colBuf, sizeBuf, pointCount: plotted,
-          sfPos: sf.posBuf, sfCol: sf.colBuf, sfCount: sf.count,
-          diskProg,
-          diskUMvp: gl.getUniformLocation(diskProg, "u_mvp")!,
-          diskUTex: gl.getUniformLocation(diskProg, "u_tex")!,
-          diskAPos: gl.getAttribLocation(diskProg, "a_position"),
-          diskAUv:  gl.getAttribLocation(diskProg, "a_uv"),
-          diskPosBuf: disk.posBuf, diskUvBuf: disk.uvBuf, diskTex,
-        };
-
+    // Fetch manifest, populate populated-tile sets, then load LOD 0 immediately.
+    fetch(`${settings.api.url}/galaxy/manifest`)
+      .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json() as Promise<Manifest>; })
+      .then(async (m) => {
+        manifestRef.current = m;
+        lod1Pop.current = new Set(m.lod1_tiles);
+        lod2Pop.current = new Set(m.lod2_tiles);
+        await reconcileTiles();
         setStatus("ready");
         startLoop();
       })
@@ -583,6 +809,7 @@ export default function GalaxyMapCanvas() {
     return () => {
       cancelAnimationFrame(rafRef.current);
       if (autoTimer.current) clearTimeout(autoTimer.current);
+      if (tileTimer.current) clearTimeout(tileTimer.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -656,4 +883,15 @@ export default function GalaxyMapCanvas() {
       )}
     </div>
   );
+}
+
+/**
+ * Resolve the URL for a tile registry key like `lod0:global` / `lod1:1_0_0`
+ * against the manifest's URL templates.
+ */
+function tileUrlFor(key: string, m: Manifest): string {
+  if (key === "lod0:global") return resolveTileUrl(m.lod0.url);
+  const [lod, tileKey] = key.split(":");
+  const template = lod === "lod1" ? m.lod1_url_template : m.lod2_url_template;
+  return resolveTileUrl(template.replace("{key}", tileKey));
 }

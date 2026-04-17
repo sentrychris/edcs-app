@@ -47,8 +47,8 @@ export function getCurrentEliteDate() {
  * @param id64
  * @returns
  */
-export function getBoxelDataFromId64(id64: number) {
-  const id64BigInt = BigInt(id64);
+export function getBoxelDataFromId64(id64: number | bigint) {
+  const id64BigInt = typeof id64 === "bigint" ? id64 : BigInt(id64);
 
   /**
    * Unpacks a value and shifts it to the right by a number of bits.
