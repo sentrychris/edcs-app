@@ -437,9 +437,15 @@ function pickLod(radius: number): 0 | 1 | 2 {
 
 /**
  * Compute the set of tile keys that should be loaded for the current camera.
- * Deliberately uses an axis-aligned box around the camera target rather than
- * a true frustum — over-fetches a little but keeps the math trivial and the
- * tile set stable as the user orbits in place.
+ *
+ * Spherical cull: iterate every populated tile and keep those whose centre is
+ * within `reach` of the camera target. An axis-aligned box would produce a
+ * hard square boundary at the cull edge, which is visible as you zoom.
+ *
+ * `reach = radius * 1.5 + tileSize` covers the visible volume on both sides
+ * of the target (the view frustum extends *past* the target by roughly one
+ * more radius) with a bit of slack so tiles load just before they come into
+ * view.
  *
  * Tile keys are BASE-shifted on every axis (so Sgr A* sits at sector
  * (39,32,39) at LOD 2 / (9,8,9) at LOD 1) — matching the bake-side encoding.
@@ -448,26 +454,23 @@ function tileKeysForView(
   target: { x: number; y: number; z: number },
   radius: number,
   tileSize: number,
-  populated: Set<string>,
+  populated: Iterable<string>,
 ): Set<string> {
-  // ~half the camera radius approximates the visible volume around the target
-  // for a 45° FOV. The +tileSize buffer keeps tiles loaded just outside view.
-  const reach = radius * 0.6 + tileSize;
-
-  const xMin = Math.floor((target.x - reach + BASE_X) / tileSize);
-  const xMax = Math.floor((target.x + reach + BASE_X) / tileSize);
-  const yMin = Math.floor((target.y - reach + BASE_Y) / tileSize);
-  const yMax = Math.floor((target.y + reach + BASE_Y) / tileSize);
-  const zMin = Math.floor((target.z - reach + BASE_Z) / tileSize);
-  const zMax = Math.floor((target.z + reach + BASE_Z) / tileSize);
+  const reach = radius * 1.5 + tileSize;
+  const reach2 = reach * reach;
+  const half = tileSize / 2;
 
   const out = new Set<string>();
-  for (let x = xMin; x <= xMax; x++) {
-    for (let y = yMin; y <= yMax; y++) {
-      for (let z = zMin; z <= zMax; z++) {
-        const key = `${x}_${y}_${z}`;
-        if (populated.has(key)) out.add(key);
-      }
+  for (const key of populated) {
+    const [sx, sy, sz] = key.split("_").map(Number);
+    const cx = sx * tileSize + half - BASE_X;
+    const cy = sy * tileSize + half - BASE_Y;
+    const cz = sz * tileSize + half - BASE_Z;
+    const dx = cx - target.x;
+    const dy = cy - target.y;
+    const dz = cz - target.z;
+    if (dx * dx + dy * dy + dz * dz <= reach2) {
+      out.add(key);
     }
   }
   return out;
