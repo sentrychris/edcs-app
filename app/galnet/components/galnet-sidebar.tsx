@@ -34,19 +34,19 @@ const GalnetSidebar: FunctionComponent<Props> = ({ className, articles }) => {
   const totalSlices = Math.ceil(articles.data.length / itemsPerSlice);
 
   return (
-    <Panel variant="muted" className={cn("fx-border-breathe", className)} cornerClassName="z-10">
+    <Panel variant="muted" className={cn("", className)} cornerClassName="z-10">
 
       <div className="p-4">
         {/* Section header */}
         <Heading bordered icon="icarus-terminal-notifications" title="Galnet Comms" subtitle="Uplink Channel" className="mb-4 pb-4">
           <span className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-neutral-500">
-            <span className="fx-dot-orange h-1.5 w-1.5"></span>
+            <span className="fx-dot-blue h-1.5 w-1.5"></span>
             Live
           </span>
         </Heading>
 
       {slicedArticles.map((article, i) => (
-        <div key={article.id} className="group relative border-b border-orange-900/20 py-4">
+        <div key={article.id} className="group relative border-b border-sky-900/20 py-4">
           {/* Transmission index */}
           <div className="mb-2 flex items-center justify-between">
             <span className="text-xs uppercase tracking-widest text-neutral-600">
@@ -65,7 +65,7 @@ const GalnetSidebar: FunctionComponent<Props> = ({ className, articles }) => {
           {/* Read more */}
           <Link
             href={`/galnet/news/${article.slug}`}
-            className="flex items-center gap-2 text-xs uppercase tracking-widest text-glow__orange font-bold transition-colors hover:text-orange-300"
+            className="flex items-center gap-2 text-xs uppercase tracking-widest text-glow__blue font-bold transition-colors hover:text-sky-300"
           >
             Access Report <span>{">>"}</span>
           </Link>
@@ -77,7 +77,7 @@ const GalnetSidebar: FunctionComponent<Props> = ({ className, articles }) => {
         <button
           onClick={handlePrevSlice}
           disabled={currentSlice === 0}
-          className="flex items-center gap-2 text-glow__orange uppercase transition-colors hover:text-glow__blue disabled:cursor-not-allowed disabled:opacity-30"
+          className="flex items-center gap-2 text-glow__blue uppercase transition-colors hover:text-glow__blue disabled:cursor-not-allowed disabled:opacity-30"
         >
           Prev
         </button>
@@ -87,7 +87,7 @@ const GalnetSidebar: FunctionComponent<Props> = ({ className, articles }) => {
         <button
           onClick={handleNextSlice}
           disabled={(currentSlice + 1) * itemsPerSlice >= articles.data.length}
-          className="flex items-center gap-2 text-glow__orange uppercase transition-colors hover:text-glow__blue disabled:cursor-not-allowed disabled:opacity-30"
+          className="flex items-center gap-2 text-glow__blue uppercase transition-colors hover:text-glow__blue disabled:cursor-not-allowed disabled:opacity-30"
         >
           Next
         </button>

@@ -34,11 +34,11 @@ const LatestSystem: FunctionComponent<Props> = ({ className }) => {
   return (
     <div className={`${className} uppercase`}>
       <div className="mb-2 flex items-center gap-2 text-xs tracking-wide uppercase text-neutral-500">
-        <i className="icarus-terminal-location-filled text-orange-500/60"></i>
+        <i className="icarus-terminal-location-filled text-sky-500/60"></i>
         Last Telemetry Uplink
       </div>
       <Link
-        className="hover:text-glow__orange text-blue-200 mb-3 block text-sm font-bold tracking-wide transition-colors hover:text-white"
+        className="hover:text-glow__blue text-blue-200 mb-3 block text-sm font-bold tracking-wide transition-colors hover:text-white"
         href={`systems/${system.detail.slug}`}
       >
         {system.name}

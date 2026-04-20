@@ -26,11 +26,11 @@ const SidebarUser: FunctionComponent<Props> = ({ user, collapsed }) => {
   /* ── Collapsed state ── */
   if (collapsed) {
     return (
-      <div className="flex flex-col items-center border-b border-orange-900/20 py-3">
+      <div className="flex flex-col items-center border-b border-sky-900/20 py-3">
         {user ? (
           <Link
             href="/commander"
-            className="flex w-full items-center justify-center py-1 text-orange-500/60 transition-colors hover:text-orange-400"
+            className="flex w-full items-center justify-center py-1 text-sky-500/60 transition-colors hover:text-sky-400"
             title={`CMDR ${user.commander?.name ?? user.name}`}
             aria-label="View commander"
           >
@@ -39,7 +39,7 @@ const SidebarUser: FunctionComponent<Props> = ({ user, collapsed }) => {
         ) : (
           <button
             onClick={login}
-            className="flex w-full items-center justify-center py-1 text-neutral-700 transition-colors hover:text-orange-400"
+            className="flex w-full items-center justify-center py-1 text-neutral-700 transition-colors hover:text-sky-400"
             title="Login with Frontier"
             aria-label="Login with Frontier"
           >
@@ -53,10 +53,10 @@ const SidebarUser: FunctionComponent<Props> = ({ user, collapsed }) => {
   /* ── Expanded — authenticated ── */
   if (user) {
     return (
-      <div className="shrink-0 border-b border-orange-900/20 px-4 py-4">
+      <div className="shrink-0 border-b border-sky-900/20 px-4 py-4">
         {/* Header row */}
         <div className="mb-3 flex items-center gap-2 text-xs uppercase tracking-widest text-neutral-600">
-          <i className="icarus-terminal-shield text-orange-500/50 text-sm"></i>
+          <i className="icarus-terminal-shield text-sky-500/50 text-sm"></i>
           <span>Commander Identified</span>
           <span className="ml-auto flex items-center gap-1.5">
             <span className="fx-dot-green h-1.5 w-1.5"></span>
@@ -65,7 +65,7 @@ const SidebarUser: FunctionComponent<Props> = ({ user, collapsed }) => {
         </div>
 
         {/* CMDR name */}
-        <p className="text-glow__orange mb-3 text-sm font-bold uppercase tracking-widest">
+        <p className="text-glow__blue mb-3 text-sm font-bold uppercase tracking-widest">
           CMDR {user.commander?.name ?? user.name}
         </p>
 
@@ -81,7 +81,7 @@ const SidebarUser: FunctionComponent<Props> = ({ user, collapsed }) => {
         <div className="flex gap-2">
           <Link
             href="/commander"
-            className="fx-btn-sweep flex flex-1 items-center justify-center gap-2 border border-orange-900/40 py-2 text-xs font-bold uppercase tracking-widest text-orange-500/70 transition-colors hover:border-orange-500/60 hover:text-orange-400"
+            className="fx-btn-sweep flex flex-1 items-center justify-center gap-2 border border-sky-900/40 py-2 text-xs font-bold uppercase tracking-widest text-sky-500/70 transition-colors hover:border-sky-500/60 hover:text-sky-400"
           >
             <i className="icarus-terminal-shield text-xs"></i>
             View CMDR
@@ -100,10 +100,10 @@ const SidebarUser: FunctionComponent<Props> = ({ user, collapsed }) => {
 
   /* ── Expanded — unauthenticated ── */
   return (
-    <div className="shrink-0 border-b border-orange-900/20 px-4 py-4">
+    <div className="shrink-0 border-b border-sky-900/20 px-4 py-4">
       {/* Header row */}
       <div className="mb-3 flex items-center gap-2 text-xs uppercase tracking-widest text-neutral-600">
-        <i className="icarus-terminal-shield text-orange-500/20 text-sm"></i>
+        <i className="icarus-terminal-shield text-sky-500/20 text-sm"></i>
         <span>Commander</span>
         <span className="ml-auto flex items-center gap-1.5">
           <span className="h-1.5 w-1.5 rounded-full bg-neutral-800"></span>
@@ -115,7 +115,7 @@ const SidebarUser: FunctionComponent<Props> = ({ user, collapsed }) => {
       <div className="mb-3 space-y-1.5">
         <div className="h-px w-full bg-neutral-900"></div>
         <div className="flex items-center gap-2 text-[0.6rem] uppercase tracking-widest text-neutral-800">
-          <i className="icarus-terminal-route text-orange-500/10"></i>
+          <i className="icarus-terminal-route text-sky-500/10"></i>
           <span>No pilot profile linked</span>
         </div>
         <div className="h-px w-3/4 bg-neutral-900"></div>
@@ -124,7 +124,7 @@ const SidebarUser: FunctionComponent<Props> = ({ user, collapsed }) => {
       {/* Login button */}
       <button
         onClick={login}
-        className="fx-btn-sweep flex w-full items-center justify-center gap-2 border border-orange-900/40 py-2 text-xs font-bold uppercase tracking-widest text-neutral-500 transition-colors hover:border-orange-500/40 hover:text-orange-400"
+        className="fx-btn-sweep flex w-full items-center justify-center gap-2 border border-sky-900/40 py-2 text-xs font-bold uppercase tracking-widest text-neutral-500 transition-colors hover:border-sky-500/40 hover:text-sky-400"
       >
         <i className="icarus-terminal-planet text-xs"></i>
         Login with Frontier

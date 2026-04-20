@@ -4,7 +4,7 @@ import { cn } from "@/core/cn";
 interface Props {
   /** Corner size: sm = h-3 w-3, md = h-4 w-4 (default), lg = h-5 w-5 */
   size?: "sm" | "md" | "lg";
-  /** Tailwind border-color class. Defaults to border-orange-500. */
+  /** Tailwind border-color class. Defaults to border-sky-500. */
   color?: string;
   /** Whether to render the bottom two corners. Defaults to true. */
   bottom?: boolean;
@@ -18,7 +18,7 @@ const sizes: Record<NonNullable<Props["size"]>, string> = {
   lg: "h-5 w-5",
 };
 
-const PanelCorners = ({ size = "md", color = "border-orange-500", bottom = true, className }: Props) => {
+const PanelCorners = ({ size = "md", color = "border-sky-500", bottom = true, className }: Props) => {
   const base = cn("pointer-events-none absolute", sizes[size], color, className);
 
   return (

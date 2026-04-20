@@ -13,13 +13,8 @@ html[data-fx-crt-text="true"] label,
 html[data-fx-crt-text="true"] svg text,
 html[data-fx-crt-text="true"] .icon {
   text-shadow:
-    1.3px 0 1px var(--text-shift-right-color),
-    -1.3px 0 1px var(--text-shift-left-color),
-    0 0 2px;
-  text-shadow:
-    1.1px 0 1px var(--text-shift-right-color),
-    -1.1px 0 1px var(--text-shift-left-color),
-    0 0 3px;
+    0.6px 0 0.5px var(--text-shift-right-color),
+    -0.6px 0 0.5px var(--text-shift-left-color);
 }
 
 .crt-fx::before,

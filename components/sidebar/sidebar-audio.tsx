@@ -52,36 +52,36 @@ const SidebarAudio = ({ articles }: Props) => {
   const elapsed = duration > 0 ? (progress / 100) * duration : 0;
 
   return (
-    <div className="border-t border-orange-900/20 px-4 py-4">
+    <div className="border-t border-sky-900/20 px-4 py-4">
       {/* Section header */}
-      <div className="mb-3 flex items-center justify-between border-b border-orange-900/20 pb-3">
+      <div className="mb-3 flex items-center justify-between border-b border-sky-900/20 pb-3">
         <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-neutral-600">
-          <i className="icarus-terminal-sound text-orange-500/50"></i>
+          <i className="icarus-terminal-sound text-sky-500/50"></i>
           <span>Galnet Broadcast</span>
         </div>
         {isPlaying && (
           <div className="flex items-end gap-px h-3.5">
-            <div className="w-0.5 bg-orange-500 rounded-sm fx-eq-bar" style={{ animationDelay: "0s" }}></div>
-            <div className="w-0.5 bg-orange-500 rounded-sm fx-eq-bar" style={{ animationDelay: "0.15s" }}></div>
-            <div className="w-0.5 bg-orange-500 rounded-sm fx-eq-bar" style={{ animationDelay: "0.3s" }}></div>
-            <div className="w-0.5 bg-orange-500 rounded-sm fx-eq-bar" style={{ animationDelay: "0.1s" }}></div>
-            <div className="w-0.5 bg-orange-500 rounded-sm fx-eq-bar" style={{ animationDelay: "0.25s" }}></div>
+            <div className="w-0.5 bg-sky-500 rounded-sm fx-eq-bar" style={{ animationDelay: "0s" }}></div>
+            <div className="w-0.5 bg-sky-500 rounded-sm fx-eq-bar" style={{ animationDelay: "0.15s" }}></div>
+            <div className="w-0.5 bg-sky-500 rounded-sm fx-eq-bar" style={{ animationDelay: "0.3s" }}></div>
+            <div className="w-0.5 bg-sky-500 rounded-sm fx-eq-bar" style={{ animationDelay: "0.1s" }}></div>
+            <div className="w-0.5 bg-sky-500 rounded-sm fx-eq-bar" style={{ animationDelay: "0.25s" }}></div>
           </div>
         )}
       </div>
 
       {/* Player panel */}
-      <div className="relative border border-orange-900/20 p-3">
-        <PanelCorners size="sm" color="border-orange-500/70" />
+      <div className="relative border border-sky-900/20 p-3">
+        <PanelCorners size="sm" color="border-sky-500/70" />
 
         {/* Track info */}
         <div className="mb-3 min-h-[2.5rem]">
           {isPlaying ? (
             <div className="flex items-start gap-2">
-              <i className="icarus-terminal-sound text-glow__orange mt-0.5 shrink-0 text-xs"></i>
+              <i className="icarus-terminal-sound text-glow__blue mt-0.5 shrink-0 text-xs"></i>
               <Link
                 href={`/galnet/news/${current.slug}`}
-                className="line-clamp-2 text-xs uppercase leading-4 tracking-wide text-orange-300/80 transition-colors hover:text-orange-300"
+                className="line-clamp-2 text-xs uppercase leading-4 tracking-wide text-sky-300/80 transition-colors hover:text-sky-300"
               >
                 {current.title}
               </Link>
@@ -104,12 +104,12 @@ const SidebarAudio = ({ articles }: Props) => {
           }}
         >
           <div
-            className="absolute left-0 top-0 h-full bg-orange-500/80 transition-all"
+            className="absolute left-0 top-0 h-full bg-sky-500/80 transition-all"
             style={{ width: `${progress}%` }}
           />
           {isPlaying && (
             <div
-              className="absolute top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-orange-400 shadow-[0_0_6px_rgb(251_146_60)]"
+              className="absolute top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-sky-400 shadow-[0_0_6px_rgb(251_146_60)]"
               style={{ left: `${progress}%` }}
             />
           )}
@@ -136,7 +136,7 @@ const SidebarAudio = ({ articles }: Props) => {
 
           <button
             onClick={toggle}
-            className="flex h-8 w-8 items-center justify-center border border-orange-900/40 text-glow__orange transition-all hover:border-orange-500 hover:bg-orange-900/20"
+            className="flex h-8 w-8 items-center justify-center border border-sky-900/40 text-glow__blue transition-all hover:border-sky-500 hover:bg-sky-900/20"
             aria-label={isPlaying ? "Pause" : "Play"}
           >
             {isPlaying ? (

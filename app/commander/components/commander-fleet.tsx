@@ -31,21 +31,21 @@ const CommanderFleet: FunctionComponent<Props> = ({ ships, currentShipId }) => {
                 key={ship.id}
                 className={`flex items-center gap-4 border p-3 ${
                   isActive
-                    ? "border-orange-500/30 bg-orange-500/5"
-                    : "border-orange-900/20 bg-black/40"
+                    ? "border-sky-500/30 bg-sky-500/5"
+                    : "border-sky-900/20 bg-black/40"
                 }`}
               >
                 {/* Icon */}
                 <i
                   className={`icarus-terminal-ship shrink-0 text-base ${
-                    isActive ? "text-orange-400/70" : "text-orange-500/20"
+                    isActive ? "text-sky-400/70" : "text-sky-500/20"
                   }`}
                 ></i>
 
                 {/* Ship info */}
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
-                    <p className="text-[0.7rem] font-bold uppercase tracking-wide text-orange-400/80">
+                    <p className="text-[0.7rem] font-bold uppercase tracking-wide text-sky-400/80">
                       {ship.name}
                     </p>
                     {ship.shipName && (
@@ -54,7 +54,7 @@ const CommanderFleet: FunctionComponent<Props> = ({ ships, currentShipId }) => {
                       </span>
                     )}
                     {isActive && (
-                      <span className="ml-auto shrink-0 border border-orange-500/30 px-1.5 py-0.5 text-[0.6rem] uppercase tracking-widest text-orange-400/70">
+                      <span className="ml-auto shrink-0 border border-sky-500/30 px-1.5 py-0.5 text-[0.6rem] uppercase tracking-widest text-sky-400/70">
                         Active
                       </span>
                     )}
@@ -62,13 +62,13 @@ const CommanderFleet: FunctionComponent<Props> = ({ ships, currentShipId }) => {
                   <div className="mt-0.5 flex flex-wrap gap-x-3 gap-y-0.5 text-[0.65rem] uppercase tracking-widest text-neutral-700">
                     {ship.starsystem && (
                       <span>
-                        <i className="icarus-terminal-route mr-0.5 text-orange-500/20"></i>
+                        <i className="icarus-terminal-route mr-0.5 text-sky-500/20"></i>
                         {ship.starsystem.name}
                       </span>
                     )}
                     {ship.station && (
                       <span>
-                        <i className="icarus-terminal-station mr-0.5 text-orange-500/20"></i>
+                        <i className="icarus-terminal-station mr-0.5 text-sky-500/20"></i>
                         {ship.station.name}
                       </span>
                     )}

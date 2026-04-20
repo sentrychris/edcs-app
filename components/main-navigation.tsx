@@ -42,11 +42,11 @@ const MainNavigation: FunctionComponent = () => {
     <Disclosure as="nav" className="main-nav__nav">
       {({ open }) => (
         <>
-          <div className="main-nav__menu lg:px-18 backdrop-blur border-b border-orange-900/40 px-6 uppercase md:px-12">
+          <div className="main-nav__menu lg:px-18 backdrop-blur border-b border-sky-900/40 px-6 uppercase md:px-12">
             <div className="relative flex h-10 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
-                <DisclosureButton className="hover:text-glow__orange inline-flex items-center justify-center rounded-md p-2 text-gray-400 focus:outline-none">
+                <DisclosureButton className="hover:text-glow__blue inline-flex items-center justify-center rounded-md p-2 text-gray-400 focus:outline-none">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
                     <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
@@ -57,7 +57,7 @@ const MainNavigation: FunctionComponent = () => {
               </div>
               <div className="flex flex-1 items-center justify-center sm:justify-start">
                 <div className="flex items-center gap-3">
-                  <i className="icarus-terminal-logo text-glow__orange text-3xl"></i>
+                  <i className="icarus-terminal-logo text-glow__blue text-3xl"></i>
                 </div>
                 <div className="hidden sm:ml-6 sm:block lg:hidden">
                   <div className="flex space-x-4">
@@ -66,7 +66,7 @@ const MainNavigation: FunctionComponent = () => {
                         key={item.name}
                         href={item.href}
                         className={classNames(
-                          isActive(item.href) ? "font-bold text-glow__orange active" : "text-neutral-400 hover:text-white",
+                          isActive(item.href) ? "font-bold text-glow__blue active" : "text-neutral-400 hover:text-white",
                           "fx-nav-link px-3 py-2 text-xs uppercase tracking-widest transition-colors",
                         )}
                         aria-current={isActive(item.href) ? "page" : undefined}
@@ -90,7 +90,7 @@ const MainNavigation: FunctionComponent = () => {
                   <Menu as="div" className="relative ml-3">
                   <div className="flex items-center gap-3">
                     <MenuButton className="align-items flex items-center gap-3 text-xs focus:outline-none">
-                      <span className="text-glow__orange text-xs[ hidden md:flex">
+                      <span className="text-glow__blue text-xs[ hidden md:flex">
                         CMDR {user.commander.name}
                       </span>
                       <Image
@@ -112,15 +112,15 @@ const MainNavigation: FunctionComponent = () => {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <MenuItems className="absolute right-0 z-10 mt-2 w-52 origin-top-right border border-orange-900/40 bg-black/95 backdrop-blur focus:outline-none">
+                    <MenuItems className="absolute right-0 z-10 mt-2 w-52 origin-top-right border border-sky-900/40 bg-black/95 backdrop-blur focus:outline-none">
                       <PanelCorners size="sm" />
                       <MenuItem>
                         {({ active }) => (
                           <Link
                             href="#"
                             className={classNames(
-                              active ? "bg-orange-900/20 text-orange-300" : "text-neutral-400",
-                              "block border-b border-orange-900/20 px-4 py-2.5 text-xs uppercase tracking-widest transition-colors",
+                              active ? "bg-sky-900/20 text-sky-300" : "text-neutral-400",
+                              "block border-b border-sky-900/20 px-4 py-2.5 text-xs uppercase tracking-widest transition-colors",
                             )}
                           >
                             Your Profile
@@ -132,8 +132,8 @@ const MainNavigation: FunctionComponent = () => {
                           <Link
                             href="#"
                             className={classNames(
-                              active ? "bg-orange-900/20 text-orange-300" : "text-neutral-400",
-                              "block border-b border-orange-900/20 px-4 py-2.5 text-xs uppercase tracking-widest transition-colors",
+                              active ? "bg-sky-900/20 text-sky-300" : "text-neutral-400",
+                              "block border-b border-sky-900/20 px-4 py-2.5 text-xs uppercase tracking-widest transition-colors",
                             )}
                           >
                             Settings
@@ -145,7 +145,7 @@ const MainNavigation: FunctionComponent = () => {
                           <Link
                             href="#"
                             className={classNames(
-                              active ? "bg-orange-900/20 text-orange-300" : "text-neutral-400",
+                              active ? "bg-sky-900/20 text-sky-300" : "text-neutral-400",
                               "block px-4 py-2.5 text-xs uppercase tracking-widest transition-colors",
                             )}
                           >
@@ -162,14 +162,14 @@ const MainNavigation: FunctionComponent = () => {
           </div>
 
           <DisclosurePanel className="sm:hidden">
-            <div className="space-y-1 border-b border-orange-900/20 bg-black/90 px-2 pb-3 pt-2 backdrop-blur">
+            <div className="space-y-1 border-b border-sky-900/20 bg-black/90 px-2 pb-3 pt-2 backdrop-blur">
               {navItems.map((item) => (
                 <DisclosureButton
                   key={item.name}
                   as="a"
                   href={item.href}
                   className={classNames(
-                    isActive(item.href) ? "text-glow__orange font-bold" : "text-neutral-400",
+                    isActive(item.href) ? "text-glow__blue font-bold" : "text-neutral-400",
                     "block px-3 py-2 text-xs uppercase tracking-widest transition-colors",
                   )}
                   aria-current={isActive(item.href) ? "page" : undefined}

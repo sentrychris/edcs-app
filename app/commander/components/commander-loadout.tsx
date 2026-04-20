@@ -44,11 +44,11 @@ const WeaponRow: FunctionComponent<{ weapon: CAPILoadoutWeapon; label: string }>
   const { damageType, fireMode } = parseWeaponMeta(weapon.name);
 
   return (
-    <div className="border border-orange-900/20 bg-black/40 p-3">
+    <div className="border border-sky-900/20 bg-black/40 p-3">
       <div className="mb-1 flex items-start gap-2">
-        <i className="icarus-terminal-combat mt-0.5 shrink-0 text-xs text-orange-500/30" />
+        <i className="icarus-terminal-combat mt-0.5 shrink-0 text-xs text-sky-500/30" />
         <div className="min-w-0 flex-1">
-          <p className="text-[0.7rem] font-bold uppercase tracking-wide text-orange-400/80 leading-tight">
+          <p className="text-[0.7rem] font-bold uppercase tracking-wide text-sky-400/80 leading-tight">
             {weapon.locName}
           </p>
           <p className="text-[0.65rem] uppercase tracking-widest text-neutral-700">
@@ -58,7 +58,7 @@ const WeaponRow: FunctionComponent<{ weapon: CAPILoadoutWeapon; label: string }>
       </div>
 
       {weapon.ammo && (
-        <div className="mt-2 flex items-center gap-3 border-t border-orange-900/10 pt-2">
+        <div className="mt-2 flex items-center gap-3 border-t border-sky-900/10 pt-2">
           <span className="text-[0.6rem] uppercase tracking-widest text-neutral-700">Ammo</span>
           <div className="flex items-center gap-1.5 text-[0.6rem] font-bold uppercase tracking-widest text-neutral-500">
             <span>{weapon.ammo.clip}</span>
@@ -96,12 +96,12 @@ const CommanderLoadout: FunctionComponent<Props> = ({ loadout }) => {
       <div className="space-y-3">
 
         {/* Suit */}
-        <div className="border border-orange-900/20 bg-black/40 p-3">
+        <div className="border border-sky-900/20 bg-black/40 p-3">
           <p className="mb-1 text-[0.65rem] uppercase tracking-widest text-neutral-700">Active Suit</p>
           <div className="flex items-start gap-2">
-            <i className="icarus-terminal-shield mt-0.5 shrink-0 text-xs text-orange-500/30" />
+            <i className="icarus-terminal-shield mt-0.5 shrink-0 text-xs text-sky-500/30" />
             <div>
-              <p className="text-[0.7rem] font-bold uppercase tracking-wide text-orange-400/80">
+              <p className="text-[0.7rem] font-bold uppercase tracking-wide text-sky-400/80">
                 {suit.locName}
               </p>
               <p className="text-[0.65rem] uppercase tracking-widest text-neutral-700">
@@ -122,20 +122,20 @@ const CommanderLoadout: FunctionComponent<Props> = ({ loadout }) => {
         )}
 
         {/* Status bars */}
-        <div className="border border-orange-900/20 bg-black/40 p-3 space-y-2.5">
+        <div className="border border-sky-900/20 bg-black/40 p-3 space-y-2.5">
           <p className="text-[0.65rem] uppercase tracking-widest text-neutral-700">Suit Status</p>
 
           {/* Oxygen */}
           <div>
             <div className="mb-1 flex items-center justify-between text-[0.65rem] uppercase tracking-widest">
               <span className="text-neutral-600">Oxygen</span>
-              <span className={oxygenPct > 30 ? "text-orange-400/70" : "text-red-400/70"}>
+              <span className={oxygenPct > 30 ? "text-sky-400/70" : "text-red-400/70"}>
                 {oxygenPct}%
               </span>
             </div>
-            <div className="h-[2px] w-full bg-orange-900/20">
+            <div className="h-[2px] w-full bg-sky-900/20">
               <div
-                className="h-full bg-orange-500/50 transition-all duration-500"
+                className="h-full bg-sky-500/50 transition-all duration-500"
                 style={{ width: `${oxygenPct}%` }}
               />
             </div>
@@ -145,11 +145,11 @@ const CommanderLoadout: FunctionComponent<Props> = ({ loadout }) => {
           <div>
             <div className="mb-1 flex items-center justify-between text-[0.65rem] uppercase tracking-widest">
               <span className="text-neutral-600">Energy</span>
-              <span className="text-orange-400/70">{energyPct}%</span>
+              <span className="text-sky-400/70">{energyPct}%</span>
             </div>
-            <div className="h-[2px] w-full bg-orange-900/20">
+            <div className="h-[2px] w-full bg-sky-900/20">
               <div
-                className="h-full bg-orange-500/50 transition-all duration-500"
+                className="h-full bg-sky-500/50 transition-all duration-500"
                 style={{ width: `${energyPct}%` }}
               />
             </div>

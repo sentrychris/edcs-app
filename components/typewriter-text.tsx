@@ -17,7 +17,7 @@ interface Props {
  *
  * Usage:
  *   <TypewriterText text="Incoming transmission..." />
- *   <TypewriterText as="h2" text={title} charDelay={40} className="text-glow__orange" />
+ *   <TypewriterText as="h2" text={title} charDelay={40} className="text-glow__blue" />
  */
 const TypewriterText: FunctionComponent<Props> = ({
   text,

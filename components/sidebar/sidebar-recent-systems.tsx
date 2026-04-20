@@ -9,8 +9,8 @@ const SidebarRecentSystems = () => {
 
   return (
     <div className="px-4 py-4">
-      <div className="mb-3 flex items-center gap-2 border-b border-orange-900/20 pb-3 text-xs uppercase tracking-widest text-neutral-600">
-        <i className="icarus-terminal-system-orbits text-orange-500/50"></i>
+      <div className="mb-3 flex items-center gap-2 border-b border-sky-900/20 pb-3 text-xs uppercase tracking-widest text-neutral-600">
+        <i className="icarus-terminal-system-orbits text-sky-500/50"></i>
         <span>Recently Surveyed</span>
         {systems.length > 0 && (
           <button
@@ -33,7 +33,7 @@ const SidebarRecentSystems = () => {
             <Link
               key={slug}
               href={`/systems/${slug}`}
-              className="group flex items-center gap-2.5 border-l-2 border-transparent py-2 pl-3 pr-2 text-xs uppercase tracking-widest text-neutral-500 transition-all hover:border-orange-900/40 hover:bg-orange-900/5 hover:text-neutral-200"
+              className="group flex items-center gap-2.5 border-l-2 border-transparent py-2 pl-3 pr-2 text-xs uppercase tracking-widest text-neutral-500 transition-all hover:border-sky-900/40 hover:bg-sky-900/5 hover:text-neutral-200"
             >
               <i className="icarus-terminal-location text-neutral-800 transition-colors group-hover:text-neutral-600 text-sm"></i>
               <span className="truncate">{name}</span>

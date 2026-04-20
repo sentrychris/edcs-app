@@ -54,7 +54,7 @@ export default function NotFound() {
   return (
     <>
       {/* ── Masthead ── */}
-      <Panel className="fx-border-breathe mb-3 px-4 py-4 md:px-8" corners="lg">
+      <Panel className="mb-3 px-4 py-4 md:px-8" corners="lg">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-2 text-xs uppercase tracking-widest text-neutral-600">
           <div className="flex flex-wrap items-center gap-3">
             <span>SYS:EDCS-001</span>
@@ -64,7 +64,7 @@ export default function NotFound() {
             <span className="hidden md:inline">CLASS:NAVIGATION ERROR</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="fx-dot-orange h-1.5 w-1.5"></span>
+            <span className="fx-dot-blue h-1.5 w-1.5"></span>
             <span>ROUTE: FAULT</span>
           </div>
         </div>
@@ -73,7 +73,7 @@ export default function NotFound() {
           <p className="mb-3 text-xs uppercase tracking-[0.2em] text-neutral-500 sm:tracking-[0.5em]">
             frontier developments ── universal cartographics
           </p>
-          <h1 className="fx-glitch fx-holo-heading text-glow__orange mb-3 text-6xl font-bold uppercase tracking-[0.4em] md:text-8xl">
+          <h1 className="text-glow__blue mb-3 text-6xl font-bold uppercase tracking-[0.4em] md:text-8xl">
             404
           </h1>
           <p className="text-xs uppercase tracking-[0.15em] text-neutral-500 sm:tracking-[0.35em]">
@@ -81,7 +81,7 @@ export default function NotFound() {
           </p>
         </div>
 
-        <div className="mt-6 flex items-center gap-6 border-t border-orange-900/20 pt-4 text-xs uppercase tracking-widest text-neutral-700">
+        <div className="mt-6 flex items-center gap-6 border-t border-sky-900/20 pt-4 text-xs uppercase tracking-widest text-neutral-700">
           <span className="h-px flex-1 bg-neutral-800"></span>
           <span className="flex items-center gap-2">
             <i className="icarus-terminal-route"></i>
@@ -98,7 +98,7 @@ export default function NotFound() {
           <Panel className="fx-panel-scan flex flex-1 flex-col p-4" corners="lg">
             <div className="mb-3 flex items-center justify-between text-xs uppercase tracking-widest text-neutral-600">
               <div className="flex items-center gap-2">
-                <span className="fx-dot-orange h-1.5 w-1.5"></span>
+                <span className="fx-dot-blue h-1.5 w-1.5"></span>
                 <span>GALAXY MAP — NAVIGATION FAILURE</span>
               </div>
               <span className="hidden text-neutral-700 sm:inline">
@@ -106,7 +106,7 @@ export default function NotFound() {
               </span>
             </div>
 
-            <div className="relative min-h-0 flex-1 overflow-hidden border border-orange-900/20">
+            <div className="relative min-h-0 flex-1 overflow-hidden border border-sky-900/20">
               <svg
                 viewBox="0 0 500 400"
                 xmlns="http://www.w3.org/2000/svg"
@@ -117,7 +117,7 @@ export default function NotFound() {
                     <path
                       d="M 50 0 L 0 0 0 50"
                       fill="none"
-                      stroke="rgba(251,146,60,0.09)"
+                      stroke="rgba(120,200,255,0.09)"
                       strokeWidth="0.5"
                     />
                   </pattern>
@@ -125,7 +125,7 @@ export default function NotFound() {
                     <path
                       d="M 10 0 L 0 0 0 10"
                       fill="none"
-                      stroke="rgba(251,146,60,0.04)"
+                      stroke="rgba(120,200,255,0.04)"
                       strokeWidth="0.5"
                     />
                   </pattern>
@@ -135,7 +135,7 @@ export default function NotFound() {
                     <stop offset="100%" stopColor="transparent" />
                   </radialGradient>
                   <radialGradient id="nf-radarFade" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stopColor="rgba(251,146,60,0.18)" />
+                    <stop offset="0%" stopColor="rgba(120,200,255,0.18)" />
                     <stop offset="100%" stopColor="transparent" />
                   </radialGradient>
                   <filter id="nf-starGlow" x="-50%" y="-50%" width="200%" height="200%">
@@ -148,13 +148,13 @@ export default function NotFound() {
                   </filter>
                   <linearGradient id="nf-scanGrad" x1="0" y1="0" x2="1" y2="0">
                     <stop offset="0%" stopColor="transparent" />
-                    <stop offset="20%" stopColor="rgba(251,146,60,0.35)" />
-                    <stop offset="50%" stopColor="rgba(251,146,60,0.85)" />
-                    <stop offset="80%" stopColor="rgba(251,146,60,0.35)" />
+                    <stop offset="20%" stopColor="rgba(120,200,255,0.35)" />
+                    <stop offset="50%" stopColor="rgba(120,200,255,0.85)" />
+                    <stop offset="80%" stopColor="rgba(120,200,255,0.35)" />
                     <stop offset="100%" stopColor="transparent" />
                   </linearGradient>
                   <linearGradient id="nf-radarSweep" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stopColor="rgba(251,146,60,0.5)" />
+                    <stop offset="0%" stopColor="rgba(120,200,255,0.5)" />
                     <stop offset="100%" stopColor="transparent" />
                   </linearGradient>
                   <mask id="nf-radarMask">
@@ -173,7 +173,7 @@ export default function NotFound() {
                     key={`xl-${i}`}
                     x={i * 100 + 4}
                     y="11"
-                    fill="rgba(251,146,60,0.18)"
+                    fill="rgba(120,200,255,0.18)"
                     fontSize="6"
                     fontFamily="monospace"
                   >
@@ -185,7 +185,7 @@ export default function NotFound() {
                     key={`yl-${i}`}
                     x="3"
                     y={i * 100 + 55}
-                    fill="rgba(251,146,60,0.18)"
+                    fill="rgba(120,200,255,0.18)"
                     fontSize="6"
                     fontFamily="monospace"
                   >
@@ -200,7 +200,7 @@ export default function NotFound() {
                     cx={star.cx}
                     cy={star.cy}
                     r={star.r}
-                    fill="rgba(251,200,120,0.7)"
+                    fill="rgba(160,215,255,0.7)"
                     filter="url(#nf-starGlow)"
                   />
                 ))}
@@ -209,28 +209,28 @@ export default function NotFound() {
                 <polyline
                   points="45,30 250,200"
                   fill="none"
-                  stroke="rgba(251,146,60,0.18)"
+                  stroke="rgba(120,200,255,0.18)"
                   strokeWidth="1"
                   strokeDasharray="5,5"
                 />
                 <polyline
                   points="420,140 250,200"
                   fill="none"
-                  stroke="rgba(251,146,60,0.18)"
+                  stroke="rgba(120,200,255,0.18)"
                   strokeWidth="1"
                   strokeDasharray="5,5"
                 />
                 <polyline
                   points="260,310 250,200"
                   fill="none"
-                  stroke="rgba(251,146,60,0.15)"
+                  stroke="rgba(120,200,255,0.15)"
                   strokeWidth="1"
                   strokeDasharray="5,5"
                 />
                 <polyline
                   points="460,370 250,200"
                   fill="none"
-                  stroke="rgba(251,146,60,0.15)"
+                  stroke="rgba(120,200,255,0.15)"
                   strokeWidth="1"
                   strokeDasharray="5,5"
                 />
@@ -265,7 +265,7 @@ export default function NotFound() {
                     y1="200"
                     x2="250"
                     y2="142"
-                    stroke="rgba(251,146,60,0.55)"
+                    stroke="rgba(120,200,255,0.55)"
                     strokeWidth="1.5"
                   >
                     <animateTransform
@@ -435,14 +435,14 @@ export default function NotFound() {
                       cy={wp.cy}
                       r="5"
                       fill="none"
-                      stroke="rgba(251,146,60,0.55)"
+                      stroke="rgba(120,200,255,0.55)"
                       strokeWidth="1"
                     />
-                    <circle cx={wp.cx} cy={wp.cy} r="1.5" fill="rgba(251,146,60,0.85)" />
+                    <circle cx={wp.cx} cy={wp.cy} r="1.5" fill="rgba(120,200,255,0.85)" />
                     <text
                       x={wp.cx + 8}
                       y={wp.cy + 3}
-                      fill="rgba(251,146,60,0.5)"
+                      fill="rgba(120,200,255,0.5)"
                       fontSize="6"
                       fontFamily="monospace"
                     >
@@ -469,7 +469,7 @@ export default function NotFound() {
             <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-[10px] uppercase tracking-widest text-neutral-700">
               <span>PLOT ORIGIN: SOL ── DESTINATION: <span className="text-red-900">NULL</span></span>
               <span className="flex items-center gap-1.5">
-                <span className="fx-dot-orange h-1 w-1"></span>
+                <span className="fx-dot-blue h-1 w-1"></span>
                 ACTIVE SCAN
               </span>
             </div>
@@ -480,23 +480,23 @@ export default function NotFound() {
         <div className="col-span-1 flex h-full flex-col pt-3">
           <Panel className="flex flex-1 flex-col p-4" corners="md">
             <div className="mb-4 flex items-center gap-2 text-xs uppercase tracking-widest text-neutral-600">
-              <span className="fx-dot-orange h-1.5 w-1.5"></span>
+              <span className="fx-dot-blue h-1.5 w-1.5"></span>
               <span>NAV DIAGNOSTIC</span>
             </div>
 
             {/* Diagnostic readout grid */}
-            <div className="space-y-0 border border-orange-900/20">
+            <div className="space-y-0 border border-sky-900/20">
               {[
                 { label: "FSD STATUS", value: "MISFIRE", color: "text-red-500" },
                 { label: "TARGET LOCK", value: "NONE", color: "text-red-500" },
-                { label: "ROUTE CODE", value: "ERR-404", color: "text-orange-500 text-glow__orange" },
+                { label: "ROUTE CODE", value: "ERR-404", color: "text-sky-500 text-glow__blue" },
                 { label: "SECTOR CLASS", value: "UNCHARTED", color: "text-neutral-400" },
                 { label: "SIGNAL LOCK", value: "LOST", color: "text-red-500" },
                 { label: "JUMP RANGE", value: "N/A", color: "text-neutral-600" },
               ].map((row, i) => (
                 <div
                   key={i}
-                  className="flex items-center justify-between border-b border-orange-900/20 px-3 py-2 text-xs last:border-b-0"
+                  className="flex items-center justify-between border-b border-sky-900/20 px-3 py-2 text-xs last:border-b-0"
                 >
                   <span className="uppercase tracking-widest text-neutral-600">{row.label}</span>
                   <span className={`font-bold uppercase tracking-widest ${row.color}`}>{row.value}</span>
@@ -505,19 +505,19 @@ export default function NotFound() {
             </div>
 
             {/* Terminal log */}
-            <div className="mt-4 flex-1 space-y-1 border border-orange-900/20 bg-black/30 p-3 font-mono text-[10px] text-neutral-700">
+            <div className="mt-4 flex-1 space-y-1 border border-sky-900/20 bg-black/30 p-3 font-mono text-[10px] text-neutral-700">
               <p>
-                <span className="text-orange-900/60">SYS</span>
+                <span className="text-sky-900/60">SYS</span>
                 <span className="text-neutral-800"> &gt; </span>
                 BOOT SEQUENCE COMPLETE
               </p>
               <p>
-                <span className="text-orange-900/60">SYS</span>
+                <span className="text-sky-900/60">SYS</span>
                 <span className="text-neutral-800"> &gt; </span>
                 FSD CHARGED — INITIATING JUMP...
               </p>
               <p>
-                <span className="text-orange-900/60">SYS</span>
+                <span className="text-sky-900/60">SYS</span>
                 <span className="text-neutral-800"> &gt; </span>
                 ACQUIRING TARGET LOCK...
               </p>
@@ -527,7 +527,7 @@ export default function NotFound() {
                 TARGET LOCK FAILED
               </p>
               <p>
-                <span className="text-orange-900/60">SYS</span>
+                <span className="text-sky-900/60">SYS</span>
                 <span className="text-neutral-800"> &gt; </span>
                 QUERYING CARTOGRAPHIC DB...
               </p>
@@ -541,33 +541,33 @@ export default function NotFound() {
                 <span className="text-neutral-800"> &gt; </span>
                 ROUTE CALCULATION FAILED
               </p>
-              <p className="text-orange-900/70">
-                <span className="text-orange-900/60">WRN</span>
+              <p className="text-sky-900/70">
+                <span className="text-sky-900/60">WRN</span>
                 <span className="text-neutral-800"> &gt; </span>
                 SECTOR DATA MISSING
               </p>
-              <p className="text-orange-900/70">
-                <span className="text-orange-900/60">WRN</span>
+              <p className="text-sky-900/70">
+                <span className="text-sky-900/60">WRN</span>
                 <span className="text-neutral-800"> &gt; </span>
                 NO STELLAR BODY AT COORDS
               </p>
               <p>
-                <span className="text-orange-900/60">SYS</span>
+                <span className="text-sky-900/60">SYS</span>
                 <span className="text-neutral-800"> &gt; </span>
                 REVERTING TO LAST KNOWN...
               </p>
-              <p className="text-orange-900/70">
-                <span className="text-orange-900/60">WRN</span>
+              <p className="text-sky-900/70">
+                <span className="text-sky-900/60">WRN</span>
                 <span className="text-neutral-800"> &gt; </span>
                 SIGNAL INTEGRITY: 0%
               </p>
-              <p className="text-orange-900/70">
-                <span className="text-orange-900/60">WRN</span>
+              <p className="text-sky-900/70">
+                <span className="text-sky-900/60">WRN</span>
                 <span className="text-neutral-800"> &gt; </span>
                 HONK SENSOR OFFLINE
               </p>
               <p>
-                <span className="text-orange-900/60">SYS</span>
+                <span className="text-sky-900/60">SYS</span>
                 <span className="text-neutral-800"> &gt; </span>
                 EMITTING DISTRESS BEACON...
               </p>
@@ -577,19 +577,19 @@ export default function NotFound() {
                 NO RELAY IN RANGE
               </p>
               <p>
-                <span className="text-orange-900/60">SYS</span>
+                <span className="text-sky-900/60">SYS</span>
                 <span className="text-neutral-800"> &gt; </span>
                 HULL INTEGRITY: NOMINAL
               </p>
-              <p className="fx-cursor text-orange-500/40">
-                <span className="text-orange-900/60">SYS</span>
+              <p className="fx-cursor text-sky-500/40">
+                <span className="text-sky-900/60">SYS</span>
                 <span className="text-neutral-800"> &gt; </span>
                 AWAITING CMDR INPUT
               </p>
             </div>
 
             {/* Action */}
-            <div className="mt-4 border-t border-orange-900/20 pt-4">
+            <div className="mt-4 border-t border-sky-900/20 pt-4">
               <p className="mb-3 text-[10px] uppercase tracking-widest text-neutral-600">
                 RECOMMENDED ACTION
               </p>

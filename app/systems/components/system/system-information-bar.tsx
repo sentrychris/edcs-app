@@ -9,12 +9,12 @@ interface Props {
 
 const SystemInformationBar: FunctionComponent<Props> = ({ information }) => {
   return (
-    <div className="mb-5 border border-orange-900/20 bg-black/50 backdrop-blur backdrop-filter">
+    <div className="mb-5 border border-sky-900/20 bg-black/50 backdrop-blur backdrop-filter">
       <div className="grid grid-cols-2 divide-x divide-neutral-800 text-xs uppercase tracking-wide md:grid-cols-3 lg:grid-cols-5">
         <div className="flex flex-col gap-1 px-4 py-3">
           <span className="mb-1 text-xs tracking-widest text-neutral-600">Allegiance / Security</span>
           <span className="flex items-center gap-2 font-bold text-neutral-200">
-            <i className="icarus-terminal-system-authority-solid text-glow__orange shrink-0"></i>
+            <i className="icarus-terminal-system-authority-solid text-glow__blue shrink-0"></i>
             <span>
               {renderAllegianceText(
                 information && information.allegiance ? information.allegiance : "No Allegiance",
@@ -35,7 +35,7 @@ const SystemInformationBar: FunctionComponent<Props> = ({ information }) => {
         <div className="flex flex-col gap-1 px-4 py-3">
           <span className="mb-1 text-xs tracking-widest text-neutral-600">Controlling Faction</span>
           <span className="flex items-center gap-2 font-bold text-neutral-200">
-            <i className="icarus-terminal-system-authority-solid text-glow__orange shrink-0"></i>
+            <i className="icarus-terminal-system-authority-solid text-glow__blue shrink-0"></i>
             {information && information.controlling_faction && information.controlling_faction.name
               ? information.controlling_faction.name
               : "No Controlling Faction"}
@@ -45,7 +45,7 @@ const SystemInformationBar: FunctionComponent<Props> = ({ information }) => {
         <div className="flex flex-col gap-1 px-4 py-3">
           <span className="mb-1 text-xs tracking-widest text-neutral-600">Faction State</span>
           <span className="flex items-center gap-2 font-bold text-neutral-200">
-            <i className="icarus-terminal-system-authority-solid text-glow__orange shrink-0"></i>
+            <i className="icarus-terminal-system-authority-solid text-glow__blue shrink-0"></i>
             {information && information.controlling_faction && information.controlling_faction.state
               ? information.controlling_faction.state
               : "No Data"}
@@ -55,7 +55,7 @@ const SystemInformationBar: FunctionComponent<Props> = ({ information }) => {
         <div className="flex flex-col gap-1 px-4 py-3">
           <span className="mb-1 text-xs tracking-widest text-neutral-600">Economy</span>
           <span className="flex items-center gap-2 font-bold text-neutral-200">
-            <i className="icarus-terminal-economy text-glow__orange shrink-0"></i>
+            <i className="icarus-terminal-economy text-glow__blue shrink-0"></i>
             {information && information.economy ? information.economy : "None"}
           </span>
         </div>
@@ -63,7 +63,7 @@ const SystemInformationBar: FunctionComponent<Props> = ({ information }) => {
         <div className="flex flex-col gap-1 px-4 py-3">
           <span className="mb-1 text-xs tracking-widest text-neutral-600">Population</span>
           <span className="flex items-center gap-2 font-bold text-neutral-200">
-            <i className="icarus-terminal-planet-life text-glow__orange shrink-0"></i>
+            <i className="icarus-terminal-planet-life text-glow__blue shrink-0"></i>
             {formatNumber(information && information.population ? information.population : 0)}
           </span>
         </div>

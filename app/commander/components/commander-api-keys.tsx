@@ -42,13 +42,13 @@ function KeyRow({
   onChange: (v: string) => void;
 }) {
   return (
-    <div className="border border-orange-900/20 bg-black/40 p-3">
+    <div className="border border-sky-900/20 bg-black/40 p-3">
       <div className="mb-2 flex items-center justify-between">
         <p className="text-[0.75rem] uppercase tracking-widest text-neutral-700">{label}</p>
         {!state.unlocked && (
           <button
             onClick={onUnlock}
-            className="flex items-center gap-1 text-[0.75rem] uppercase tracking-widest text-neutral-700 transition-colors hover:text-orange-400"
+            className="flex items-center gap-1 text-[0.75rem] uppercase tracking-widest text-neutral-700 transition-colors hover:text-sky-400"
           >
             <i className={`${state.hasKey ? "icarus-terminal-lock" : "icarus-terminal-edit"} text-xs`} />
             <span>{state.hasKey ? "Edit" : "Set"}</span>
@@ -65,7 +65,7 @@ function KeyRow({
             value={state.value}
             onChange={(e) => onChange(e.target.value)}
             placeholder="Enter API key..."
-            className="h-[33px] w-full border border-orange-900/20 bg-transparent px-3 text-xs tracking-wider text-neutral-200 placeholder-neutral-600 outline-none transition-colors focus:border-orange-500/60"
+            className="h-[33px] w-full border border-sky-900/20 bg-transparent px-3 text-xs tracking-wider text-neutral-200 placeholder-neutral-600 outline-none transition-colors focus:border-sky-500/60"
           />
           {state.error && (
             <p className="text-[0.7rem] uppercase tracking-widest text-red-400">{state.error}</p>
@@ -74,14 +74,14 @@ function KeyRow({
             <button
               onClick={onSave}
               disabled={state.saving}
-              className="fx-btn-sweep h-[29px] flex-1 border border-orange-900/40 text-[0.7rem] uppercase tracking-widest text-orange-400/70 transition-colors hover:border-orange-500/60 hover:text-orange-300 disabled:pointer-events-none disabled:opacity-40"
+              className="fx-btn-sweep h-[29px] flex-1 border border-sky-900/40 text-[0.7rem] uppercase tracking-widest text-sky-400/70 transition-colors hover:border-sky-500/60 hover:text-sky-300 disabled:pointer-events-none disabled:opacity-40"
             >
               {state.saving ? "Saving..." : "Save"}
             </button>
             <button
               onClick={onCancel}
               disabled={state.saving}
-              className="h-[29px] border border-orange-900/20 px-3 text-[0.7rem] uppercase tracking-widest text-neutral-600 transition-colors hover:text-neutral-400 disabled:pointer-events-none disabled:opacity-40"
+              className="h-[29px] border border-sky-900/20 px-3 text-[0.7rem] uppercase tracking-widest text-neutral-600 transition-colors hover:text-neutral-400 disabled:pointer-events-none disabled:opacity-40"
             >
               Cancel
             </button>
@@ -91,7 +91,7 @@ function KeyRow({
         <div className="flex items-center gap-2">
           {state.hasKey ? (
             <>
-              <i className="icarus-terminal-lock text-xs text-orange-500/30" />
+              <i className="icarus-terminal-lock text-xs text-sky-500/30" />
               <span className="font-mono text-sm tracking-widest text-neutral-700">
                 ••••••••••••••••
               </span>

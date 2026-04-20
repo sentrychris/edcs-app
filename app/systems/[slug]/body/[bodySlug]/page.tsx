@@ -60,7 +60,7 @@ export default async function Page({ params }: Props) {
   return (
     <>
       {/* ── Survey Terminal header ── */}
-      <div className="fx-chamfer relative mb-5 border border-orange-900/40 bg-black/50 backdrop-blur backdrop-filter px-4 py-3 md:px-6 md:py-4">
+      <div className="fx-chamfer relative mb-5 border border-sky-900/40 bg-black/50 backdrop-blur backdrop-filter px-4 py-3 md:px-6 md:py-4">
         <div className="flex flex-wrap items-center justify-between gap-2 text-xs uppercase tracking-widest text-neutral-600">
           <div className="flex items-center gap-3">
             <span>MODULE:SURVEY</span>
@@ -70,14 +70,14 @@ export default async function Page({ params }: Props) {
             <span className="hidden md:inline">CLASS:UNRESTRICTED</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="fx-dot-orange h-1.5 w-1.5" />
+            <span className="fx-dot-blue h-1.5 w-1.5" />
             <span>SCAN: COMPLETE</span>
           </div>
         </div>
       </div>
 
       {/* ── Hero panel ── */}
-      <div className="fx-chamfer fx-border-breathe fx-panel-scan relative mb-5 border border-orange-900/40 bg-black/50 backdrop-blur backdrop-filter">
+      <div className="fx-chamfer fx-panel-scan relative mb-5 border border-sky-900/40 bg-black/50 backdrop-blur backdrop-filter">
         <div className="flex flex-col items-center gap-8 p-8 md:flex-row">
 
           {/* SVG body */}
@@ -89,9 +89,9 @@ export default async function Page({ params }: Props) {
           <div className="flex-1 space-y-4">
             {/* Breadcrumb */}
             <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-neutral-600">
-              <Link href="/systems" className="transition-colors hover:text-orange-400">Systems</Link>
+              <Link href="/systems" className="transition-colors hover:text-sky-400">Systems</Link>
               <span>/</span>
-              <Link href={`/systems/${params.slug}`} className="transition-colors hover:text-orange-400">
+              <Link href={`/systems/${params.slug}`} className="transition-colors hover:text-sky-400">
                 {body.system?.name}
               </Link>
               <span>/</span>
@@ -101,12 +101,12 @@ export default async function Page({ params }: Props) {
             {/* Name + type */}
             <div>
               <div className="mb-1 flex items-center gap-3">
-                <i className={`${bodyIcon} text-glow__orange`} style={{ fontSize: "2rem" }} />
-                <h1 className="fx-glitch text-glow__white text-2xl font-bold uppercase tracking-wide md:text-3xl">
+                <i className={`${bodyIcon} text-glow__blue`} style={{ fontSize: "2rem" }} />
+                <h1 className="text-glow__white text-2xl font-bold uppercase tracking-wide md:text-3xl">
                   {body.name}
                 </h1>
               </div>
-              <p className="text-glow__orange text-sm font-bold uppercase tracking-widest">
+              <p className="text-glow__blue text-sm font-bold uppercase tracking-widest">
                 {body.sub_type}
                 {body.terraforming_state === "Candidate for terraforming" && (
                   <span className="ml-3 text-green-400">— Terraforming Candidate</span>
@@ -115,7 +115,7 @@ export default async function Page({ params }: Props) {
             </div>
 
             {/* Quick-stats row */}
-            <div className="flex flex-wrap gap-x-8 gap-y-3 border-t border-orange-900/20 pt-4 text-xs uppercase tracking-widest">
+            <div className="flex flex-wrap gap-x-8 gap-y-3 border-t border-sky-900/20 pt-4 text-xs uppercase tracking-widest">
               {body.distance_to_arrival ? (
                 <div>
                   <p className="mb-0.5 text-neutral-600">Dist. to Arrival</p>
@@ -166,7 +166,7 @@ export default async function Page({ params }: Props) {
           {/* Discovery */}
           <Panel variant="muted" className="fx-chamfer p-5">
             <SectionHeader icon="icarus-terminal-scan" title="Discovery Record" />
-            <StatRow label="Discovered By" value={<span className="text-glow__orange">CMDR {body.discovery?.commander ?? "Unknown"}</span>} />
+            <StatRow label="Discovered By" value={<span className="text-glow__blue">CMDR {body.discovery?.commander ?? "Unknown"}</span>} />
             <StatRow label="Discovery Date" value={formatDate(body.discovery?.date)} />
           </Panel>
 
@@ -224,7 +224,7 @@ export default async function Page({ params }: Props) {
               <div className="space-y-4">
                 {body.rings.map((ring: SystemBodyRing) => (
                   <div key={ring.name} className="border-b border-neutral-900 pb-4 last:border-0 last:pb-0">
-                    <p className="text-glow__orange mb-2 text-xs font-bold uppercase tracking-widest">{ring.name}</p>
+                    <p className="text-glow__blue mb-2 text-xs font-bold uppercase tracking-widest">{ring.name}</p>
                     <StatRow label="Type"         value={ring.type} />
                     <StatRow label="Mass"         value={`${formatNumber(ring.mass)} KG`} />
                     <StatRow label="Inner Radius" value={`${formatNumber(ring.innerRadius)} KM`} />
@@ -243,15 +243,15 @@ export default async function Page({ params }: Props) {
           <SectionHeader icon="icarus-terminal-settlement" title="Planetary Settlements" />
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
             {settlements.map((settlement) => (
-              <div key={settlement.id} className="relative border border-orange-900/20 p-3">
-                <span className="pointer-events-none absolute -left-px -top-px h-2.5 w-2.5 border-l border-t border-orange-500/60" />
-                <span className="pointer-events-none absolute -right-px -top-px h-2.5 w-2.5 border-r border-t border-orange-500/60" />
-                <span className="pointer-events-none absolute -bottom-px -left-px h-2.5 w-2.5 border-b border-l border-orange-500/60" />
-                <span className="pointer-events-none absolute -bottom-px -right-px h-2.5 w-2.5 border-b border-r border-orange-500/60" />
+              <div key={settlement.id} className="relative border border-sky-900/20 p-3">
+                <span className="pointer-events-none absolute -left-px -top-px h-2.5 w-2.5 border-l border-t border-sky-500/60" />
+                <span className="pointer-events-none absolute -right-px -top-px h-2.5 w-2.5 border-r border-t border-sky-500/60" />
+                <span className="pointer-events-none absolute -bottom-px -left-px h-2.5 w-2.5 border-b border-l border-sky-500/60" />
+                <span className="pointer-events-none absolute -bottom-px -right-px h-2.5 w-2.5 border-b border-r border-sky-500/60" />
                 <div className="mb-1.5 flex items-center justify-between gap-3">
                   <Link
                     href={`/stations/${settlement.slug}`}
-                    className="text-glow__orange flex items-center"
+                    className="text-glow__blue flex items-center"
                   >
                     <i className={`${stationIconByType(settlement.type)} text-glow me-2 text-sm`}></i>
                     {settlement.name}
@@ -267,19 +267,19 @@ export default async function Page({ params }: Props) {
                 <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-neutral-500">
                   {settlement.has_market && (
                     <span className="flex items-center gap-1">
-                      <CheckIcon className="h-3 w-3 text-orange-500/60" />
+                      <CheckIcon className="h-3 w-3 text-sky-500/60" />
                       Market
                     </span>
                   )}
                   {settlement.has_outfitting && (
                     <span className="flex items-center gap-1">
-                      <CheckIcon className="h-3 w-3 text-orange-500/60" />
+                      <CheckIcon className="h-3 w-3 text-sky-500/60" />
                       Outfitting
                     </span>
                   )}
                   {settlement.has_shipyard && (
                     <span className="flex items-center gap-1">
-                      <CheckIcon className="h-3 w-3 text-orange-500/60" />
+                      <CheckIcon className="h-3 w-3 text-sky-500/60" />
                       Shipyard
                     </span>
                   )}
@@ -294,17 +294,17 @@ export default async function Page({ params }: Props) {
       )}
 
       {/* ── Footer ── */}
-      <div className="mt-6 border-t border-orange-900/20 pt-4">
+      <div className="mt-6 border-t border-sky-900/20 pt-4">
         <div className="flex items-center justify-between text-xs uppercase tracking-widest text-neutral-700">
           <Link
             href={`/systems/${params.slug}`}
-            className="flex items-center gap-2 transition-colors hover:text-orange-400"
+            className="flex items-center gap-2 transition-colors hover:text-sky-400"
           >
             <i className="icarus-terminal-chevron-left text-xs" />
             Back to {body.system?.name}
           </Link>
           <span className="flex items-center gap-2 text-neutral-800">
-            <i className="icarus-terminal-scan text-orange-500/20" />
+            <i className="icarus-terminal-scan text-sky-500/20" />
             SURVEY REPORT — {body.name}
           </span>
         </div>

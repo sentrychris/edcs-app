@@ -140,16 +140,16 @@ const SystemBodiesMap: FunctionComponent<Props> = ({
             <>
               <div className="flex shrink-0 items-center md:rounded-full md:border-r md:border-neutral-700 md:pe-12">
                 {
-                  <div className={"text-glow__orange me-6 hidden flex-col md:flex"}>
+                  <div className={"text-glow__blue me-6 hidden flex-col md:flex"}>
                     <i
                       className={
-                        "icarus-terminal-chevron-up text-glow__orange hover:text-glow__blue hover:cursor-pointer"
+                        "icarus-terminal-chevron-up text-glow__blue hover:text-glow__blue hover:cursor-pointer"
                       }
                       onClick={() => handleSelectedBodyChange(selectedBodyIndex - 1)}
                     ></i>
                     <i
                       className={
-                        "icarus-terminal-chevron-down text-glow__orange hover:text-glow__blue hover:cursor-pointer"
+                        "icarus-terminal-chevron-down text-glow__blue hover:text-glow__blue hover:cursor-pointer"
                       }
                       onClick={() => handleSelectedBodyChange(selectedBodyIndex + 1)}
                     ></i>
@@ -176,7 +176,7 @@ const SystemBodiesMap: FunctionComponent<Props> = ({
         <Link key={station.slug} href={`/stations/${station.slug}`} className="me-5 flex items-center text-xs hover:opacity-80">
           <i className={`${stationIconByType(station.type)} text-glow`}></i>
           <div className="ms-3">
-            <span className="text-glow__blue uppercase hover:underline hover:text-glow__orange">{station.name}</span>
+            <span className="text-glow__blue uppercase hover:underline hover:text-glow__blue">{station.name}</span>
             <div className="text-xs text-neutral-300">{station.distance_to_arrival} ls</div>
           </div>
         </Link>
@@ -189,7 +189,7 @@ const SystemBodiesMap: FunctionComponent<Props> = ({
 
     if (!bodies) {
       return (
-        <span className="text-glow__orange ms-4 uppercase">
+        <span className="text-glow__blue ms-4 uppercase">
           {body.name} has no direct orbiting celestial bodies
         </span>
       );
@@ -220,12 +220,12 @@ const SystemBodiesMap: FunctionComponent<Props> = ({
   }
 
   return (
-    <div className="mb-5 border border-orange-900/20 bg-black/50 backdrop-blur backdrop-filter">
-      <div className="flex items-center justify-between border-b border-orange-900/20 px-4 py-3">
+    <div className="mb-5 border border-sky-900/20 bg-black/50 backdrop-blur backdrop-filter">
+      <div className="flex items-center justify-between border-b border-sky-900/20 px-4 py-3">
         <div className="flex items-center gap-3">
-          <i className="icarus-terminal-system-bodies text-glow__orange" style={{ fontSize: "1.5rem" }}></i>
+          <i className="icarus-terminal-system-bodies text-glow__blue" style={{ fontSize: "1.5rem" }}></i>
           <div>
-            <h2 className="text-glow__orange font-bold uppercase tracking-wide">System Map</h2>
+            <h2 className="text-glow__blue font-bold uppercase tracking-wide">System Map</h2>
             <p className="text-xs uppercase tracking-wider text-neutral-500">Orbital Telemetry</p>
           </div>
         </div>
@@ -234,7 +234,7 @@ const SystemBodiesMap: FunctionComponent<Props> = ({
           {!isLoading && (
             <Link
               href={`/systems/${system.slug}/solar-map`}
-              className="text-glow__orange border border-orange-900 px-3 py-1 text-xs uppercase tracking-wider transition-colors hover:border-orange-500"
+              className="text-glow__blue border border-sky-900 px-3 py-1 text-xs uppercase tracking-wider transition-colors hover:border-sky-500"
             >
               View More
             </Link>
@@ -252,7 +252,7 @@ const SystemBodiesMap: FunctionComponent<Props> = ({
             {systemMap && systemMap.items.length > 0 ? (
               renderSystemBodies(systemMap)
             ) : (
-              <div className="text-glow__orange mx-auto py-6 text-center text-lg font-bold uppercase">
+              <div className="text-glow__blue mx-auto py-6 text-center text-lg font-bold uppercase">
                 Telemetry data not found for {system.name}
               </div>
             )}

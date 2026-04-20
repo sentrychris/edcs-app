@@ -95,7 +95,7 @@ const SystemsTable: FunctionComponent<Props> = ({ className = "", systems }) => 
       title: "Designation",
       render: (system: System) => (
         <Link
-          className="hover:text-glow__orange text-blue-200 flex items-center gap-2"
+          className="hover:text-glow__blue text-blue-200 flex items-center gap-2"
           href={`/systems/${system.slug}`}
         >
           <i className="icarus-terminal-system-orbits text-xs"></i>
@@ -135,7 +135,7 @@ const SystemsTable: FunctionComponent<Props> = ({ className = "", systems }) => 
     economy: {
       title: "Economy",
       render: (system: System) => (
-        <span className="text-glow__orange tracking-wide">
+        <span className="text-glow__blue tracking-wide">
           {system.information?.economy ?? "None"}
         </span>
       ),
@@ -154,7 +154,7 @@ const SystemsTable: FunctionComponent<Props> = ({ className = "", systems }) => 
 
         <Heading bordered icon="icarus-terminal-route" title="Query Parameters" subtitle="Cartographic Database Filter" iconSize="1.2rem" className="px-4 py-3">
           <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-neutral-600">
-            <span className="h-1.5 w-1.5 rounded-full bg-orange-500/60"></span>
+            <span className="h-1.5 w-1.5 rounded-full bg-sky-500/60"></span>
             <span>{rows.length} results</span>
           </div>
         </Heading>

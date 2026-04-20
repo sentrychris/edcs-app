@@ -5,7 +5,7 @@ export const renderTextWithIcon = (
   options?: { className?: string; icon?: string },
 ) => (
   <span className={cn("flex items-center gap-2 py-1 uppercase text-glow__white font-bold", options?.className)}>
-    {options?.icon && <i className={cn(options.icon, "text-glow__orange")}></i>}
+    {options?.icon && <i className={cn(options.icon, "text-glow__blue")}></i>}
     {text}
   </span>
 );
@@ -15,7 +15,7 @@ export const renderSecurityText = (level: string = "None", suffix = "") => (
     className={cn(
       "uppercase tracking-wide",
       level === "Medium"
-        ? "text-orange-300"
+        ? "text-sky-300"
         : ["Low", "Anarchy", "None", "No"].includes(level)
           ? "text-red-300"
           : "text-green-300",

@@ -8,11 +8,11 @@ export default async function Page() {
           icon="icarus-terminal-shield"
           iconSize="1.5rem"
           title="Privacy Policy"
-          className="gap-3 border-b border-orange-900/20 pb-3 text-2xl"
+          className="gap-3 border-b border-sky-900/20 pb-3 text-2xl"
         />
         <div className="privacy-policy">
           <section className="introduction py-5">
-            <h2 className="text-glow__orange mb-4 text-3xl">Introduction</h2>
+            <h2 className="text-glow__blue mb-4 text-3xl">Introduction</h2>
             <p className="mb-2">
               Welcome to <strong>ED:CS</strong>, a fan site dedicated to the game Elite Dangerous.
               We are committed to protecting your privacy and ensuring that your personal
@@ -25,7 +25,7 @@ export default async function Page() {
           </section>
 
           <section className="information-we-collect py-5">
-            <h2 className="text-glow__orange mb-4 text-3xl">Information We Collect</h2>
+            <h2 className="text-glow__blue mb-4 text-3xl">Information We Collect</h2>
 
             <h3 className="my-4 text-2xl">1. Automatically Collected Information</h3>
             <p className="text mb-4">
@@ -86,7 +86,7 @@ export default async function Page() {
           </section>
 
           <section className="how-we-use-information py-5">
-            <h2 className="text-glow__orange my-4 text-3xl">How We Use Your Information</h2>
+            <h2 className="text-glow__blue my-4 text-3xl">How We Use Your Information</h2>
             <p className="text mb-2">The information we collect is used to:</p>
             <ul className="ms-8 list-disc">
               <li className="list-item">
@@ -105,7 +105,7 @@ export default async function Page() {
           </section>
 
           <section className="sharing-information py-5">
-            <h2 className="text-glow__orange my-4 text-3xl">Sharing Your Information</h2>
+            <h2 className="text-glow__blue my-4 text-3xl">Sharing Your Information</h2>
             <p className="text">
               We do not sell, trade, or otherwise transfer your personally identifiable information
               to outside parties. However, we may share your information with trusted third parties
@@ -115,7 +115,7 @@ export default async function Page() {
           </section>
 
           <section className="data-security py-5">
-            <h2 className="text-glow__orange my-4 text-3xl">Data Security</h2>
+            <h2 className="text-glow__blue my-4 text-3xl">Data Security</h2>
             <p className="text">
               We implement a variety of security measures to protect your personal information. This
               includes encryption, access controls, and secure hosting environments. However, please
@@ -125,7 +125,7 @@ export default async function Page() {
           </section>
 
           <section className="gdpr-compliance py-5">
-            <h2 className="text-glow__orange my-4 text-3xl">GDPR Compliance</h2>
+            <h2 className="text-glow__blue my-4 text-3xl">GDPR Compliance</h2>
 
             <h3 className="mt-12 mt-4 text-2xl">Legal Basis for Processing</h3>
             <p className="text my-4">
@@ -227,7 +227,7 @@ export default async function Page() {
           </section>
 
           <section className="your-rights py-5">
-            <h2 className="text-glow__orange my-4 text-3xl">Your Rights</h2>
+            <h2 className="text-glow__blue my-4 text-3xl">Your Rights</h2>
             <p className="text mb-4">You have the right to:</p>
             <ul className="ms-8 list-disc">
               <li className="list-item">
@@ -251,7 +251,7 @@ export default async function Page() {
           </section>
 
           <section className="changes-to-policy pb-5">
-            <h2 className="text-glow__orange my-4 text-3xl">Changes to This Privacy Policy</h2>
+            <h2 className="text-glow__blue my-4 text-3xl">Changes to This Privacy Policy</h2>
             <p className="text">
               We may update this Privacy Policy from time to time. Any changes will be posted on
               this page with an updated effective date.
@@ -259,7 +259,7 @@ export default async function Page() {
           </section>
 
           <section className="contact-us py-5">
-            <h2 className="text-glow__orange my-4 text-3xl">Contact Us</h2>
+            <h2 className="text-glow__blue my-4 text-3xl">Contact Us</h2>
             <p className="text mb-4">
               If you have any questions or concerns about this Privacy Policy, please contact us at:
             </p>

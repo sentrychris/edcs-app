@@ -186,7 +186,7 @@ export default function DistanceResults3D({ results, originName, searchLy }: Pro
   return (
     <Panel className="overflow-hidden">
       {/* ── Header ── */}
-      <div className="flex items-center justify-between border-b border-orange-900/20 px-4 py-3 md:px-5 md:py-4">
+      <div className="flex items-center justify-between border-b border-sky-900/20 px-4 py-3 md:px-5 md:py-4">
         <Heading
           icon="icarus-terminal-system-orbits"
           title="Proximity Scan"
@@ -199,7 +199,7 @@ export default function DistanceResults3D({ results, originName, searchLy }: Pro
           <button
             onClick={resetView}
             title="Reset view"
-            className="border border-orange-900/20 p-1.5 text-neutral-700 transition-colors hover:border-orange-500/40 hover:text-orange-400"
+            className="border border-sky-900/20 p-1.5 text-neutral-700 transition-colors hover:border-sky-500/40 hover:text-sky-400"
           >
             <i className="icarus-terminal-settings text-xs"></i>
           </button>
@@ -257,8 +257,8 @@ export default function DistanceResults3D({ results, originName, searchLy }: Pro
           </defs>
 
           {/* ── Subtle crosshair ── */}
-          <line x1={SVG_W / 2 - 20} y1={SVG_H / 2} x2={SVG_W / 2 + 20} y2={SVG_H / 2} stroke="#f9731608" strokeWidth="1" />
-          <line x1={SVG_W / 2} y1={SVG_H / 2 - 20} x2={SVG_W / 2} y2={SVG_H / 2 + 20} stroke="#f9731608" strokeWidth="1" />
+          <line x1={SVG_W / 2 - 20} y1={SVG_H / 2} x2={SVG_W / 2 + 20} y2={SVG_H / 2} stroke="#50b4f508" strokeWidth="1" />
+          <line x1={SVG_W / 2} y1={SVG_H / 2 - 20} x2={SVG_W / 2} y2={SVG_H / 2 + 20} stroke="#50b4f508" strokeWidth="1" />
 
           {/* ── Floor shadow drop-lines ── */}
           {results.map((_, i) => (
@@ -268,7 +268,7 @@ export default function DistanceResults3D({ results, originName, searchLy }: Pro
               y1={projected[i].y}
               x2={shadows[i].x}
               y2={shadows[i].y}
-              stroke={i === 0 ? "#4ade8018" : "#f9731612"}
+              stroke={i === 0 ? "#4ade8018" : "#50b4f512"}
               strokeWidth="1"
               strokeDasharray="2 4"
             />
@@ -281,7 +281,7 @@ export default function DistanceResults3D({ results, originName, searchLy }: Pro
               cx={shadows[i].x}
               cy={shadows[i].y}
               r={2}
-              fill={i === 0 ? "#4ade8025" : "#f9731620"}
+              fill={i === 0 ? "#4ade8025" : "#50b4f520"}
             />
           ))}
 
@@ -295,7 +295,7 @@ export default function DistanceResults3D({ results, originName, searchLy }: Pro
                 y1={projected[0].y}
                 x2={projected[i].x}
                 y2={projected[i].y}
-                stroke="#f97316"
+                stroke="#50b4f5"
                 strokeWidth="0.6"
                 strokeOpacity={0.08 + (1 - results[i].distance / maxDist) * 0.12}
               />
@@ -347,13 +347,13 @@ export default function DistanceResults3D({ results, originName, searchLy }: Pro
                   <>
                     {/* Selection ring */}
                     {isSelected && (
-                      <circle cx={p.x} cy={p.y} r={9} fill="none" stroke="#f97316" strokeWidth="1" strokeOpacity="0.6" filter="url(#ds-glow-sel)" />
+                      <circle cx={p.x} cy={p.y} r={9} fill="none" stroke="#50b4f5" strokeWidth="1" strokeOpacity="0.6" filter="url(#ds-glow-sel)" />
                     )}
                     <circle
                       cx={p.x}
                       cy={p.y}
                       r={isSelected ? 4.5 : 3.5}
-                      fill={isSelected ? "#fb923c" : "#f97316"}
+                      fill={isSelected ? "#78c8ff" : "#50b4f5"}
                       fillOpacity={isSelected ? 1 : nodeOpacity}
                       filter="url(#ds-glow-node)"
                     />
@@ -366,7 +366,7 @@ export default function DistanceResults3D({ results, originName, searchLy }: Pro
                       fontSize="9"
                       fontFamily="Jura, monospace"
                       letterSpacing="0.08em"
-                      fill={isSelected ? "#fb923c" : "#f97316"}
+                      fill={isSelected ? "#78c8ff" : "#50b4f5"}
                       fillOpacity={isSelected ? 1 : 0.75}
                       filter="url(#ds-glow-label)"
                     >
@@ -379,7 +379,7 @@ export default function DistanceResults3D({ results, originName, searchLy }: Pro
                       fontSize="7.5"
                       fontFamily="Jura, monospace"
                       letterSpacing="0.08em"
-                      fill={isSelected ? "#fb923c" : "#f97316"}
+                      fill={isSelected ? "#78c8ff" : "#50b4f5"}
                       fillOpacity={isSelected ? 0.85 : 0.5}
                     >
                       {r.distance.toFixed(2)} LY
@@ -393,11 +393,11 @@ export default function DistanceResults3D({ results, originName, searchLy }: Pro
 
         {/* ── Selected system info box ── */}
         {selected && (
-          <div className="pointer-events-none absolute right-3 top-3 w-52 border border-orange-500/30 bg-black/85 p-3 backdrop-blur-sm">
+          <div className="pointer-events-none absolute right-3 top-3 w-52 border border-sky-500/30 bg-black/85 p-3 backdrop-blur-sm">
             <div className="mb-2 flex items-start justify-between gap-2">
               <Link
                 href={`/systems/${selected.slug}`}
-                className="pointer-events-auto block truncate text-xs font-bold uppercase tracking-widest text-orange-400 transition-colors hover:text-orange-300"
+                className="pointer-events-auto block truncate text-xs font-bold uppercase tracking-widest text-sky-400 transition-colors hover:text-sky-300"
               >
                 {selected.name}
               </Link>
@@ -427,17 +427,17 @@ export default function DistanceResults3D({ results, originName, searchLy }: Pro
       </div>
 
       {/* ── Legend ── */}
-      <div className="flex flex-wrap items-center gap-4 border-t border-orange-900/20 px-4 py-2 text-xs uppercase tracking-widest">
+      <div className="flex flex-wrap items-center gap-4 border-t border-sky-900/20 px-4 py-2 text-xs uppercase tracking-widest">
         <div className="flex items-center gap-1.5">
           <span className="inline-block h-2 w-2 rounded-full bg-green-400" style={{ boxShadow: "0 0 4px #4ade80" }}></span>
           <span className="text-neutral-600">Origin</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="inline-block h-2 w-2 rounded-full bg-orange-500"></span>
+          <span className="inline-block h-2 w-2 rounded-full bg-sky-500"></span>
           <span className="text-neutral-600">Nearby</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="inline-block h-2 w-2 rounded-full bg-orange-900/60"></span>
+          <span className="inline-block h-2 w-2 rounded-full bg-sky-900/60"></span>
           <span className="text-neutral-600">Distant</span>
         </div>
         <div className="ml-auto text-neutral-800">

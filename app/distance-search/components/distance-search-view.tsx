@@ -85,7 +85,7 @@ export default function DistanceSearchView({ initialSlug, initialLy }: Props) {
       {isLoading && (
         <Panel className="flex items-center justify-center px-4 py-16">
           <div className="flex flex-col items-center gap-4">
-            <i className="icarus-terminal-system-orbits text-glow__orange text-3xl"></i>
+            <i className="icarus-terminal-system-orbits text-glow__blue text-3xl"></i>
             <p className="text-xs uppercase tracking-widest text-neutral-500">
               Scanning proximity...
             </p>

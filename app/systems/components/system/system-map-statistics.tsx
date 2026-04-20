@@ -13,22 +13,22 @@ const SystemMapStatistics: FunctionComponent<Props> = ({ system }) => {
 
   return (
     <div className="hidden items-center gap-1 text-xs md:flex">
-      <span className="text-glow__orange font-bold uppercase">
+      <span className="text-glow__blue font-bold uppercase">
         {starCount}{" "}
         {pluralizeTextFromArray(filteredStars, { singular: "star", plural: "stars" })}
       </span>
       <span className="text-neutral-700">■</span>
-      <span className="text-glow__orange font-bold uppercase">
+      <span className="text-glow__blue font-bold uppercase">
         {system.planets.length}{" "}
         {pluralizeTextFromArray(system.planets, { singular: "body", plural: "bodies" })}
       </span>
       <span className="text-neutral-700">■</span>
-      <span className="text-glow__orange font-bold uppercase">
+      <span className="text-glow__blue font-bold uppercase">
         {system.stations.length}{" "}
         {pluralizeTextFromArray(system.stations, { singular: "station", plural: "stations" })}
       </span>
       <span className="text-neutral-700">■</span>
-      <span className="text-glow__orange font-bold uppercase">
+      <span className="text-glow__blue font-bold uppercase">
         {system.settlements.length}{" "}
         {pluralizeTextFromArray(system.settlements, { singular: "settlement", plural: "settlements" })}
       </span>

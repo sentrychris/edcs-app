@@ -34,11 +34,11 @@ const Button: FunctionComponent<Props> = ({
       spinnerClasses = "fill-red-600 text-white";
       break;
     case "elite":
-      themeClasses = "fx-btn-sweep fx-btn-sweep--elite border border-orange-900/40 bg-transparent text-glow__orange hover:border-orange-500 hover:text-orange-300";
-      spinnerClasses = "fill-orange-500 text-neutral-700";
+      themeClasses = "fx-btn-sweep fx-btn-sweep--elite border border-sky-900/40 bg-transparent text-glow__blue hover:border-sky-500 hover:text-sky-300";
+      spinnerClasses = "fill-sky-500 text-neutral-700";
       break;
     default:
-      themeClasses = "fx-btn-sweep border border-orange-900/20 bg-neutral-900 text-neutral-200 hover:border-neutral-600 hover:text-white";
+      themeClasses = "fx-btn-sweep border border-sky-900/20 bg-neutral-900 text-neutral-200 hover:border-neutral-600 hover:text-white";
       spinnerClasses = "fill-neutral-500 text-neutral-300";
   }
 

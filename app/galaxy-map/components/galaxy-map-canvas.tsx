@@ -833,7 +833,7 @@ export default function GalaxyMapCanvas() {
       {/* ── Loading / error overlays ── */}
       {status === "loading" && (
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/80">
-          <i className="icarus-terminal-star text-glow__orange animate-pulse text-4xl" />
+          <i className="icarus-terminal-star text-glow__blue animate-pulse text-4xl" />
           <p className="text-xs uppercase tracking-widest text-neutral-500">Plotting stellar coordinates...</p>
         </div>
       )}
@@ -857,7 +857,7 @@ export default function GalaxyMapCanvas() {
           {/* Bottom-left: counts + legend */}
           <div className="absolute bottom-4 left-4 flex flex-col gap-1 text-xs uppercase tracking-widest text-neutral-600">
             <div className="flex items-center gap-2">
-              <span className="fx-dot-orange h-1.5 w-1.5" />
+              <span className="fx-dot-blue h-1.5 w-1.5" />
               <span>{count.toLocaleString()} systems plotted</span>
             </div>
             <div className="flex items-center gap-2">
@@ -875,7 +875,7 @@ export default function GalaxyMapCanvas() {
               onClick={togglePause}
               className={`border px-2.5 py-1 text-xs uppercase tracking-widest transition-colors ${
                 paused
-                  ? "border-orange-500/60 text-orange-400 hover:border-orange-400"
+                  ? "border-sky-500/60 text-sky-400 hover:border-sky-400"
                   : "border-neutral-800 text-neutral-600 hover:border-neutral-600 hover:text-neutral-400"
               }`}
             >

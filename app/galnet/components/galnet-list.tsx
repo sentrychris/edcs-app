@@ -20,26 +20,26 @@ const GalnetList: FunctionComponent<Props> = ({ articles }) => {
         {rows.map((article: Galnet, i: number) => (
           <div
             key={article.id}
-            className="group border-b border-orange-900/20 py-6 last:border-b-0"
+            className="group border-b border-sky-900/20 py-6 last:border-b-0"
           >
             {/* Transmission header */}
             <div className="mb-3 flex items-center justify-between text-xs uppercase tracking-widest text-neutral-600">
               <span className="flex items-center gap-2">
-                <i className="icarus-terminal-notifications text-orange-500/30 text-xs"></i>
+                <i className="icarus-terminal-notifications text-sky-500/30 text-xs"></i>
                 TRANSMISSION {String(i + 1).padStart(3, "0")}
               </span>
               <span>{article.uploaded_at}</span>
             </div>
 
             {/* Title */}
-            <h3 className="text-glow__white mb-4 text-xl font-bold uppercase leading-snug tracking-wide transition-colors group-hover:text-orange-200">
+            <h3 className="text-glow__white mb-4 text-xl font-bold uppercase leading-snug tracking-wide transition-colors group-hover:text-sky-200">
               {article.title}
             </h3>
 
             {/* Access link */}
             <Link
               href={`/galnet/news/${article.slug}`}
-              className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-glow__orange transition-colors hover:text-orange-300"
+              className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-glow__blue transition-colors hover:text-sky-300"
             >
               Access Report <span>{">>"}</span>
             </Link>

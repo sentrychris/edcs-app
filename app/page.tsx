@@ -23,7 +23,7 @@ export default async function Home() {
   return (
     <>
       {/* ── System Masthead ── */}
-      <Panel className="fx-border-breathe mb-3 px-4 py-4 md:px-8" corners="lg">
+      <Panel className="mb-3 px-4 py-4 md:px-8" corners="lg">
 
         {/* Status row */}
         <div className="mb-6 flex flex-wrap items-center justify-between gap-2 text-xs uppercase tracking-widest text-neutral-600">
@@ -45,7 +45,7 @@ export default async function Home() {
           <p className="mb-3 text-xs uppercase tracking-[0.2em] sm:tracking-[0.5em] text-neutral-500">
             frontier developments ── universal cartographics
           </p>
-          <h1 className="text-glow__orange fx-glitch fx-holo-heading mb-3 text-3xl font-bold uppercase tracking-[0.2em] md:text-4xl">
+          <h1 className="text-glow__blue mb-3 text-3xl font-bold uppercase tracking-[0.2em] md:text-4xl">
             ED:CS Terminal
           </h1>
           <p className="text-xs uppercase tracking-[0.15em] sm:tracking-[0.35em] text-neutral-500">
@@ -54,7 +54,7 @@ export default async function Home() {
         </div>
 
         {/* Footer rule */}
-        <div className="mt-6 flex items-center gap-6 border-t border-orange-900/20  pt-4 text-xs uppercase tracking-widest text-neutral-700">
+        <div className="mt-6 flex items-center gap-6 border-t border-sky-900/20  pt-4 text-xs uppercase tracking-widest text-neutral-700">
           <span className="h-px flex-1 bg-neutral-800"></span>
           <span className="flex items-center gap-2">
             <i className="icarus-terminal-shield"></i>

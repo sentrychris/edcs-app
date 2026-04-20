@@ -168,7 +168,7 @@ const SystemBodySVG: FunctionComponent<Props> = ({
         <div className="flex flex-row items-center gap-2 text-xs">
           <span
             className={
-              "text-glow__orange flex items-center gap-2 whitespace-nowrap " +
+              "text-glow__blue flex items-center gap-2 whitespace-nowrap " +
               (bodyIsSelectedUserFocus
                 ? "text-sm"
                 : "hover:text-glow__blue hover:scale-110 hover:cursor-grabbing")
@@ -187,7 +187,7 @@ const SystemBodySVG: FunctionComponent<Props> = ({
                   "text-glow__blue flex items-center gap-2 whitespace-nowrap " +
                   (bodyIsSelectedUserFocus
                     ? "text-sm"
-                    : "hover:text-glow__orange hover:scale-110 hover:cursor-grabbing")
+                    : "hover:text-glow__blue hover:scale-110 hover:cursor-grabbing")
                 }
                 onClick={() => dispatcher.selectBody({ body, type: "select-body" })}
               >

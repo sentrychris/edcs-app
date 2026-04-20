@@ -58,7 +58,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
             <span className="hidden md:inline">CLASS:UNRESTRICTED</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="fx-dot-orange h-1.5 w-1.5"></span>
+            <span className="fx-dot-blue h-1.5 w-1.5"></span>
             <span>BEACON: ACTIVE</span>
           </div>
         </div>

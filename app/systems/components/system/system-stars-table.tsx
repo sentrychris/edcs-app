@@ -55,7 +55,7 @@ const SystemStarsTable: FunctionComponent<Props> = ({ stars, dispatcher }) => {
       render: (body: SystemStar) => {
         return (
           <span
-            className="hover:text-glow__orange text-blue-200 hover:cursor-pointer hover:underline"
+            className="hover:text-glow__blue text-blue-200 hover:cursor-pointer hover:underline"
             onClick={() =>
               dispatcher.selectBody({
                 body,
@@ -96,7 +96,7 @@ const SystemStarsTable: FunctionComponent<Props> = ({ stars, dispatcher }) => {
       render: (body: SystemStar) => {
         return (
           <span
-            className="hover:text-glow__orange text-blue-200 hover:cursor-pointer hover:underline"
+            className="hover:text-glow__blue text-blue-200 hover:cursor-pointer hover:underline"
             onClick={() =>
               dispatcher.selectBody({
                 body,

@@ -12,10 +12,10 @@ interface Props {
 }
 
 const Heading = ({ title, subtitle, icon, iconSize = "1.25rem", bordered = false, className, children }: Props) => (
-  <div className={cn("flex items-center gap-3", bordered && "border-b border-orange-900/20", className)}>
-    {icon && <i className={`${icon} text-glow__orange`} style={{ fontSize: iconSize }} />}
+  <div className={cn("flex items-center gap-3", bordered && "border-b border-sky-900/20", className)}>
+    {icon && <i className={`${icon} text-glow__blue`} style={{ fontSize: iconSize }} />}
     <div className={children ? "flex-1" : undefined}>
-      <h2 className="text-glow__orange font-bold uppercase tracking-wide">{title}</h2>
+      <h2 className="text-glow__blue font-bold uppercase tracking-wide">{title}</h2>
       {subtitle && <p className="text-xs uppercase tracking-wider text-neutral-500">{subtitle}</p>}
     </div>
     {children}

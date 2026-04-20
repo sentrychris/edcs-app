@@ -38,7 +38,7 @@ export default function Page() {
             <span className="hidden md:inline">COORDINATES:STELLAR-FORGE</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="fx-dot-orange h-1.5 w-1.5"></span>
+            <span className="fx-dot-blue h-1.5 w-1.5"></span>
             <span className="fx-cursor">HOLOGRAPHIC: ACTIVE</span>
           </div>
         </div>
@@ -46,11 +46,11 @@ export default function Page() {
 
       {/* ── Galaxy map panel ── */}
       <Panel className="overflow-hidden">
-        <div className="flex items-center justify-between border-b border-orange-900/20 px-4 py-3 md:px-5 md:py-4">
+        <div className="flex items-center justify-between border-b border-sky-900/20 px-4 py-3 md:px-5 md:py-4">
           <div className="flex items-center gap-3">
-            <i className="icarus-terminal-star text-glow__orange" style={{ fontSize: "1.25rem" }}></i>
+            <i className="icarus-terminal-star text-glow__blue" style={{ fontSize: "1.25rem" }}></i>
             <div>
-              <h2 className="text-glow__orange font-bold uppercase tracking-wide">
+              <h2 className="text-glow__blue font-bold uppercase tracking-wide">
                 Galaxy Map
               </h2>
               <p className="text-xs uppercase tracking-wider text-neutral-500">

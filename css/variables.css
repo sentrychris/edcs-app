@@ -9,13 +9,13 @@
   --base-font-size: 1.25rem;
 
   --color-orange: 251 146 60 / 1;
-  --color-blue: 101 234 255 / 1;
+  --color-blue: 120 200 255 / 1;
 
   /* Default values to allow for theme reset */
-  --color-default-primary-r: 250;
-  --color-default-primary-g: 150;
-  --color-default-primary-b: 0;
-  --color-default-primary-dark-modifier: 200;
+  --color-default-primary-r: 120;
+  --color-default-primary-g: 200;
+  --color-default-primary-b: 255;
+  --color-default-primary-dark-modifier: 100;
 
   --color-default-secondary-r: 20;
   --color-default-secondary-g: 245;
@@ -80,8 +80,8 @@
   --color-success: rgb(77, 255, 201);
   --color-info: rgb(206, 237, 255);
 
-  --text-shift-left-color: rgba(0, 128, 0, 0.5);
-  --text-shift-right-color: rgba(255, 0, 0, 0.5);
+  --text-shift-left-color: rgba(0, 128, 0, 0.25);
+  --text-shift-right-color: rgba(255, 0, 0, 0.25);
 
   --color-background: var(--color-primary-dark);
 
@@ -116,7 +116,7 @@
   --filter-system-map-planet-landable: contrast(1.15) brightness(1.2);
 
   --base-font-size: 1.25rem;
-  --text-shadow: 0 0 20px;
+  --text-shadow: none;
 
   --breakpoint-small: 600px; /* Where Small starts. Anything below this is Tiny */
   --breakpoint-medium: 800px; /* Where Medium starts. */

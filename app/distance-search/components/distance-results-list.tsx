@@ -24,7 +24,7 @@ export default function DistanceResultsList({ pagination, originName, searchLy, 
   return (
     <Panel className="flex h-full flex-col overflow-hidden">
       {/* ── Header ── */}
-      <div className="shrink-0 border-b border-orange-900/20 px-4 py-3 md:px-5 md:py-4">
+      <div className="shrink-0 border-b border-sky-900/20 px-4 py-3 md:px-5 md:py-4">
         <Heading
           icon="icarus-terminal-route"
           title="Nearby Systems"
@@ -33,7 +33,7 @@ export default function DistanceResultsList({ pagination, originName, searchLy, 
       </div>
 
       {/* ── Summary stats ── */}
-      <div className="grid shrink-0 grid-cols-2 gap-px border-b border-orange-900/20 bg-orange-900/10">
+      <div className="grid shrink-0 grid-cols-2 gap-px border-b border-sky-900/20 bg-sky-900/10">
         <div className="bg-black/50 px-4 py-3">
           <p className="text-xs uppercase tracking-widest text-neutral-600">Search Radius</p>
           <p className="mt-0.5 font-bold text-neutral-200">
@@ -56,7 +56,7 @@ export default function DistanceResultsList({ pagination, originName, searchLy, 
       </div>
 
       {/* ── System list ── */}
-      <div className="min-h-0 flex-1 divide-y divide-orange-900/10 overflow-y-auto">
+      <div className="min-h-0 flex-1 divide-y divide-sky-900/10 overflow-y-auto">
         {results.map((system) => {
           const isOrigin = system.distance < 0.01;
 
@@ -64,15 +64,15 @@ export default function DistanceResultsList({ pagination, originName, searchLy, 
             <div
               key={system.id}
               className={`flex items-start gap-3 px-4 py-3 transition-colors ${
-                isOrigin ? "bg-orange-900/10" : "hover:bg-orange-900/5"
+                isOrigin ? "bg-sky-900/10" : "hover:bg-sky-900/5"
               }`}
             >
               {/* Icon */}
-              <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center border border-orange-900/30 text-xs font-bold">
+              <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center border border-sky-900/30 text-xs font-bold">
                 {isOrigin ? (
                   <i className="icarus-terminal-system-orbits text-xs text-green-400"></i>
                 ) : (
-                  <i className="icarus-terminal-star text-xs text-orange-900/60"></i>
+                  <i className="icarus-terminal-star text-xs text-sky-900/60"></i>
                 )}
               </div>
 
@@ -80,7 +80,7 @@ export default function DistanceResultsList({ pagination, originName, searchLy, 
               <div className="min-w-0 flex-1">
                 <Link
                   href={`/systems/${system.slug}`}
-                  className="block truncate text-xs font-bold uppercase tracking-widest text-neutral-300 transition-colors hover:text-orange-400"
+                  className="block truncate text-xs font-bold uppercase tracking-widest text-neutral-300 transition-colors hover:text-sky-400"
                 >
                   {system.name}
                 </Link>
@@ -106,11 +106,11 @@ export default function DistanceResultsList({ pagination, originName, searchLy, 
       </div>
 
       {/* ── Pagination controls ── */}
-      <div className="flex shrink-0 items-center justify-between border-t border-orange-900/20 px-4 py-3">
+      <div className="flex shrink-0 items-center justify-between border-t border-sky-900/20 px-4 py-3">
         <button
           onClick={() => onPageChange(currentPage - 1)}
           disabled={!hasPrev}
-          className="text-xs uppercase tracking-widest text-neutral-500 transition-colors hover:text-orange-400 disabled:pointer-events-none disabled:opacity-30"
+          className="text-xs uppercase tracking-widest text-neutral-500 transition-colors hover:text-sky-400 disabled:pointer-events-none disabled:opacity-30"
         >
           ← Prev
         </button>
@@ -118,7 +118,7 @@ export default function DistanceResultsList({ pagination, originName, searchLy, 
         <button
           onClick={() => onPageChange(currentPage + 1)}
           disabled={!hasNext}
-          className="text-xs uppercase tracking-widest text-neutral-500 transition-colors hover:text-orange-400 disabled:pointer-events-none disabled:opacity-30"
+          className="text-xs uppercase tracking-widest text-neutral-500 transition-colors hover:text-sky-400 disabled:pointer-events-none disabled:opacity-30"
         >
           Next →
         </button>

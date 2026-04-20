@@ -62,14 +62,14 @@ export default function DistanceSearchForm({ initialSlug, initialLy, onSubmit, i
           value={ly}
           onChange={(e) => setLy(e.target.value)}
           disabled={isLoading}
-          className="h-[37px] w-full border border-orange-900/20 bg-transparent pl-4 text-xs uppercase tracking-wider text-neutral-200 outline-none transition-colors focus:border-orange-500/60 focus:outline-none"
+          className="h-[37px] w-full border border-sky-900/20 bg-transparent pl-4 text-xs uppercase tracking-wider text-neutral-200 outline-none transition-colors focus:border-sky-500/60 focus:outline-none"
         />
       </div>
 
       <button
         type="submit"
         disabled={!canSubmit}
-        className="fx-btn-sweep h-[37px] shrink-0 border border-orange-900/40 px-6 text-xs font-bold uppercase tracking-widest text-orange-500/70 transition-colors hover:border-orange-500/60 hover:text-orange-400 disabled:pointer-events-none disabled:opacity-40"
+        className="fx-btn-sweep h-[37px] shrink-0 border border-sky-900/40 px-6 text-xs font-bold uppercase tracking-widest text-sky-500/70 transition-colors hover:border-sky-500/60 hover:text-sky-400 disabled:pointer-events-none disabled:opacity-40"
       >
         {isLoading ? (
           <span className="flex items-center gap-2">

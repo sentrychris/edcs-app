@@ -175,8 +175,8 @@ const StationMarket: FunctionComponent<Props> = ({ slug }) => {
     cn(
       "whitespace-nowrap px-4 py-2.5 text-xs font-bold uppercase tracking-widest border transition-colors",
       view === tab
-        ? "border-orange-500/60 text-glow__orange bg-orange-900/20"
-        : "border-orange-900/20 text-neutral-500 hover:border-neutral-600 hover:text-neutral-300",
+        ? "border-sky-500/60 text-glow__blue bg-sky-900/20"
+        : "border-sky-900/20 text-neutral-500 hover:border-neutral-600 hover:text-neutral-300",
     );
 
   const marketHeader = (

@@ -63,7 +63,7 @@ const StationDetail: FunctionComponent<Props> = ({ params, initialData = null })
 
             <div className="flex items-center gap-4">
               <i
-                className={`${stationIconByType(station.type)} text-glow__orange`}
+                className={`${stationIconByType(station.type)} text-glow__blue`}
                 style={{ fontSize: "2.5rem" }}
               ></i>
               <div>
@@ -74,7 +74,7 @@ const StationDetail: FunctionComponent<Props> = ({ params, initialData = null })
                 {station.system && (
                   <Link
                     href={`/systems/${station.system.slug}`}
-                    className="text-glow__orange text-xs font-bold tracking-widest hover:text-orange-300 hover:underline"
+                    className="text-glow__blue text-xs font-bold tracking-widest hover:text-sky-300 hover:underline"
                   >
                     {station.system.name} system
                   </Link>
@@ -82,7 +82,7 @@ const StationDetail: FunctionComponent<Props> = ({ params, initialData = null })
               </div>
             </div>
 
-            <div className="mt-4 flex items-center gap-4 border-t border-orange-900/20 pt-3 text-xs uppercase tracking-widest text-neutral-700">
+            <div className="mt-4 flex items-center gap-4 border-t border-sky-900/20 pt-3 text-xs uppercase tracking-widest text-neutral-700">
               <span className="h-px flex-1 bg-neutral-800"></span>
               <span className="flex items-center gap-2">
                 <i className="icarus-terminal-route"></i>

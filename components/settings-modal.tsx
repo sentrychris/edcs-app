@@ -50,7 +50,7 @@ function drawWheel(canvas: HTMLCanvasElement, hue: number) {
   for (const r of [W_INNER_R, W_OUTER_R]) {
     ctx.beginPath();
     ctx.arc(W_C, W_C, r, 0, Math.PI * 2);
-    ctx.strokeStyle = "rgba(251,146,60,0.18)";
+    ctx.strokeStyle = "rgba(120,200,255,0.18)";
     ctx.lineWidth = 0.75;
     ctx.stroke();
   }
@@ -63,13 +63,13 @@ function drawWheel(canvas: HTMLCanvasElement, hue: number) {
     ctx.beginPath();
     ctx.moveTo(W_C + W_INNER_R * cos, W_C + W_INNER_R * sin);
     ctx.lineTo(W_C + W_OUTER_R * cos, W_C + W_OUTER_R * sin);
-    ctx.strokeStyle = "rgba(251,146,60,0.35)";
+    ctx.strokeStyle = "rgba(120,200,255,0.35)";
     ctx.lineWidth = 1;
     ctx.stroke();
 
     const labelR = W_OUTER_R + 8;
     ctx.font = `${7}px monospace`;
-    ctx.fillStyle = "rgba(251,146,60,0.28)";
+    ctx.fillStyle = "rgba(120,200,255,0.28)";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(tick.label, W_C + labelR * cos, W_C + labelR * sin);
@@ -82,7 +82,7 @@ function drawWheel(canvas: HTMLCanvasElement, hue: number) {
   ctx.beginPath();
   ctx.moveTo(W_C + 10 * pCos, W_C + 10 * pSin);
   ctx.lineTo(W_C + W_OUTER_R * pCos, W_C + W_OUTER_R * pSin);
-  ctx.strokeStyle = "rgba(251,146,60,0.22)";
+  ctx.strokeStyle = "rgba(120,200,255,0.22)";
   ctx.lineWidth = 5;
   ctx.stroke();
 
@@ -90,15 +90,15 @@ function drawWheel(canvas: HTMLCanvasElement, hue: number) {
   ctx.beginPath();
   ctx.moveTo(W_C + 10 * pCos, W_C + 10 * pSin);
   ctx.lineTo(W_C + W_OUTER_R * pCos, W_C + W_OUTER_R * pSin);
-  ctx.strokeStyle = "rgba(251,146,60,0.9)";
+  ctx.strokeStyle = "rgba(120,200,255,0.9)";
   ctx.lineWidth = 1.5;
   ctx.stroke();
 
   // Indicator dot on ring
   ctx.beginPath();
   ctx.arc(W_C + W_TRACK_MID * pCos, W_C + W_TRACK_MID * pSin, 4.5, 0, Math.PI * 2);
-  ctx.fillStyle = "rgb(251,146,60)";
-  ctx.shadowColor = "rgba(251,146,60,0.8)";
+  ctx.fillStyle = "rgb(120,200,255)";
+  ctx.shadowColor = "rgba(120,200,255,0.8)";
   ctx.shadowBlur = 8;
   ctx.fill();
   ctx.shadowBlur = 0;
@@ -106,7 +106,7 @@ function drawWheel(canvas: HTMLCanvasElement, hue: number) {
   // Centre dot
   ctx.beginPath();
   ctx.arc(W_C, W_C, 3, 0, Math.PI * 2);
-  ctx.fillStyle = "rgba(251,146,60,0.6)";
+  ctx.fillStyle = "rgba(120,200,255,0.6)";
   ctx.fill();
 }
 
@@ -142,7 +142,7 @@ const HueWheel: FunctionComponent<{ hue: number; onChange: (h: number) => void }
         }}
       />
       <div className="text-center">
-        <span className="text-glow__orange block text-sm font-bold tabular-nums">{hue}°</span>
+        <span className="text-glow__blue block text-sm font-bold tabular-nums">{hue}°</span>
         <span className="block text-[0.6rem] uppercase tracking-[0.4em] text-neutral-600">Hue Rotate</span>
       </div>
     </div>
@@ -183,7 +183,7 @@ const SliderRow: FunctionComponent<SliderProps> = ({
     <div className="space-y-1.5">
       <div className="flex items-center justify-between text-xs uppercase tracking-widest">
         <span className="text-neutral-500">{label}</span>
-        <span className="text-glow__orange font-bold tabular-nums">{format(value)}</span>
+        <span className="text-glow__blue font-bold tabular-nums">{format(value)}</span>
       </div>
 
       <div
@@ -193,16 +193,16 @@ const SliderRow: FunctionComponent<SliderProps> = ({
         onPointerMove={(e) => { if (e.buttons > 0) compute(e); }}
         onPointerUp={(e) => e.currentTarget.releasePointerCapture(e.pointerId)}
       >
-        <div className="absolute inset-0 bg-orange-900/25" />
-        <div className="absolute inset-y-0 left-0 bg-orange-500/45" style={{ width: `${pct}%` }} />
+        <div className="absolute inset-0 bg-sky-900/25" />
+        <div className="absolute inset-y-0 left-0 bg-sky-500/45" style={{ width: `${pct}%` }} />
         {/* Diamond thumb */}
         <div
           className="pointer-events-none absolute top-1/2 -translate-x-1/2 -translate-y-1/2"
           style={{ left: `${pct}%` }}
         >
           <div
-            className="h-3 w-3 rotate-45 border border-orange-200/50 bg-orange-500"
-            style={{ boxShadow: "0 0 5px rgba(249,115,22,0.7), 0 0 10px rgba(249,115,22,0.3)" }}
+            className="h-3 w-3 rotate-45 border border-sky-200/50 bg-sky-500"
+            style={{ boxShadow: "0 0 5px rgba(80,180,245,0.7), 0 0 10px rgba(80,180,245,0.3)" }}
           />
         </div>
       </div>
@@ -239,17 +239,17 @@ const SettingsModal: FunctionComponent<Props> = ({ onClose }) => {
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
       onClick={(e) => { if (e.target === backdropRef.current) onClose(); }}
     >
-      <div className="relative flex w-full max-w-3xl max-h-[90vh] flex-col border border-orange-900/40 bg-black/90 backdrop-blur">
+      <div className="relative flex w-full max-w-3xl max-h-[90vh] flex-col border border-sky-900/40 bg-black/90 backdrop-blur">
         <PanelCorners className="z-10" />
 
         {/* Header */}
-        <div className="flex flex-shrink-0 items-center gap-3 border-b border-orange-900/20 bg-black/95 px-5 py-4">
-          <i className="icarus-terminal-settings text-glow__orange text-lg" />
+        <div className="flex flex-shrink-0 items-center gap-3 border-b border-sky-900/20 bg-black/95 px-5 py-4">
+          <i className="icarus-terminal-settings text-glow__blue text-lg" />
           <div className="flex-1">
-            <h2 className="text-glow__orange text-sm font-bold uppercase tracking-widest">Interface Settings</h2>
+            <h2 className="text-glow__blue text-sm font-bold uppercase tracking-widest">Interface Settings</h2>
             <p className="text-xs uppercase tracking-wider text-neutral-600">Display & Visual Configuration</p>
           </div>
-          <button onClick={onClose} className="text-neutral-600 transition-colors hover:text-orange-400" aria-label="Close">
+          <button onClick={onClose} className="text-neutral-600 transition-colors hover:text-sky-400" aria-label="Close">
             <i className="icarus-terminal-exit text-sm" />
           </button>
         </div>
@@ -274,7 +274,7 @@ const SettingsModal: FunctionComponent<Props> = ({ onClose }) => {
                     title={theme.description}
                     className="flex items-center gap-1.5 border px-2 py-2 text-left transition-all duration-150"
                     style={{
-                      borderColor: active ? `${c}70` : "rgba(60,40,20,0.4)",
+                      borderColor: active ? `${c}70` : "rgba(30,50,70,0.4)",
                       backgroundColor: active ? `${c}12` : "transparent",
                     }}
                   >
@@ -328,17 +328,17 @@ const SettingsModal: FunctionComponent<Props> = ({ onClose }) => {
                 onClick={toggleGreyscale}
                 className="flex w-full items-center gap-2 border px-3 py-2.5 text-left transition-all duration-150"
                 style={{
-                  borderColor: settings.greyscale ? "rgba(180,180,180,0.4)" : "rgba(60,40,20,0.4)",
+                  borderColor: settings.greyscale ? "rgba(180,180,180,0.4)" : "rgba(30,50,70,0.4)",
                   backgroundColor: settings.greyscale ? "rgba(180,180,180,0.06)" : "transparent",
                 }}
               >
                 <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full" style={{
-                  backgroundColor: settings.greyscale ? "rgb(200,200,200)" : "rgb(60,35,15)",
+                  backgroundColor: settings.greyscale ? "rgb(200,200,200)" : "rgb(25,45,65)",
                   boxShadow: settings.greyscale ? "0 0 5px rgb(200,200,200)" : "none",
                 }} />
-                <i className="icarus-terminal-color-picker flex-shrink-0" style={{ color: settings.greyscale ? "rgb(200,200,200)" : "rgb(80,55,30)" }} />
-                <span className="flex-1 text-xs font-bold uppercase tracking-widest" style={{ color: settings.greyscale ? "rgb(200,200,200)" : "rgb(100,80,60)" }}>Greyscale</span>
-                <span className="text-xs uppercase tracking-widest" style={{ color: settings.greyscale ? "rgb(200,200,200)" : "rgb(60,40,20)" }}>
+                <i className="icarus-terminal-color-picker flex-shrink-0" style={{ color: settings.greyscale ? "rgb(200,200,200)" : "rgb(40,70,100)" }} />
+                <span className="flex-1 text-xs font-bold uppercase tracking-widest" style={{ color: settings.greyscale ? "rgb(200,200,200)" : "rgb(60,90,120)" }}>Greyscale</span>
+                <span className="text-xs uppercase tracking-widest" style={{ color: settings.greyscale ? "rgb(200,200,200)" : "rgb(30,50,70)" }}>
                   {settings.greyscale ? "ON" : "OFF"}
                 </span>
               </button>
@@ -347,17 +347,17 @@ const SettingsModal: FunctionComponent<Props> = ({ onClose }) => {
                 onClick={toggleCrt}
                 className="flex w-full items-center gap-2 border px-3 py-2.5 text-left transition-all duration-150"
                 style={{
-                  borderColor: settings.crtMode ? "rgba(249,115,22,0.45)" : "rgba(60,40,20,0.4)",
-                  backgroundColor: settings.crtMode ? "rgba(249,115,22,0.06)" : "transparent",
+                  borderColor: settings.crtMode ? "rgba(80,180,245,0.45)" : "rgba(30,50,70,0.4)",
+                  backgroundColor: settings.crtMode ? "rgba(80,180,245,0.06)" : "transparent",
                 }}
               >
                 <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full" style={{
-                  backgroundColor: settings.crtMode ? "rgb(249,115,22)" : "rgb(60,35,15)",
-                  boxShadow: settings.crtMode ? "0 0 5px rgb(249,115,22)" : "none",
+                  backgroundColor: settings.crtMode ? "rgb(80,180,245)" : "rgb(25,45,65)",
+                  boxShadow: settings.crtMode ? "0 0 5px rgb(80,180,245)" : "none",
                 }} />
-                <i className="icarus-terminal-fullscreen-window flex-shrink-0" style={{ color: settings.crtMode ? "rgb(251,146,60)" : "rgb(80,55,30)" }} />
-                <span className="flex-1 text-xs font-bold uppercase tracking-widest" style={{ color: settings.crtMode ? "rgb(200,130,60)" : "rgb(100,80,60)" }}>CRT Mode</span>
-                <span className="text-xs uppercase tracking-widest" style={{ color: settings.crtMode ? "rgb(200,130,60)" : "rgb(60,40,20)" }}>
+                <i className="icarus-terminal-fullscreen-window flex-shrink-0" style={{ color: settings.crtMode ? "rgb(120,200,255)" : "rgb(40,70,100)" }} />
+                <span className="flex-1 text-xs font-bold uppercase tracking-widest" style={{ color: settings.crtMode ? "rgb(160,210,240)" : "rgb(60,90,120)" }}>CRT Mode</span>
+                <span className="text-xs uppercase tracking-widest" style={{ color: settings.crtMode ? "rgb(160,210,240)" : "rgb(30,50,70)" }}>
                   {settings.crtMode ? "ON" : "OFF"}
                 </span>
               </button>
@@ -366,17 +366,17 @@ const SettingsModal: FunctionComponent<Props> = ({ onClose }) => {
                 onClick={togglePhosphorAfterglow}
                 className="flex w-full items-center gap-2 border px-3 py-2.5 text-left transition-all duration-150"
                 style={{
-                  borderColor: settings.phosphorAfterglow ? "rgba(249,115,22,0.45)" : "rgba(60,40,20,0.4)",
-                  backgroundColor: settings.phosphorAfterglow ? "rgba(249,115,22,0.06)" : "transparent",
+                  borderColor: settings.phosphorAfterglow ? "rgba(80,180,245,0.45)" : "rgba(30,50,70,0.4)",
+                  backgroundColor: settings.phosphorAfterglow ? "rgba(80,180,245,0.06)" : "transparent",
                 }}
               >
                 <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full" style={{
-                  backgroundColor: settings.phosphorAfterglow ? "rgb(249,115,22)" : "rgb(60,35,15)",
-                  boxShadow: settings.phosphorAfterglow ? "0 0 5px rgb(249,115,22)" : "none",
+                  backgroundColor: settings.phosphorAfterglow ? "rgb(80,180,245)" : "rgb(25,45,65)",
+                  boxShadow: settings.phosphorAfterglow ? "0 0 5px rgb(80,180,245)" : "none",
                 }} />
-                <i className="icarus-terminal-star flex-shrink-0" style={{ color: settings.phosphorAfterglow ? "rgb(251,146,60)" : "rgb(80,55,30)" }} />
-                <span className="flex-1 text-xs font-bold uppercase tracking-widest" style={{ color: settings.phosphorAfterglow ? "rgb(200,130,60)" : "rgb(100,80,60)" }}>Phosphor</span>
-                <span className="text-xs uppercase tracking-widest" style={{ color: settings.phosphorAfterglow ? "rgb(200,130,60)" : "rgb(60,40,20)" }}>
+                <i className="icarus-terminal-star flex-shrink-0" style={{ color: settings.phosphorAfterglow ? "rgb(120,200,255)" : "rgb(40,70,100)" }} />
+                <span className="flex-1 text-xs font-bold uppercase tracking-widest" style={{ color: settings.phosphorAfterglow ? "rgb(160,210,240)" : "rgb(60,90,120)" }}>Phosphor</span>
+                <span className="text-xs uppercase tracking-widest" style={{ color: settings.phosphorAfterglow ? "rgb(160,210,240)" : "rgb(30,50,70)" }}>
                   {settings.phosphorAfterglow ? "ON" : "OFF"}
                 </span>
               </button>
@@ -385,17 +385,17 @@ const SettingsModal: FunctionComponent<Props> = ({ onClose }) => {
                 onClick={toggleChromaticAberration}
                 className="flex w-full items-center gap-2 border px-3 py-2.5 text-left transition-all duration-150"
                 style={{
-                  borderColor: settings.chromaticAberration ? "rgba(249,115,22,0.45)" : "rgba(60,40,20,0.4)",
-                  backgroundColor: settings.chromaticAberration ? "rgba(249,115,22,0.06)" : "transparent",
+                  borderColor: settings.chromaticAberration ? "rgba(80,180,245,0.45)" : "rgba(30,50,70,0.4)",
+                  backgroundColor: settings.chromaticAberration ? "rgba(80,180,245,0.06)" : "transparent",
                 }}
               >
                 <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full" style={{
-                  backgroundColor: settings.chromaticAberration ? "rgb(249,115,22)" : "rgb(60,35,15)",
-                  boxShadow: settings.chromaticAberration ? "0 0 5px rgb(249,115,22)" : "none",
+                  backgroundColor: settings.chromaticAberration ? "rgb(80,180,245)" : "rgb(25,45,65)",
+                  boxShadow: settings.chromaticAberration ? "0 0 5px rgb(80,180,245)" : "none",
                 }} />
-                <i className="icarus-terminal-settings flex-shrink-0" style={{ color: settings.chromaticAberration ? "rgb(251,146,60)" : "rgb(80,55,30)" }} />
-                <span className="flex-1 text-xs font-bold uppercase tracking-widest" style={{ color: settings.chromaticAberration ? "rgb(200,130,60)" : "rgb(100,80,60)" }}>Chromatic</span>
-                <span className="text-xs uppercase tracking-widest" style={{ color: settings.chromaticAberration ? "rgb(200,130,60)" : "rgb(60,40,20)" }}>
+                <i className="icarus-terminal-settings flex-shrink-0" style={{ color: settings.chromaticAberration ? "rgb(120,200,255)" : "rgb(40,70,100)" }} />
+                <span className="flex-1 text-xs font-bold uppercase tracking-widest" style={{ color: settings.chromaticAberration ? "rgb(160,210,240)" : "rgb(60,90,120)" }}>Chromatic</span>
+                <span className="text-xs uppercase tracking-widest" style={{ color: settings.chromaticAberration ? "rgb(160,210,240)" : "rgb(30,50,70)" }}>
                   {settings.chromaticAberration ? "ON" : "OFF"}
                 </span>
               </button>
@@ -403,17 +403,17 @@ const SettingsModal: FunctionComponent<Props> = ({ onClose }) => {
               {/* ── Sliders — full width ── */}
               <div
                 className="col-span-2 border px-3 py-2.5"
-                style={{ borderColor: settings.vignetteIntensity > 0 ? "rgba(249,115,22,0.45)" : "rgba(60,40,20,0.4)",
-                         backgroundColor: settings.vignetteIntensity > 0 ? "rgba(249,115,22,0.06)" : "transparent" }}
+                style={{ borderColor: settings.vignetteIntensity > 0 ? "rgba(80,180,245,0.45)" : "rgba(30,50,70,0.4)",
+                         backgroundColor: settings.vignetteIntensity > 0 ? "rgba(80,180,245,0.06)" : "transparent" }}
               >
                 <div className="mb-3 flex items-center gap-3">
                   <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full" style={{
-                    backgroundColor: settings.vignetteIntensity > 0 ? "rgb(249,115,22)" : "rgb(60,35,15)",
-                    boxShadow: settings.vignetteIntensity > 0 ? "0 0 5px rgb(249,115,22)" : "none",
+                    backgroundColor: settings.vignetteIntensity > 0 ? "rgb(80,180,245)" : "rgb(25,45,65)",
+                    boxShadow: settings.vignetteIntensity > 0 ? "0 0 5px rgb(80,180,245)" : "none",
                   }} />
-                  <i className="icarus-terminal-camera flex-shrink-0" style={{ color: settings.vignetteIntensity > 0 ? "rgb(251,146,60)" : "rgb(80,55,30)" }} />
+                  <i className="icarus-terminal-camera flex-shrink-0" style={{ color: settings.vignetteIntensity > 0 ? "rgb(120,200,255)" : "rgb(40,70,100)" }} />
                   <span className="flex-1">
-                    <span className="block text-xs font-bold uppercase tracking-widest" style={{ color: settings.vignetteIntensity > 0 ? "rgb(200,130,60)" : "rgb(100,80,60)" }}>Vignette</span>
+                    <span className="block text-xs font-bold uppercase tracking-widest" style={{ color: settings.vignetteIntensity > 0 ? "rgb(160,210,240)" : "rgb(60,90,120)" }}>Vignette</span>
                     <span className="block text-xs uppercase tracking-wider text-neutral-600">Lens edge darkening — 0 disables</span>
                   </span>
                 </div>
@@ -428,17 +428,17 @@ const SettingsModal: FunctionComponent<Props> = ({ onClose }) => {
 
               <div
                 className="col-span-2 border px-3 py-2.5"
-                style={{ borderColor: settings.grainIntensity > 0 ? "rgba(249,115,22,0.45)" : "rgba(60,40,20,0.4)",
-                         backgroundColor: settings.grainIntensity > 0 ? "rgba(249,115,22,0.06)" : "transparent" }}
+                style={{ borderColor: settings.grainIntensity > 0 ? "rgba(80,180,245,0.45)" : "rgba(30,50,70,0.4)",
+                         backgroundColor: settings.grainIntensity > 0 ? "rgba(80,180,245,0.06)" : "transparent" }}
               >
                 <div className="mb-3 flex items-center gap-3">
                   <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full" style={{
-                    backgroundColor: settings.grainIntensity > 0 ? "rgb(249,115,22)" : "rgb(60,35,15)",
-                    boxShadow: settings.grainIntensity > 0 ? "0 0 5px rgb(249,115,22)" : "none",
+                    backgroundColor: settings.grainIntensity > 0 ? "rgb(80,180,245)" : "rgb(25,45,65)",
+                    boxShadow: settings.grainIntensity > 0 ? "0 0 5px rgb(80,180,245)" : "none",
                   }} />
-                  <i className="icarus-terminal-star flex-shrink-0" style={{ color: settings.grainIntensity > 0 ? "rgb(251,146,60)" : "rgb(80,55,30)" }} />
+                  <i className="icarus-terminal-star flex-shrink-0" style={{ color: settings.grainIntensity > 0 ? "rgb(120,200,255)" : "rgb(40,70,100)" }} />
                   <span className="flex-1">
-                    <span className="block text-xs font-bold uppercase tracking-widest" style={{ color: settings.grainIntensity > 0 ? "rgb(200,130,60)" : "rgb(100,80,60)" }}>Film Grain</span>
+                    <span className="block text-xs font-bold uppercase tracking-widest" style={{ color: settings.grainIntensity > 0 ? "rgb(160,210,240)" : "rgb(60,90,120)" }}>Film Grain</span>
                     <span className="block text-xs uppercase tracking-wider text-neutral-600">Animated noise overlay — 0 disables</span>
                   </span>
                 </div>
@@ -462,12 +462,12 @@ const SettingsModal: FunctionComponent<Props> = ({ onClose }) => {
               {/* Data Density — segmented control */}
               <div
                 className="border px-3 py-2.5"
-                style={{ borderColor: "rgba(60,40,20,0.4)" }}
+                style={{ borderColor: "rgba(30,50,70,0.4)" }}
               >
                 <div className="mb-2.5 flex items-center gap-3">
-                  <i className="icarus-terminal-route flex-shrink-0" style={{ color: "rgb(80,55,30)" }} />
+                  <i className="icarus-terminal-route flex-shrink-0" style={{ color: "rgb(40,70,100)" }} />
                   <span className="flex-1">
-                    <span className="block text-xs font-bold uppercase tracking-widest" style={{ color: "rgb(100,80,60)" }}>Data Density</span>
+                    <span className="block text-xs font-bold uppercase tracking-widest" style={{ color: "rgb(60,90,120)" }}>Data Density</span>
                     <span className="block text-xs uppercase tracking-wider text-neutral-600">Padding scale across the interface</span>
                   </span>
                 </div>
@@ -484,9 +484,9 @@ const SettingsModal: FunctionComponent<Props> = ({ onClose }) => {
                           borderBottom: "1px solid",
                           borderLeft:   "1px solid",
                           borderRight:  i === 2 ? "1px solid" : "none",
-                          borderColor:  active ? "rgba(249,115,22,0.5)" : "rgba(60,40,20,0.4)",
-                          backgroundColor: active ? "rgba(249,115,22,0.1)" : "transparent",
-                          color: active ? "rgb(251,146,60)" : "rgb(80,60,40)",
+                          borderColor:  active ? "rgba(80,180,245,0.5)" : "rgba(30,50,70,0.4)",
+                          backgroundColor: active ? "rgba(80,180,245,0.1)" : "transparent",
+                          color: active ? "rgb(120,200,255)" : "rgb(80,60,40)",
                         }}
                       >
                         {d}
@@ -500,20 +500,20 @@ const SettingsModal: FunctionComponent<Props> = ({ onClose }) => {
                 onClick={toggleTypewriterMode}
                 className="flex w-full items-center gap-3 border px-3 py-2.5 text-left transition-all duration-150"
                 style={{
-                  borderColor: settings.typewriterMode ? "rgba(249,115,22,0.45)" : "rgba(60,40,20,0.4)",
-                  backgroundColor: settings.typewriterMode ? "rgba(249,115,22,0.06)" : "transparent",
+                  borderColor: settings.typewriterMode ? "rgba(80,180,245,0.45)" : "rgba(30,50,70,0.4)",
+                  backgroundColor: settings.typewriterMode ? "rgba(80,180,245,0.06)" : "transparent",
                 }}
               >
                 <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full" style={{
-                  backgroundColor: settings.typewriterMode ? "rgb(249,115,22)" : "rgb(60,35,15)",
-                  boxShadow: settings.typewriterMode ? "0 0 5px rgb(249,115,22)" : "none",
+                  backgroundColor: settings.typewriterMode ? "rgb(80,180,245)" : "rgb(25,45,65)",
+                  boxShadow: settings.typewriterMode ? "0 0 5px rgb(80,180,245)" : "none",
                 }} />
-                <i className="icarus-terminal-edit flex-shrink-0" style={{ color: settings.typewriterMode ? "rgb(251,146,60)" : "rgb(80,55,30)" }} />
+                <i className="icarus-terminal-edit flex-shrink-0" style={{ color: settings.typewriterMode ? "rgb(120,200,255)" : "rgb(40,70,100)" }} />
                 <span className="flex-1">
-                  <span className="block text-xs font-bold uppercase tracking-widest" style={{ color: settings.typewriterMode ? "rgb(200,130,60)" : "rgb(100,80,60)" }}>Typewriter Mode</span>
+                  <span className="block text-xs font-bold uppercase tracking-widest" style={{ color: settings.typewriterMode ? "rgb(160,210,240)" : "rgb(60,90,120)" }}>Typewriter Mode</span>
                   <span className="block text-xs uppercase tracking-wider text-neutral-600">Text renders character by character</span>
                 </span>
-                <span className="text-xs uppercase tracking-widest" style={{ color: settings.typewriterMode ? "rgb(200,130,60)" : "rgb(60,40,20)" }}>
+                <span className="text-xs uppercase tracking-widest" style={{ color: settings.typewriterMode ? "rgb(160,210,240)" : "rgb(30,50,70)" }}>
                   {settings.typewriterMode ? "ON" : "OFF"}
                 </span>
               </button>
@@ -522,20 +522,20 @@ const SettingsModal: FunctionComponent<Props> = ({ onClose }) => {
                 onClick={toggleBootSequence}
                 className="flex w-full items-center gap-3 border px-3 py-2.5 text-left transition-all duration-150"
                 style={{
-                  borderColor: settings.bootSequence ? "rgba(249,115,22,0.45)" : "rgba(60,40,20,0.4)",
-                  backgroundColor: settings.bootSequence ? "rgba(249,115,22,0.06)" : "transparent",
+                  borderColor: settings.bootSequence ? "rgba(80,180,245,0.45)" : "rgba(30,50,70,0.4)",
+                  backgroundColor: settings.bootSequence ? "rgba(80,180,245,0.06)" : "transparent",
                 }}
               >
                 <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full" style={{
-                  backgroundColor: settings.bootSequence ? "rgb(249,115,22)" : "rgb(60,35,15)",
-                  boxShadow: settings.bootSequence ? "0 0 5px rgb(249,115,22)" : "none",
+                  backgroundColor: settings.bootSequence ? "rgb(80,180,245)" : "rgb(25,45,65)",
+                  boxShadow: settings.bootSequence ? "0 0 5px rgb(80,180,245)" : "none",
                 }} />
-                <i className="icarus-terminal-power flex-shrink-0" style={{ color: settings.bootSequence ? "rgb(251,146,60)" : "rgb(80,55,30)" }} />
+                <i className="icarus-terminal-power flex-shrink-0" style={{ color: settings.bootSequence ? "rgb(120,200,255)" : "rgb(40,70,100)" }} />
                 <span className="flex-1">
-                  <span className="block text-xs font-bold uppercase tracking-widest" style={{ color: settings.bootSequence ? "rgb(200,130,60)" : "rgb(100,80,60)" }}>Boot Sequence</span>
+                  <span className="block text-xs font-bold uppercase tracking-widest" style={{ color: settings.bootSequence ? "rgb(160,210,240)" : "rgb(60,90,120)" }}>Boot Sequence</span>
                   <span className="block text-xs uppercase tracking-wider text-neutral-600">System initialisation on every load</span>
                 </span>
-                <span className="text-xs uppercase tracking-widest" style={{ color: settings.bootSequence ? "rgb(200,130,60)" : "rgb(60,40,20)" }}>
+                <span className="text-xs uppercase tracking-widest" style={{ color: settings.bootSequence ? "rgb(160,210,240)" : "rgb(30,50,70)" }}>
                   {settings.bootSequence ? "ON" : "OFF"}
                 </span>
               </button>
@@ -548,13 +548,13 @@ const SettingsModal: FunctionComponent<Props> = ({ onClose }) => {
         </div>{/* /scroll wrapper */}
 
         {/* Footer */}
-        <div className="flex items-center justify-between border-t border-orange-900/20 px-5 py-3">
+        <div className="flex items-center justify-between border-t border-sky-900/20 px-5 py-3">
           <p className="text-[0.65rem] uppercase tracking-widest text-neutral-700">
             Settings persist across sessions ■ ESC to close
           </p>
           <button
             onClick={reset}
-            className="flex items-center gap-1.5 border border-orange-900/20 px-3 py-1.5 text-xs uppercase tracking-widest text-neutral-600 transition-all duration-150 hover:border-orange-500/40 hover:text-orange-400"
+            className="flex items-center gap-1.5 border border-sky-900/20 px-3 py-1.5 text-xs uppercase tracking-widest text-neutral-600 transition-all duration-150 hover:border-sky-500/40 hover:text-sky-400"
           >
             <i className="icarus-terminal-sync text-xs" />
             Reset

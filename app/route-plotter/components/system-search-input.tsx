@@ -113,15 +113,15 @@ export default function SystemSearchInput({ label, placeholder, onSelect, disabl
           aria-expanded={open}
           className={`h-[37px] w-full border bg-transparent pl-4 pr-8 text-xs uppercase tracking-wider placeholder-neutral-600 outline-none transition-colors focus:outline-none ${
             confirmed
-              ? "border-orange-500/60 text-orange-300"
-              : "border-orange-900/20 text-neutral-200 focus:border-orange-500/60"
+              ? "border-sky-500/60 text-sky-300"
+              : "border-sky-900/20 text-neutral-200 focus:border-sky-500/60"
           }`}
         />
 
         {/* Selection confirmed indicator */}
         {confirmed && (
           <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-            <i className="icarus-terminal-route text-xs text-orange-400/70"></i>
+            <i className="icarus-terminal-route text-xs text-sky-400/70"></i>
           </span>
         )}
       </div>
@@ -130,7 +130,7 @@ export default function SystemSearchInput({ label, placeholder, onSelect, disabl
       {open && (
         <div
           role="listbox"
-          className="absolute left-0 right-0 top-full z-50 mt-px border border-orange-900/30 bg-black/95 backdrop-blur backdrop-filter"
+          className="absolute left-0 right-0 top-full z-50 mt-px border border-sky-900/30 bg-black/95 backdrop-blur backdrop-filter"
         >
           {results.map((system, i) => (
             <button
@@ -144,11 +144,11 @@ export default function SystemSearchInput({ label, placeholder, onSelect, disabl
               }}
               className={`flex w-full items-center gap-3 px-4 py-2 text-left text-xs uppercase tracking-widest transition-colors ${
                 i === activeIndex
-                  ? "bg-orange-900/30 text-orange-300"
-                  : "text-neutral-400 hover:bg-orange-900/20 hover:text-neutral-200"
+                  ? "bg-sky-900/30 text-sky-300"
+                  : "text-neutral-400 hover:bg-sky-900/20 hover:text-neutral-200"
               }`}
             >
-              <i className="icarus-terminal-star shrink-0 text-xs text-orange-500/30"></i>
+              <i className="icarus-terminal-star shrink-0 text-xs text-sky-500/30"></i>
               <span className="truncate">{system.name}</span>
             </button>
           ))}

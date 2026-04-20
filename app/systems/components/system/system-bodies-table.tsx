@@ -76,12 +76,12 @@ const SystemBodiesTable: FunctionComponent<Props> = ({ bodies, systemSlug }) => 
             ? "atmosphere text-glow"
             : body.is_landable
               ? "planet-landable text-glow__blue"
-              : "planet text-glow__orange";
+              : "planet text-glow__blue";
 
         return (
           <Link
             href={`/systems/${systemSlug}/body/${body.slug}`}
-            className={`${childClass} hover:text-glow__orange flex items-center text-blue-200 hover:underline`}
+            className={`${childClass} hover:text-glow__blue flex items-center text-blue-200 hover:underline`}
           >
             <i className={`icarus-terminal-${iconClass} me-2 text-sm`}></i>
             {body.name}

@@ -34,11 +34,11 @@ const Filter: FunctionComponent<Props> = ({
 
   return (
     <div
-      className={cn("relative w-full border border-orange-900/20 bg-black/20 backdrop-blur backdrop-filter", className)}
+      className={cn("relative w-full border border-sky-900/20 bg-black/20 backdrop-blur backdrop-filter", className)}
     >
       <form className="flex items-center">
-        <span className="flex shrink-0 items-center border-r border-orange-900/20 px-3 py-2.5">
-          <i className="icarus-terminal-route text-xs text-orange-500/50"></i>
+        <span className="flex shrink-0 items-center border-r border-sky-900/20 px-3 py-2.5">
+          <i className="icarus-terminal-route text-xs text-sky-500/50"></i>
         </span>
         <input
           type={type}
@@ -54,7 +54,7 @@ const Filter: FunctionComponent<Props> = ({
               e.preventDefault();
               clearFilter();
             }}
-            className="shrink-0 border-l border-orange-900/20 px-3 text-xs uppercase tracking-widest text-orange-500/60 transition-colors hover:text-orange-400"
+            className="shrink-0 border-l border-sky-900/20 px-3 text-xs uppercase tracking-widest text-sky-500/60 transition-colors hover:text-sky-400"
           >
             CLR
           </button>

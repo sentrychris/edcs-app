@@ -136,14 +136,14 @@ const SystemBodyPopover: FunctionComponent<Props> = ({ body, system, dispatcher,
 
   return (
     <div
-      className={`fixed z-50 flex flex-col border border-orange-900/40 bg-black/70 shadow-2xl shadow-black/60 backdrop-blur ${
-        isDragging ? "select-none shadow-orange-900/30" : ""
+      className={`fixed z-50 flex flex-col border border-sky-900/40 bg-black/70 shadow-2xl shadow-black/60 backdrop-blur ${
+        isDragging ? "select-none shadow-sky-900/30" : ""
       } ${isResizing ? "select-none" : ""}`}
       style={{ left: position.x, top: position.y, width: size.width, height: size.height }}
     >
       {/* ── Drag Handle / Header ── */}
       <div
-        className={`relative shrink-0 border-b border-orange-900/40 px-4 py-4 ${
+        className={`relative shrink-0 border-b border-sky-900/40 px-4 py-4 ${
           isDragging ? "cursor-grabbing" : "cursor-grab"
         }`}
         onMouseDown={onDragHandleMouseDown}
@@ -152,9 +152,9 @@ const SystemBodyPopover: FunctionComponent<Props> = ({ body, system, dispatcher,
 
         <div className="flex items-start justify-between gap-3">
           <div className="flex min-w-0 items-center gap-3">
-            <i className={`${bodyIcon} text-glow__orange shrink-0`} style={{ fontSize: "1.5rem" }}></i>
+            <i className={`${bodyIcon} text-glow__blue shrink-0`} style={{ fontSize: "1.5rem" }}></i>
             <div className="min-w-0">
-              <p className="truncate text-xs font-bold uppercase tracking-widest text-glow__orange">{body.name}</p>
+              <p className="truncate text-xs font-bold uppercase tracking-widest text-glow__blue">{body.name}</p>
               <p className="mt-0.5 text-xs uppercase tracking-wider text-neutral-600">
                 {body.type}
                 {body.sub_type && body.sub_type !== body.type && (
@@ -174,7 +174,7 @@ const SystemBodyPopover: FunctionComponent<Props> = ({ body, system, dispatcher,
             </div>
             <button
               onClick={close}
-              className="text-neutral-700 transition-colors hover:text-glow__orange"
+              className="text-neutral-700 transition-colors hover:text-glow__blue"
               aria-label="Close"
             >
               <XMarkIcon height={14} width={14} />
@@ -185,19 +185,19 @@ const SystemBodyPopover: FunctionComponent<Props> = ({ body, system, dispatcher,
         {/* Orbital children link */}
         {body._children && body._children.length > 0 && (
           <button
-            className="mt-3 flex items-center gap-1.5 text-xs uppercase tracking-widest text-neutral-500 transition-colors hover:text-orange-400"
+            className="mt-3 flex items-center gap-1.5 text-xs uppercase tracking-widest text-neutral-500 transition-colors hover:text-sky-400"
             onClick={() => {
               dispatcher.selectBody({ body, type: "select-body" });
               if (close) close();
             }}
           >
-            <i className="icarus-terminal-system-orbits text-sm text-orange-500/40"></i>
+            <i className="icarus-terminal-system-orbits text-sm text-sky-500/40"></i>
             <span>{body._children.length} orbital bodies</span>
           </button>
         )}
 
         {/* Status bar */}
-        <div className="mt-3 flex items-center gap-3 border-t border-orange-900/20 pt-3 text-xs uppercase tracking-widest text-neutral-700">
+        <div className="mt-3 flex items-center gap-3 border-t border-sky-900/20 pt-3 text-xs uppercase tracking-widest text-neutral-700">
           <span>MODULE:SURVEY</span>
           <span className="text-neutral-800">■</span>
           <span>CLASS:{isStarType ? "STELLAR" : "PLANETARY"}</span>
@@ -216,7 +216,7 @@ const SystemBodyPopover: FunctionComponent<Props> = ({ body, system, dispatcher,
           <SectionHeader icon="icarus-terminal-scan" title="Discovery Record" />
           <StatRow
             label="Discovered By"
-            value={<span className="text-glow__orange">CMDR {body.discovered_by ?? "Unknown"}</span>}
+            value={<span className="text-glow__blue">CMDR {body.discovered_by ?? "Unknown"}</span>}
           />
           <StatRow label="Discovery Date" value={formatDate(body.discovered_at)} />
         </section>
@@ -268,29 +268,29 @@ const SystemBodyPopover: FunctionComponent<Props> = ({ body, system, dispatcher,
                 <SectionHeader icon="icarus-terminal-settlement" title="Planetary Settlements" />
                 <div className="space-y-3">
                   {body._planetary_bases.map((s) => (
-                    <div key={s.id} className="relative border border-orange-900/20 p-3">
-                      <span className="pointer-events-none absolute -left-px -top-px h-2.5 w-2.5 border-l border-t border-orange-500/60" />
-                      <span className="pointer-events-none absolute -right-px -top-px h-2.5 w-2.5 border-r border-t border-orange-500/60" />
-                      <span className="pointer-events-none absolute -bottom-px -left-px h-2.5 w-2.5 border-b border-l border-orange-500/60" />
-                      <span className="pointer-events-none absolute -bottom-px -right-px h-2.5 w-2.5 border-b border-r border-orange-500/60" />
+                    <div key={s.id} className="relative border border-sky-900/20 p-3">
+                      <span className="pointer-events-none absolute -left-px -top-px h-2.5 w-2.5 border-l border-t border-sky-500/60" />
+                      <span className="pointer-events-none absolute -right-px -top-px h-2.5 w-2.5 border-r border-t border-sky-500/60" />
+                      <span className="pointer-events-none absolute -bottom-px -left-px h-2.5 w-2.5 border-b border-l border-sky-500/60" />
+                      <span className="pointer-events-none absolute -bottom-px -right-px h-2.5 w-2.5 border-b border-r border-sky-500/60" />
                       <p className="text-glow__blue mb-1.5 font-bold">{s.name}</p>
                       <p className="mb-2 text-neutral-600">{s.economy} Economy</p>
                       <div className="flex flex-wrap gap-x-4 gap-y-1">
                         {s.has_market && (
                           <div className="flex items-center gap-1 text-neutral-500">
-                            <CheckIcon className="h-3 w-3 text-orange-500/60" />
+                            <CheckIcon className="h-3 w-3 text-sky-500/60" />
                             <span>Market</span>
                           </div>
                         )}
                         {s.has_outfitting && (
                           <div className="flex items-center gap-1 text-neutral-500">
-                            <CheckIcon className="h-3 w-3 text-orange-500/60" />
+                            <CheckIcon className="h-3 w-3 text-sky-500/60" />
                             <span>Outfitting</span>
                           </div>
                         )}
                         {s.has_shipyard && (
                           <div className="flex items-center gap-1 text-neutral-500">
-                            <CheckIcon className="h-3 w-3 text-orange-500/60" />
+                            <CheckIcon className="h-3 w-3 text-sky-500/60" />
                             <span>Shipyard</span>
                           </div>
                         )}
@@ -333,7 +333,7 @@ const SystemBodyPopover: FunctionComponent<Props> = ({ body, system, dispatcher,
             <div className="space-y-3">
               {body.rings.map((ring: SystemBodyRing) => (
                 <div key={ring.mass} className="border-b border-neutral-900 pb-3">
-                  <p className="text-glow__orange mb-1.5">{ring.name}</p>
+                  <p className="text-glow__blue mb-1.5">{ring.name}</p>
                   <StatRow label="Type" value={ring.type} />
                   <StatRow label="Mass" value={`${formatNumber(ring.mass)} KG`} />
                 </div>
@@ -343,12 +343,12 @@ const SystemBodyPopover: FunctionComponent<Props> = ({ body, system, dispatcher,
         )}
 
         {/* Footer — link to full body page */}
-        <div className="border-t border-orange-900/20 pb-1 pt-3">
+        <div className="border-t border-sky-900/20 pb-1 pt-3">
           <Link
             href={`/systems/${system.detail.slug}/body/${body.slug}`}
-            className="flex items-center gap-2 text-neutral-600 transition-colors hover:text-orange-400"
+            className="flex items-center gap-2 text-neutral-600 transition-colors hover:text-sky-400"
           >
-            <i className="icarus-terminal-scan text-orange-500/40"></i>
+            <i className="icarus-terminal-scan text-sky-500/40"></i>
             <span>Full Survey Report</span>
             <span className="ml-auto">→</span>
           </Link>
@@ -369,9 +369,9 @@ const SystemBodyPopover: FunctionComponent<Props> = ({ body, system, dispatcher,
           viewBox="0 0 10 10"
           fill="none"
         >
-          <line x1="10" y1="3" x2="3" y2="10" stroke="rgb(251 146 60)" strokeWidth="1" />
-          <line x1="10" y1="6" x2="6" y2="10" stroke="rgb(251 146 60)" strokeWidth="1" />
-          <line x1="10" y1="9" x2="9" y2="10" stroke="rgb(251 146 60)" strokeWidth="1" />
+          <line x1="10" y1="3" x2="3" y2="10" stroke="rgb(120,200,255)" strokeWidth="1" />
+          <line x1="10" y1="6" x2="6" y2="10" stroke="rgb(120,200,255)" strokeWidth="1" />
+          <line x1="10" y1="9" x2="9" y2="10" stroke="rgb(120,200,255)" strokeWidth="1" />
         </svg>
       </div>
     </div>

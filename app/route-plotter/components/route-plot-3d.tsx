@@ -140,7 +140,7 @@ export default function RoutePlot3D({ waypoints }: Props) {
   return (
     <Panel className="overflow-hidden">
       {/* ── Header ── */}
-      <div className="flex items-center justify-between border-b border-orange-900/20 px-4 py-3 md:px-5 md:py-4">
+      <div className="flex items-center justify-between border-b border-sky-900/20 px-4 py-3 md:px-5 md:py-4">
         <Heading
           icon="icarus-terminal-star"
           title="Route Visualization"
@@ -153,7 +153,7 @@ export default function RoutePlot3D({ waypoints }: Props) {
           <button
             onClick={resetView}
             title="Reset view"
-            className="border border-orange-900/20 p-1.5 text-neutral-700 transition-colors hover:border-orange-500/40 hover:text-orange-400"
+            className="border border-sky-900/20 p-1.5 text-neutral-700 transition-colors hover:border-sky-500/40 hover:text-sky-400"
           >
             <i className="icarus-terminal-settings text-xs"></i>
           </button>
@@ -203,8 +203,8 @@ export default function RoutePlot3D({ waypoints }: Props) {
           </defs>
 
           {/* ── Subtle crosshair at SVG centre ── */}
-          <line x1={SVG_W / 2 - 20} y1={SVG_H / 2} x2={SVG_W / 2 + 20} y2={SVG_H / 2} stroke="#f9731610" strokeWidth="1" />
-          <line x1={SVG_W / 2} y1={SVG_H / 2 - 20} x2={SVG_W / 2} y2={SVG_H / 2 + 20} stroke="#f9731610" strokeWidth="1" />
+          <line x1={SVG_W / 2 - 20} y1={SVG_H / 2} x2={SVG_W / 2 + 20} y2={SVG_H / 2} stroke="#50b4f510" strokeWidth="1" />
+          <line x1={SVG_W / 2} y1={SVG_H / 2 - 20} x2={SVG_W / 2} y2={SVG_H / 2 + 20} stroke="#50b4f510" strokeWidth="1" />
 
           {/* ── Floor shadow drop-lines ── */}
           {waypoints.map((_, i) => (
@@ -214,7 +214,7 @@ export default function RoutePlot3D({ waypoints }: Props) {
               y1={projected[i].y}
               x2={shadows[i].x}
               y2={shadows[i].y}
-              stroke="#f9731615"
+              stroke="#50b4f515"
               strokeWidth="1"
               strokeDasharray="2 4"
             />
@@ -227,7 +227,7 @@ export default function RoutePlot3D({ waypoints }: Props) {
               cx={shadows[i].x}
               cy={shadows[i].y}
               r={2}
-              fill="#f9731625"
+              fill="#50b4f525"
             />
           ))}
 
@@ -241,7 +241,7 @@ export default function RoutePlot3D({ waypoints }: Props) {
                 y1={p.y}
                 x2={next.x}
                 y2={next.y}
-                stroke="#f97316"
+                stroke="#50b4f5"
                 strokeWidth="1.5"
                 strokeOpacity="0.55"
                 strokeDasharray="5 3"
@@ -257,8 +257,8 @@ export default function RoutePlot3D({ waypoints }: Props) {
             const isOrigin = i === 0;
             const isDestination = i === waypoints.length - 1;
 
-            const nodeColor = isOrigin ? "#4ade80" : isDestination ? "#fb923c" : "#f97316";
-            const labelColor = isOrigin ? "#4ade80" : isDestination ? "#fb923c" : "#d4d4d4";
+            const nodeColor = isOrigin ? "#4ade80" : isDestination ? "#78c8ff" : "#50b4f5";
+            const labelColor = isOrigin ? "#4ade80" : isDestination ? "#78c8ff" : "#d4d4d4";
             const radius = isOrigin || isDestination ? 6 : 4;
             const labelX = p.x + (isDestination ? -12 : 12);
             const labelAnchor = isDestination ? "end" : "start";
@@ -328,7 +328,7 @@ export default function RoutePlot3D({ waypoints }: Props) {
                     fontSize="6.5"
                     fontFamily="Jura, monospace"
                     letterSpacing="0.06em"
-                    fill="#f97316"
+                    fill="#50b4f5"
                     fillOpacity="0.5"
                   >
                     {w.distance.toFixed(2)} LY
@@ -357,17 +357,17 @@ export default function RoutePlot3D({ waypoints }: Props) {
       </div>
 
       {/* ── Legend ── */}
-      <div className="flex flex-wrap items-center gap-4 border-t border-orange-900/20 px-4 py-2 text-xs uppercase tracking-widest">
+      <div className="flex flex-wrap items-center gap-4 border-t border-sky-900/20 px-4 py-2 text-xs uppercase tracking-widest">
         <div className="flex items-center gap-1.5">
           <span className="inline-block h-2 w-2 rounded-full bg-green-400" style={{ boxShadow: "0 0 4px #4ade80" }}></span>
           <span className="text-neutral-600">Origin</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="inline-block h-2 w-2 rounded-full bg-orange-400" style={{ boxShadow: "0 0 4px #fb923c" }}></span>
+          <span className="inline-block h-2 w-2 rounded-full bg-sky-400" style={{ boxShadow: "0 0 4px #78c8ff" }}></span>
           <span className="text-neutral-600">Destination</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="inline-block h-2 w-2 rounded-full bg-orange-600/80"></span>
+          <span className="inline-block h-2 w-2 rounded-full bg-sky-600/80"></span>
           <span className="text-neutral-600">Waypoint</span>
         </div>
         <div className="ml-auto text-neutral-800">

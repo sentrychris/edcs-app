@@ -92,7 +92,7 @@ export default async function Page() {
             <span className="hidden md:inline">CLASS:RESTRICTED</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="fx-dot-orange h-1.5 w-1.5"></span>
+            <span className="fx-dot-blue h-1.5 w-1.5"></span>
             <span className="fx-cursor">CAPI: ACTIVE</span>
           </div>
         </div>
@@ -100,7 +100,7 @@ export default async function Page() {
 
       {error ? (
         <Panel className="px-6 py-8 text-center">
-          <i className="icarus-terminal-warning mb-3 text-2xl text-orange-500/40"></i>
+          <i className="icarus-terminal-warning mb-3 text-2xl text-sky-500/40"></i>
           <p className="text-xs uppercase tracking-widest text-neutral-600">{error}</p>
         </Panel>
       ) : profile ? (

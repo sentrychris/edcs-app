@@ -49,7 +49,7 @@ export default async function Page() {
             <span className="hidden md:inline">CLASS:UNRESTRICTED</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="fx-dot-orange h-1.5 w-1.5"></span>
+            <span className="fx-dot-blue h-1.5 w-1.5"></span>
             <span>UPLINK: ACTIVE</span>
           </div>
         </div>
@@ -60,7 +60,7 @@ export default async function Page() {
 
         <Heading bordered icon="icarus-terminal-notifications" title="Galnet Network" subtitle="Vox Galactica Transmissions" className="px-5 py-4">
           <span className="flex items-center gap-1.5 text-xs uppercase tracking-widest text-neutral-500">
-            <span className="fx-dot-orange h-1.5 w-1.5"></span>
+            <span className="fx-dot-blue h-1.5 w-1.5"></span>
             Live
           </span>
         </Heading>

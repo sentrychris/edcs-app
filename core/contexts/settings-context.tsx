@@ -28,8 +28,8 @@ export interface Theme {
 }
 
 export const THEMES: Theme[] = [
-  { id: "pioneer",    label: "Pioneer",    description: "Amber — cinematic vintage CRT",   preview: "rgb(249,115,22)",   hue: 0,   saturate: 0.75, brightness: 1.5,  contrast: 0.95, crtMode: true  },
-  { id: "commander",  label: "Commander",  description: "Amber — default ED interface",   preview: "rgb(249,115,22)",   hue: 0,   saturate: 1.0,  brightness: 1.0,  contrast: 1.0  },
+  { id: "pioneer",    label: "Pioneer",    description: "Blue — cinematic vintage CRT",    preview: "rgb(80,180,245)",   hue: 0,   saturate: 0.75, brightness: 1.5,  contrast: 0.95, crtMode: true  },
+  { id: "commander",  label: "Commander",  description: "Blue — default sci-fi glass",     preview: "rgb(80,180,245)",   hue: 0,   saturate: 1.0,  brightness: 1.0,  contrast: 1.0  },
   { id: "cartograph", label: "Cartograph", description: "Teal — explorer palette",         preview: "rgb(22,195,190)",   hue: 160, saturate: 1.15, brightness: 1.0,  contrast: 1.0  },
   { id: "viper",      label: "Viper",      description: "Green — combat visor",            preview: "rgb(40,220,70)",    hue: 130, saturate: 1.3,  brightness: 1.0,  contrast: 1.0  },
   { id: "void",       label: "Void",       description: "Purple — deep space",             preview: "rgb(148,22,245)",   hue: 260, saturate: 0.85, brightness: 1.2,  contrast: 1.0 },

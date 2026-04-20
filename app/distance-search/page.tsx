@@ -39,7 +39,7 @@ export default function Page({ searchParams }: Props) {
             <span className="hidden md:inline">CLASS:UNRESTRICTED</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="fx-dot-orange h-1.5 w-1.5"></span>
+            <span className="fx-dot-blue h-1.5 w-1.5"></span>
             <span>SCANNER: ACTIVE</span>
           </div>
         </div>

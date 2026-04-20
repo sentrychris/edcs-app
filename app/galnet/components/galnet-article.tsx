@@ -14,14 +14,14 @@ const GalnetArticle: FunctionComponent<Props> = ({ article }) => {
     <Panel>
 
       {/* ── Article header ── */}
-      <div className="border-b border-orange-900/20 px-6 py-5">
+      <div className="border-b border-sky-900/20 px-6 py-5">
         <div className="mb-3 flex items-center gap-3 text-xs uppercase tracking-widest text-neutral-600">
-          <i className="icarus-terminal-notifications text-orange-500/40"></i>
+          <i className="icarus-terminal-notifications text-sky-500/40"></i>
           <span>Vox Galactica</span>
           <span className="text-neutral-800">■</span>
           <span>{article.uploaded_at}</span>
           <span className="ml-auto flex items-center gap-1.5">
-            <span className="fx-dot-orange h-1.5 w-1.5"></span>
+            <span className="fx-dot-blue h-1.5 w-1.5"></span>
             <span>Transmission</span>
           </span>
         </div>
@@ -31,7 +31,7 @@ const GalnetArticle: FunctionComponent<Props> = ({ article }) => {
       </div>
 
       {/* ── Banner image ── */}
-      <div className="border-b border-orange-900/20">
+      <div className="border-b border-sky-900/20">
         <Image
           className="w-full object-cover"
           src={article.banner_image}

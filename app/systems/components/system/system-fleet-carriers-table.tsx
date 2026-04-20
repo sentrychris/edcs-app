@@ -137,7 +137,7 @@ const SystemFleetCarriersTable: FunctionComponent<Props> = ({ fleetCarriers }) =
               <span
                 key={service}
                 title={service}
-                className="inline-flex h-5 min-w-[1.25rem] items-center justify-center border border-orange-500/40 bg-orange-500/10 px-1 text-[0.65rem] uppercase tracking-wider text-orange-300"
+                className="inline-flex h-5 min-w-[1.25rem] items-center justify-center border border-sky-500/40 bg-sky-500/10 px-1 text-[0.65rem] uppercase tracking-wider text-sky-300"
               >
                 {serviceAbbreviation(service)}
               </span>

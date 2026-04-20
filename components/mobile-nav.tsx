@@ -36,14 +36,14 @@ const MobileNav: FunctionComponent<Props> = ({ user }) => {
   };
 
   return (
-    <div className="lg:hidden shrink-0 border-b border-orange-900/40 bg-black/50 backdrop-blur backdrop-filter">
+    <div className="lg:hidden shrink-0 border-b border-sky-900/40 bg-black/50 backdrop-blur backdrop-filter">
 
       {/* ── Top bar ── */}
       <div className="flex items-center justify-between px-4 py-3">
         <div className="flex items-center gap-3">
-          <i className="icarus-terminal-logo text-glow__orange shrink-0 text-xl"></i>
+          <i className="icarus-terminal-logo text-glow__blue shrink-0 text-xl"></i>
           <div>
-            <p className="text-glow__orange text-xs font-bold uppercase tracking-widest">ED:CS Terminal</p>
+            <p className="text-glow__blue text-xs font-bold uppercase tracking-widest">ED:CS Terminal</p>
             <div className="flex items-center gap-1.5 text-neutral-700" style={{ fontSize: "0.6rem" }}>
               <span className="fx-dot-green h-1.5 w-1.5"></span>
               <span className="uppercase tracking-widest">Online</span>
@@ -53,7 +53,7 @@ const MobileNav: FunctionComponent<Props> = ({ user }) => {
 
         <button
           onClick={() => setOpen((prev) => !prev)}
-          className="flex items-center gap-2 border border-orange-900/30 px-3 py-1.5 text-xs uppercase tracking-widest text-neutral-500 transition-colors hover:border-orange-500/40 hover:text-orange-400"
+          className="flex items-center gap-2 border border-sky-900/30 px-3 py-1.5 text-xs uppercase tracking-widest text-neutral-500 transition-colors hover:border-sky-500/40 hover:text-sky-400"
           aria-label={open ? "Close navigation" : "Open navigation"}
           aria-expanded={open}
         >
@@ -64,11 +64,11 @@ const MobileNav: FunctionComponent<Props> = ({ user }) => {
 
       {/* ── Expandable panel ── */}
       {open && (
-        <div className="border-t border-orange-900/20 px-4 pb-4 pt-2">
+        <div className="border-t border-sky-900/20 px-4 pb-4 pt-2">
 
           {/* Nav label */}
           <div className="mb-2 flex items-center gap-2 pb-2 text-xs uppercase tracking-widest text-neutral-600">
-            <i className="icarus-terminal-route text-orange-500/50"></i>
+            <i className="icarus-terminal-route text-sky-500/50"></i>
             <span>Navigation</span>
           </div>
 
@@ -82,8 +82,8 @@ const MobileNav: FunctionComponent<Props> = ({ user }) => {
                 className={[
                   "group flex items-center gap-3 border-l-2 py-2.5 pl-3 pr-2 text-xs uppercase tracking-widest transition-all",
                   isActive(item.href)
-                    ? "border-orange-500 bg-orange-900/10 text-glow__orange"
-                    : "border-transparent text-neutral-500 hover:border-orange-900/40 hover:bg-orange-900/5 hover:text-neutral-200",
+                    ? "border-sky-500 bg-sky-900/10 text-glow__blue"
+                    : "border-transparent text-neutral-500 hover:border-sky-900/40 hover:bg-sky-900/5 hover:text-neutral-200",
                 ].join(" ")}
                 aria-current={isActive(item.href) ? "page" : undefined}
               >
@@ -91,12 +91,12 @@ const MobileNav: FunctionComponent<Props> = ({ user }) => {
                   className={[
                     item.icon,
                     "text-base transition-colors",
-                    isActive(item.href) ? "text-orange-400" : "text-neutral-700 group-hover:text-neutral-500",
+                    isActive(item.href) ? "text-sky-400" : "text-neutral-700 group-hover:text-neutral-500",
                   ].join(" ")}
                 ></i>
                 <span>{item.name}</span>
                 {isActive(item.href) && (
-                  <span className="ml-auto text-orange-500/60">▶</span>
+                  <span className="ml-auto text-sky-500/60">▶</span>
                 )}
               </Link>
             ))}
@@ -107,7 +107,7 @@ const MobileNav: FunctionComponent<Props> = ({ user }) => {
             <Link
               href="/commander"
               onClick={() => setOpen(false)}
-              className="fx-btn-sweep mb-2 flex w-full items-center justify-center gap-2 border border-orange-900/40 py-2 text-xs font-bold uppercase tracking-widest text-orange-500/70 transition-colors hover:border-orange-500/60 hover:text-orange-400"
+              className="fx-btn-sweep mb-2 flex w-full items-center justify-center gap-2 border border-sky-900/40 py-2 text-xs font-bold uppercase tracking-widest text-sky-500/70 transition-colors hover:border-sky-500/60 hover:text-sky-400"
             >
               <i className="icarus-terminal-shield text-xs"></i>
               CMDR {user.commander?.name ?? user.name}
@@ -115,7 +115,7 @@ const MobileNav: FunctionComponent<Props> = ({ user }) => {
           ) : (
             <button
               onClick={async () => { await login(); setOpen(false); }}
-              className="fx-btn-sweep mb-2 flex w-full items-center justify-center gap-2 border border-orange-900/40 py-2 text-xs font-bold uppercase tracking-widest text-neutral-500 transition-colors hover:border-orange-500/40 hover:text-orange-400"
+              className="fx-btn-sweep mb-2 flex w-full items-center justify-center gap-2 border border-sky-900/40 py-2 text-xs font-bold uppercase tracking-widest text-neutral-500 transition-colors hover:border-sky-500/40 hover:text-sky-400"
             >
               <i className="icarus-terminal-planet text-xs"></i>
               Login with Frontier
@@ -125,7 +125,7 @@ const MobileNav: FunctionComponent<Props> = ({ user }) => {
           {/* Settings */}
           <button
             onClick={() => { setSettingsOpen(true); setOpen(false); }}
-            className="fx-btn-sweep flex w-full items-center justify-center gap-2 border border-orange-900/40 py-2 text-xs font-bold uppercase tracking-widest text-neutral-500 transition-colors hover:border-orange-500/40 hover:text-orange-400"
+            className="fx-btn-sweep flex w-full items-center justify-center gap-2 border border-sky-900/40 py-2 text-xs font-bold uppercase tracking-widest text-neutral-500 transition-colors hover:border-sky-500/40 hover:text-sky-400"
           >
             <i className="icarus-terminal-settings text-xs"></i>
             Interface Settings

@@ -54,7 +54,7 @@ const SystemStationsTable: FunctionComponent<Props> = ({ stations, dispatcher })
         return (
           <Link
             href={`/stations/${station.slug}`}
-            className={`hover:text-glow__orange flex items-center text-blue-200 hover:underline`}
+            className={`hover:text-glow__blue flex items-center text-blue-200 hover:underline`}
           >
             <i className={`${stationIconByType(station.type)} text-glow me-2 text-sm`}></i>
             {station.name}

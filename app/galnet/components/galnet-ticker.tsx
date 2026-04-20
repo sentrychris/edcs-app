@@ -99,18 +99,18 @@ const NewsTicker: FunctionComponent<Props> = ({ articles }) => {
 
   return (
     <div className="relative flex items-center bg-black/50 backdrop-filter backdrop-blur">
-      <span className="text-glow__orange border-b border-orange-900/20 ticker-label lg:px-18 z-10 text-xs uppercase">
+      <span className="text-glow__blue border-b border-sky-900/20 ticker-label lg:px-18 z-10 text-xs uppercase">
         <span className="ms-2 hidden sm:flex me-3">
           {currentDate} {currentTime} UTC
         </span>
       </span>
       <div
         ref={tickerRef}
-        className="ticker flex flex-1 items-center overflow-hidden whitespace-nowrap border-b border-orange-900/20 uppercase"
+        className="ticker flex flex-1 items-center overflow-hidden whitespace-nowrap border-b border-sky-900/20 uppercase"
       >
         <div
           ref={tickerContentRef}
-          className="ticker-content text-glow__orange inline-block whitespace-nowrap text-xs font-bold tracking-wide"
+          className="ticker-content text-glow__blue inline-block whitespace-nowrap text-xs font-bold tracking-wide"
         >
           <Link
             href={`/galnet/news/${articles[currentArticleIndex].slug}`}

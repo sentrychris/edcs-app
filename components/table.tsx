@@ -99,13 +99,13 @@ function Table<T extends RequiredAttribute>({ columns, data, meta, links, page, 
       {header}
       <div className="overflow-x-auto pb-1 pt-2">
         <table className="table--layout table--animated table--interactive w-full text-left text-sm text-gray-500">
-          <thead className="border-b border-orange-900/20 uppercase">
+          <thead className="border-b border-sky-900/20 uppercase">
             <tr>
               {Object.keys(columns).map((key) => (
                 <th
                   key={`columnHeader_${key}`}
                   scope="col"
-                  className="px-6 py-3 text-xs font-bold tracking-widest text-glow__orange"
+                  className="px-6 py-3 text-xs font-bold tracking-widest text-glow__blue"
                 >
                   {"title" in columns[key] ? columns[key].title : key}
                 </th>

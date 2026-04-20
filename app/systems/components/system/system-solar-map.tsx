@@ -238,7 +238,7 @@ function drawStarfield(ctx: CanvasRenderingContext2D, w: number, h: number): voi
   }
 
   // Subtle HUD grid overlay
-  ctx.strokeStyle = "rgba(251,146,60,0.035)";
+  ctx.strokeStyle = "rgba(120,200,255,0.035)";
   ctx.lineWidth = 0.5;
   const gridSize = 60;
   for (let x = 0; x < w; x += gridSize) {
@@ -278,7 +278,7 @@ function drawOrbitRing(
     const sy = cy + yOrb * orbitPx * bodyYScale * zoom;
     if (k === 0) ctx.moveTo(sx, sy); else ctx.lineTo(sx, sy);
   }
-  ctx.strokeStyle = isChild ? "rgba(250,150,0,0.07)" : "rgba(250,150,0,0.13)";
+  ctx.strokeStyle = isChild ? "rgba(100,190,255,0.07)" : "rgba(100,190,255,0.13)";
   ctx.setLineDash([3, 9]);
   ctx.lineWidth = 0.8;
   ctx.stroke();
@@ -416,7 +416,7 @@ function drawLabel(
 ): void {
   ctx.font = `${isMainStar ? 12 : 10}px "Jura", monospace`;
   ctx.textAlign = "center";
-  ctx.fillStyle = isMainStar ? "rgba(250,150,0,0.95)" : "rgba(20,245,255,0.9)";
+  ctx.fillStyle = isMainStar ? "rgba(100,190,255,0.95)" : "rgba(20,245,255,0.9)";
   ctx.fillText(label, x, y - radius - 8);
 }
 
@@ -426,7 +426,7 @@ function getSecurityColor(security: string): string {
   const s = security.toLowerCase();
   if (s.includes("high")) return "text-green-400";
   if (s.includes("medium")) return "text-yellow-400";
-  if (s.includes("low")) return "text-orange-400";
+  if (s.includes("low")) return "text-sky-400";
   if (s.includes("anarchy") || s.includes("lawless")) return "text-red-400";
   return "text-neutral-400";
 }
@@ -895,19 +895,19 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
       {/* ── HUD corner brackets on canvas viewport ── */}
       <div className="pointer-events-none absolute inset-0 z-10">
         <span
-          className="absolute h-8 w-8 border-l border-t border-orange-500/25"
+          className="absolute h-8 w-8 border-l border-t border-sky-500/25"
           style={{ left: "12px", top: "82px" }}
         />
         <span
-          className="absolute h-8 w-8 border-r border-t border-orange-500/25"
+          className="absolute h-8 w-8 border-r border-t border-sky-500/25"
           style={{ right: "12px", top: "82px" }}
         />
         <span
-          className="absolute h-8 w-8 border-b border-l border-orange-500/25"
+          className="absolute h-8 w-8 border-b border-l border-sky-500/25"
           style={{ left: "12px", bottom: "42px" }}
         />
         <span
-          className="absolute h-8 w-8 border-b border-r border-orange-500/25"
+          className="absolute h-8 w-8 border-b border-r border-sky-500/25"
           style={{ right: "12px", bottom: "42px" }}
         />
         {/* Centre crosshair */}
@@ -916,11 +916,11 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
           style={{ marginTop: "20px" }}
         >
           <svg width="40" height="40" viewBox="0 0 40 40" style={{ opacity: 0.12 }}>
-            <line x1="20" y1="0" x2="20" y2="14" stroke="rgb(251,146,60)" strokeWidth="0.8" />
-            <line x1="20" y1="26" x2="20" y2="40" stroke="rgb(251,146,60)" strokeWidth="0.8" />
-            <line x1="0" y1="20" x2="14" y2="20" stroke="rgb(251,146,60)" strokeWidth="0.8" />
-            <line x1="26" y1="20" x2="40" y2="20" stroke="rgb(251,146,60)" strokeWidth="0.8" />
-            <circle cx="20" cy="20" r="4" fill="none" stroke="rgb(251,146,60)" strokeWidth="0.6" />
+            <line x1="20" y1="0" x2="20" y2="14" stroke="rgb(120,200,255)" strokeWidth="0.8" />
+            <line x1="20" y1="26" x2="20" y2="40" stroke="rgb(120,200,255)" strokeWidth="0.8" />
+            <line x1="0" y1="20" x2="14" y2="20" stroke="rgb(120,200,255)" strokeWidth="0.8" />
+            <line x1="26" y1="20" x2="40" y2="20" stroke="rgb(120,200,255)" strokeWidth="0.8" />
+            <circle cx="20" cy="20" r="4" fill="none" stroke="rgb(120,200,255)" strokeWidth="0.6" />
           </svg>
         </div>
       </div>
@@ -928,23 +928,23 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
       {/* ══════════════════════════════════════════════════════
           TOP HUD BAR
       ══════════════════════════════════════════════════════ */}
-      <div className="absolute left-0 right-0 top-0 z-20 border-b border-orange-900/20 bg-black/88 backdrop-blur backdrop-filter">
+      <div className="absolute left-0 right-0 top-0 z-20 border-b border-sky-900/20 bg-black/88 backdrop-blur backdrop-filter">
         {/* Row 1 — navigation & system identity */}
-        <div className="flex items-center justify-between border-b border-orange-900/20 px-5 py-2.5">
+        <div className="flex items-center justify-between border-b border-sky-900/20 px-5 py-2.5">
           <div className="flex items-center gap-3">
             {/* Back link */}
             <Link
               href={`/systems/${slug}`}
-              className="text-glow__orange flex items-center gap-1.5 text-xs uppercase tracking-wider transition-opacity hover:opacity-70"
+              className="text-glow__blue flex items-center gap-1.5 text-xs uppercase tracking-wider transition-opacity hover:opacity-70"
             >
               <i className="icarus-terminal-chevron" style={{ fontSize: "0.6rem" }} />
               System
             </Link>
 
-            <span className="h-3 w-px bg-orange-900/50" />
+            <span className="h-3 w-px bg-sky-900/50" />
 
             {/* System name */}
-            <span className="text-glow__orange text-sm font-bold uppercase tracking-widest">
+            <span className="text-glow__blue text-sm font-bold uppercase tracking-widest">
               {system.name || "Loading…"}
             </span>
 
@@ -989,7 +989,7 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
             )}
 
             <span className="flex items-center gap-1.5 text-xs uppercase tracking-widest text-neutral-600">
-              <span className="fx-dot-orange h-1.5 w-1.5" />
+              <span className="fx-dot-blue h-1.5 w-1.5" />
               Telemetry Active
             </span>
           </div>
@@ -1008,8 +1008,8 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
                   onClick={() => handleSpeed(s)}
                   className={`border px-2 py-0.5 text-xs uppercase tracking-wider transition-all ${
                     speed === s
-                      ? "border-orange-500/55 bg-orange-900/20 text-orange-400"
-                      : "border-orange-900/20 text-neutral-600 hover:border-orange-900/40 hover:text-neutral-400"
+                      ? "border-sky-500/55 bg-sky-900/20 text-sky-400"
+                      : "border-sky-900/20 text-neutral-600 hover:border-sky-900/40 hover:text-neutral-400"
                   }`}
                 >
                   {s}×
@@ -1023,7 +1023,7 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
               className={`flex items-center gap-1.5 border px-3 py-0.5 text-xs uppercase tracking-wider transition-all ${
                 isPaused
                   ? "border-green-600/50 bg-green-900/15 text-green-400"
-                  : "border-orange-900/20 bg-orange-900/10 text-orange-400 hover:border-orange-500/50 hover:bg-orange-900/20"
+                  : "border-sky-900/20 bg-sky-900/10 text-sky-400 hover:border-sky-500/50 hover:bg-sky-900/20"
               }`}
             >
               {isPaused ? "▶ Resume" : "⏸ Pause"}
@@ -1037,7 +1037,7 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
               <span className="text-xs uppercase tracking-widest text-neutral-600">Zoom</span>
               <button
                 onClick={() => handleZoom(-0.2)}
-                className="border border-orange-900/20 px-2 py-0.5 text-xs text-neutral-500 hover:border-orange-900/40 hover:text-neutral-300"
+                className="border border-sky-900/20 px-2 py-0.5 text-xs text-neutral-500 hover:border-sky-900/40 hover:text-neutral-300"
               >
                 −
               </button>
@@ -1046,7 +1046,7 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
               </span>
               <button
                 onClick={() => handleZoom(0.2)}
-                className="border border-orange-900/20 px-2 py-0.5 text-xs text-neutral-500 hover:border-orange-900/40 hover:text-neutral-300"
+                className="border border-sky-900/20 px-2 py-0.5 text-xs text-neutral-500 hover:border-sky-900/40 hover:text-neutral-300"
               >
                 +
               </button>
@@ -1055,7 +1055,7 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
             {/* Reset pan */}
             <button
               onClick={handleResetPan}
-              className="border border-orange-900/20 px-2 py-0.5 text-xs uppercase tracking-wider text-neutral-600 hover:border-orange-900/40 hover:text-neutral-400"
+              className="border border-sky-900/20 px-2 py-0.5 text-xs uppercase tracking-wider text-neutral-600 hover:border-sky-900/40 hover:text-neutral-400"
               title="Re-centre map"
             >
               ⌖ Centre
@@ -1070,7 +1070,7 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
                 max={90}
                 value={tiltDeg}
                 onChange={(e) => setTiltDeg(Number(e.target.value))}
-                className="h-1 w-20 cursor-pointer accent-orange-500"
+                className="h-1 w-20 cursor-pointer accent-sky-500"
               />
               <span className="w-8 text-right font-mono text-xs text-neutral-500">{tiltDeg}°</span>
             </div>
@@ -1083,20 +1083,20 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
       ══════════════════════════════════════════════════════ */}
       {!isLoading && (hasInfo || systemMap) && (
         <div
-          className="absolute left-4 z-20 w-52 border border-orange-900/20 bg-black/82 backdrop-blur backdrop-filter"
+          className="absolute left-4 z-20 w-52 border border-sky-900/20 bg-black/82 backdrop-blur backdrop-filter"
           style={{ bottom: "42px" }}
         >
           {/* Corner brackets */}
-          <span className="pointer-events-none absolute -left-px -top-px h-3 w-3 border-l border-t border-orange-500/60" />
-          <span className="pointer-events-none absolute -right-px -top-px h-3 w-3 border-r border-t border-orange-500/60" />
-          <span className="pointer-events-none absolute -bottom-px -left-px h-3 w-3 border-b border-l border-orange-500/60" />
-          <span className="pointer-events-none absolute -bottom-px -right-px h-3 w-3 border-b border-r border-orange-500/60" />
+          <span className="pointer-events-none absolute -left-px -top-px h-3 w-3 border-l border-t border-sky-500/60" />
+          <span className="pointer-events-none absolute -right-px -top-px h-3 w-3 border-r border-t border-sky-500/60" />
+          <span className="pointer-events-none absolute -bottom-px -left-px h-3 w-3 border-b border-l border-sky-500/60" />
+          <span className="pointer-events-none absolute -bottom-px -right-px h-3 w-3 border-b border-r border-sky-500/60" />
 
           <div className="p-3">
             {/* Panel header */}
-            <div className="mb-2.5 flex items-center gap-2 border-b border-orange-900/20 pb-2.5">
-              <i className="icarus-terminal-system text-glow__orange" style={{ fontSize: "0.75rem" }} />
-              <span className="text-glow__orange text-xs font-bold uppercase tracking-wider">
+            <div className="mb-2.5 flex items-center gap-2 border-b border-sky-900/20 pb-2.5">
+              <i className="icarus-terminal-system text-glow__blue" style={{ fontSize: "0.75rem" }} />
+              <span className="text-glow__blue text-xs font-bold uppercase tracking-wider">
                 System Data
               </span>
             </div>
@@ -1135,7 +1135,7 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
             {/* Body counts */}
             {systemMap && (
               <div
-                className={`space-y-1.5 text-xs ${hasInfo ? "border-t border-orange-900/20 pt-2.5" : ""}`}
+                className={`space-y-1.5 text-xs ${hasInfo ? "border-t border-sky-900/20 pt-2.5" : ""}`}
               >
                 {starCount > 0 && <SysRow label="Stars" value={String(starCount)} />}
                 {planetCount > 0 && <SysRow label="Planets" value={String(planetCount)} />}
@@ -1151,14 +1151,14 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
       ══════════════════════════════════════════════════════ */}
       {selectedBody && (
         <div
-          className="fx-wipe-in absolute right-0 z-20 w-72 overflow-y-auto border-l border-orange-900/20 bg-black/88 backdrop-blur backdrop-filter"
+          className="fx-wipe-in absolute right-0 z-20 w-72 overflow-y-auto border-l border-sky-900/20 bg-black/88 backdrop-blur backdrop-filter"
           style={{ top: "82px", bottom: "42px" }}
         >
           {/* Corner brackets — uses top-0/bottom-0 (not -px) because this panel has overflow-y-auto */}
-          <span className="pointer-events-none absolute -left-px top-0 h-4 w-4 border-l-2 border-t-2 border-orange-500" />
-          <span className="pointer-events-none absolute -right-px top-0 h-4 w-4 border-r-2 border-t-2 border-orange-500" />
-          <span className="pointer-events-none absolute -left-px bottom-0 h-4 w-4 border-b-2 border-l-2 border-orange-500" />
-          <span className="pointer-events-none absolute -right-px bottom-0 h-4 w-4 border-b-2 border-r-2 border-orange-500" />
+          <span className="pointer-events-none absolute -left-px top-0 h-4 w-4 border-l-2 border-t-2 border-sky-500" />
+          <span className="pointer-events-none absolute -right-px top-0 h-4 w-4 border-r-2 border-t-2 border-sky-500" />
+          <span className="pointer-events-none absolute -left-px bottom-0 h-4 w-4 border-b-2 border-l-2 border-sky-500" />
+          <span className="pointer-events-none absolute -right-px bottom-0 h-4 w-4 border-b-2 border-r-2 border-sky-500" />
 
           {/* Body type colour band */}
           <div
@@ -1179,7 +1179,7 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
                 </div>
 
                 {/* Type label */}
-                <div className="text-glow__orange mb-1 text-xs uppercase tracking-widest">
+                <div className="text-glow__blue mb-1 text-xs uppercase tracking-widest">
                   {selectedBody._type}
                   {selectedBody.sub_type ? ` · ${selectedBody.sub_type}` : ""}
                 </div>
@@ -1209,7 +1209,7 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
             </div>
 
             {/* Divider */}
-            <div className="mb-4 mt-3 h-px bg-orange-900/20" />
+            <div className="mb-4 mt-3 h-px bg-sky-900/20" />
 
             {/* Data rows */}
             <div className="space-y-0 text-xs">
@@ -1275,7 +1275,7 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
             {(selectedBody.is_landable === 1 || selectedBody.is_scoopable === 1) && (
               <div className="mt-4 flex flex-wrap gap-2">
                 {selectedBody.is_landable === 1 && (
-                  <span className="border border-orange-500/40 bg-orange-900/15 px-2 py-0.5 text-xs uppercase tracking-widest text-orange-400">
+                  <span className="border border-sky-500/40 bg-sky-900/15 px-2 py-0.5 text-xs uppercase tracking-widest text-sky-400">
                     ◆ Landable
                   </span>
                 )}
@@ -1296,10 +1296,10 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
 
             {/* Full details link */}
             {selectedBody.slug && (
-              <div className="mt-5 border-t border-orange-900/20 pt-4">
+              <div className="mt-5 border-t border-sky-900/20 pt-4">
                 <Link
                   href={`/bodies/${selectedBody.slug}`}
-                  className="text-glow__orange flex items-center gap-2 text-xs uppercase tracking-wider hover:opacity-70"
+                  className="text-glow__blue flex items-center gap-2 text-xs uppercase tracking-wider hover:opacity-70"
                 >
                   Full Analysis →
                 </Link>
@@ -1312,7 +1312,7 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
       {/* ══════════════════════════════════════════════════════
           BOTTOM STATUS BAR
       ══════════════════════════════════════════════════════ */}
-      <div className="absolute bottom-0 left-0 right-0 z-20 flex items-center justify-between border-t border-orange-900/20 bg-black/80 px-5 py-2 backdrop-blur backdrop-filter">
+      <div className="absolute bottom-0 left-0 right-0 z-20 flex items-center justify-between border-t border-sky-900/20 bg-black/80 px-5 py-2 backdrop-blur backdrop-filter">
         {/* Left — body counts */}
         <div className="flex items-center gap-4 text-xs uppercase tracking-widest text-neutral-700">
           {starCount > 0 && <span>Stars: {starCount}</span>}
@@ -1333,7 +1333,7 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
           <span>Zoom: {zoom.toFixed(1)}×</span>
           <span>Tilt: {tiltDeg}°</span>
           <span className="flex items-center gap-1.5">
-            <span className={isPaused ? "fx-dot-orange h-1.5 w-1.5" : "fx-dot-green h-1.5 w-1.5"} />
+            <span className={isPaused ? "fx-dot-blue h-1.5 w-1.5" : "fx-dot-green h-1.5 w-1.5"} />
             {isPaused ? "Paused" : "Live"}
           </span>
         </div>
@@ -1344,9 +1344,9 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
       ══════════════════════════════════════════════════════ */}
       {!isLoading && systemMap && systemMap.items.length === 0 && (
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="relative border border-orange-900/20 bg-black/80 p-8 backdrop-blur backdrop-filter">
+          <div className="relative border border-sky-900/20 bg-black/80 p-8 backdrop-blur backdrop-filter">
             <PanelCorners />
-            <div className="text-glow__orange mb-2 text-center text-sm font-bold uppercase tracking-widest">
+            <div className="text-glow__blue mb-2 text-center text-sm font-bold uppercase tracking-widest">
               No Telemetry Available
             </div>
             <div className="text-center text-xs uppercase tracking-widest text-neutral-600">
@@ -1382,7 +1382,7 @@ function SysRow({
 /** Data row for the selected body detail panel */
 function BodyRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-baseline justify-between gap-2 border-b border-orange-900/20 py-1.5">
+    <div className="flex items-baseline justify-between gap-2 border-b border-sky-900/20 py-1.5">
       <span className="shrink-0 uppercase tracking-wider text-neutral-600">{label}</span>
       <span
         className="truncate text-right font-mono"

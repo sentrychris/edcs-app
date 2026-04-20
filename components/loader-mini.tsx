@@ -13,7 +13,7 @@ const LoaderMini: FunctionComponent<Props> = ({
   return (
     <div className="mini-elite-loader-container" style={{ opacity: visible ? "0.75" : "0" }}>
       <div className="mini-elite-loader">
-        <h2 className="text-glow__orange mb-3 text-xs uppercase">
+        <h2 className="text-glow__blue mb-3 text-xs uppercase">
           {visible ? message : "Loading completed!"}
         </h2>
         <div className="row">

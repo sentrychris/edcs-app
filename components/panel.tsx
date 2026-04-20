@@ -15,8 +15,8 @@ interface Props {
 }
 
 const variantBorder: Record<NonNullable<Props["variant"]>, string> = {
-  default: "border-orange-900/40",
-  muted: "border-orange-900/20",
+  default: "border-sky-900/40",
+  muted: "border-sky-900/20",
 };
 
 const Panel = ({ variant = "default", corners = "md", cornerClassName, className, children }: Props) => (
