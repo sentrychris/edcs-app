@@ -211,7 +211,7 @@ export default async function Page({ params }: Props) {
             <StatRow label="Eccentricity"      value={body.orbital?.orbital_eccentricity != null ? body.orbital.orbital_eccentricity.toFixed(6)     : "—"} />
             <StatRow label="Arg of Periapsis"  value={body.orbital?.arg_of_periapsis    != null ? body.orbital.arg_of_periapsis.toFixed(4)          : "—"} />
             <StatRow label="Semi-Major Axis"   value={body.axial?.semi_major_axis       != null ? body.axial.semi_major_axis.toFixed(6)             : "—"} />
-            <StatRow label="Axial Tilt"        value={body.axial?.axial_tilt            != null ? `${body.axial.axial_tilt.toFixed(4)}°`            : "—"} />
+            <StatRow label="Axial Tilt"        value={body.axial?.axial_tilt            != null ? `${(body.axial.axial_tilt * 180 / Math.PI).toFixed(4)}°` : "—"} />
             {!isStar && (
               <StatRow label="Tidally Locked"  value={body.axial?.is_tidally_locked ? <Yes /> : <No />} />
             )}

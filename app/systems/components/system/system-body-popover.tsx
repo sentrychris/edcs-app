@@ -318,7 +318,7 @@ const SystemBodyPopover: FunctionComponent<Props> = ({ body, system, dispatcher,
           <StatRow label="Semi-Major Axis" value={body.semi_major_axis?.toFixed(6) ?? "—"} />
           <StatRow
             label="Axial Tilt"
-            value={body.axial_tilt ? `${body.axial_tilt.toFixed(4)}°` : "—"}
+            value={body.axial_tilt ? `${(body.axial_tilt * 180 / Math.PI).toFixed(4)}°` : "—"}
           />
           <StatRow label="Arg of Periapsis" value={body.arg_of_periapsis?.toFixed(4) ?? "—"} />
           {body.type === SystemBodyType.Planet && (
