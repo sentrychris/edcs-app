@@ -17,7 +17,7 @@ const SOL_ID64 = 10477373803n;
 // Below 8000 ly we use full-detail per-sector tiles; above 60000 ly we serve
 // only the single sampled global tile. The mid-zoom band uses LOD 1.
 const LOD0_MIN_RADIUS = 60000;
-const LOD1_MIN_RADIUS = 8000;
+const LOD1_MIN_RADIUS = 12000;
 
 function id64ToCoords(id64: bigint): [number, number, number] | null {
   try {
