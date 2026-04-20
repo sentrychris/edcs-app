@@ -24,6 +24,7 @@ export const systemState: System = {
   },
   bodies: [],
   stations: [],
+  fleet_carriers: [],
   updated_at: "",
   slug: "",
 };

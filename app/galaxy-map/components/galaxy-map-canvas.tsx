@@ -16,8 +16,8 @@ const SOL_ID64 = 10477373803n;
 // LOD selection thresholds (camera radius in ly).
 // Below 8000 ly we use full-detail per-sector tiles; above 60000 ly we serve
 // only the single sampled global tile. The mid-zoom band uses LOD 1.
-const LOD0_MIN_RADIUS = 60000;
-const LOD1_MIN_RADIUS = 12000;
+const LOD0_MIN_RADIUS = 80000;
+// const LOD1_MIN_RADIUS = 12000;
 
 function id64ToCoords(id64: bigint): [number, number, number] | null {
   try {
@@ -191,7 +191,8 @@ function starAppearance(seed: number): [number, number, number, number] {
   for (let i = 0; i < STAR_CLASSES.length; i++) {
     const [thr, r, g, b, sz] = STAR_CLASSES[i];
     if (h1 < thr) {
-      const lum = 0.55 + h2 * 0.45;
+      const lum = 0.20 + h2;
+      // const lum = 0.15 + h2 * 0.05;
       return [r * lum, g * lum, b * lum, sz * (0.8 + h3 * 0.4)];
     }
   }
@@ -430,9 +431,8 @@ function resolveTileUrl(path: string): string {
 }
 
 function pickLod(radius: number): 0 | 1 | 2 {
-  if (radius >= LOD0_MIN_RADIUS) return 0;
-  if (radius >= LOD1_MIN_RADIUS) return 1;
-  return 2;
+  // if (radius >= LOD0_MIN_RADIUS) return 0;
+  return 1;
 }
 
 /**

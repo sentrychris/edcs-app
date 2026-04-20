@@ -17,6 +17,7 @@ import SystemStarsTable from "./system-stars-table";
 import SystemBodiesTable from "./system-bodies-table";
 import SystemBodiesMap from "./system-bodies-map";
 import SystemStationsTable from "./system-stations-table";
+import SystemFleetCarriersTable from "./system-fleet-carriers-table";
 
 interface Props {
   params: { slug: string };
@@ -27,7 +28,7 @@ const SystemDetail: FunctionComponent<Props> = ({ params, initialData = null }) 
   const { slug } = params;
   const { data: fetchedData, isLoading } = useResource<System>(
     initialData ? null : `systems/${slug}`,
-    { withInformation: 1, withBodies: 1, withStations: 1 },
+    { withInformation: 1, withBodies: 1, withStations: 1, withFleetCarriers: 1 },
   );
   const data = initialData ?? fetchedData;
   const loading = initialData ? false : isLoading;
@@ -64,13 +65,16 @@ const SystemDetail: FunctionComponent<Props> = ({ params, initialData = null }) 
           />
         )}
         {!loading && systemMap && (
-          <SystemStationsTable stations={systemMap.stations} dispatcher={systemDispatcher} />
-        )}
-        {!loading && systemMap && (
           <SystemBodiesTable
             bodies={systemMap.planets as Required<MappedSystemBody>[]}
             systemSlug={slug}
           />
+        )}
+        {!loading && system.stations && system.stations.length > 0 && (
+          <SystemStationsTable stations={system.stations} dispatcher={systemDispatcher} />
+        )}
+        {!loading && system.fleet_carriers && system.fleet_carriers.length > 0 && (
+          <SystemFleetCarriersTable fleetCarriers={system.fleet_carriers} />
         )}
       </div>
 

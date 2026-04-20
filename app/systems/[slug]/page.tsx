@@ -20,7 +20,7 @@ interface Props {
  */
 const getSystem = cache((slug: string) =>
   getResource<System>(`systems/${slug}`, {
-    params: { withInformation: 1, withBodies: 1, withStations: 1 },
+    params: { withInformation: 1, withBodies: 1, withStations: 1, withFleetCarriers: 1 },
   }).catch(() => null),
 );
 

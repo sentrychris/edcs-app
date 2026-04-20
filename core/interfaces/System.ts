@@ -1,3 +1,4 @@
+import type { FleetCarrier } from "./FleetCarrier";
 import type { RawSystemBody } from "./SystemBody";
 import type { Station } from "./Station";
 
@@ -13,6 +14,7 @@ export interface System {
   information: SystemInformation;
   bodies: Array<RawSystemBody>;
   stations: Array<Station>;
+  fleet_carriers: Array<FleetCarrier>;
   updated_at: string;
   slug: string;
 }
