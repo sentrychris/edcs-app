@@ -65,7 +65,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
       </Panel>
 
       <StationDetail params={params} initialData={station?.data ?? null} />
-      <StationMarket slug={params.slug} />
+      {station?.data?.has_market && <StationMarket slug={params.slug} />}
     </>
   );
 }
