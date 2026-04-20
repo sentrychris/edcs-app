@@ -103,7 +103,7 @@ const StationDetail: FunctionComponent<Props> = ({ params, initialData = null })
                 <span className="text-glow__blue">{station.type || "—"}</span>
               </StatRow>
               {station.body && (
-                <StatRow label="Orbiting">{station.body.name}</StatRow>
+                <StatRow label="Belongs To">{station.body.name}</StatRow>
               )}
               {station.distance_to_arrival > 0 && (
                 <StatRow label="Dist. to Arrival">

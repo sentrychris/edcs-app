@@ -69,7 +69,7 @@ const SystemStationsTable: FunctionComponent<Props> = ({ stations, dispatcher })
       },
     },
     body: {
-      title: "Orbiting",
+      title: "Belongs To",
       render: (station: Station) => {
         return <span>{station.body?.name ?? "None"}</span>;
       },

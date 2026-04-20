@@ -1,9 +1,12 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import type { SystemBodyResource, SystemBodyRing } from "@/core/interfaces/SystemBody";
+import type { Station } from "@/core/interfaces/Station";
 import { settings } from "@/core/config";
 import { getResource } from "@/core/api";
 import { formatDate, formatNumber } from "@/core/string-utils";
-import { SystemBodyType } from "@/core/constants/system";
+import { PLANETARY_BASES, SystemBodyType } from "@/core/constants/system";
+import { stationIconByType } from "@/core/render-utils";
+import { CheckIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Panel from "@/components/panel";
 import BodySvg from "./components/body-svg";
@@ -43,10 +46,16 @@ const No  = () => <span className="text-red-400/80">No</span>;
 /* ── Page ──────────────────────────────────────────────── */
 
 export default async function Page({ params }: Props) {
-  const { data: body } = await getResource<SystemBodyResource>(`bodies/${params.bodySlug}`);
+  const { data: body } = await getResource<SystemBodyResource>(`bodies/${params.bodySlug}`, {
+    params: { withStations: 1 },
+  });
 
   const isStar   = body.type === SystemBodyType.Star || body.sub_type?.includes("Star");
   const bodyIcon = isStar ? "icarus-terminal-star" : "icarus-terminal-planet";
+
+  const settlements: Station[] = (body.system?.stations ?? []).filter(
+    (station) => station.body?.name === body.name && PLANETARY_BASES.includes(station.type),
+  );
 
   return (
     <>
@@ -227,6 +236,62 @@ export default async function Page({ params }: Props) {
           )}
         </div>
       </div>
+
+      {/* ── Planetary settlements ── */}
+      {settlements.length > 0 && (
+        <Panel variant="muted" className="fx-chamfer mt-5 p-5">
+          <SectionHeader icon="icarus-terminal-settlement" title="Planetary Settlements" />
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+            {settlements.map((settlement) => (
+              <div key={settlement.id} className="relative border border-orange-900/20 p-3">
+                <span className="pointer-events-none absolute -left-px -top-px h-2.5 w-2.5 border-l border-t border-orange-500/60" />
+                <span className="pointer-events-none absolute -right-px -top-px h-2.5 w-2.5 border-r border-t border-orange-500/60" />
+                <span className="pointer-events-none absolute -bottom-px -left-px h-2.5 w-2.5 border-b border-l border-orange-500/60" />
+                <span className="pointer-events-none absolute -bottom-px -right-px h-2.5 w-2.5 border-b border-r border-orange-500/60" />
+                <div className="mb-1.5 flex items-center justify-between gap-3">
+                  <Link
+                    href={`/stations/${settlement.slug}`}
+                    className="text-glow__orange flex items-center"
+                  >
+                    <i className={`${stationIconByType(settlement.type)} text-glow me-2 text-sm`}></i>
+                    {settlement.name}
+                  </Link>
+                  <span className="text-[0.65rem] uppercase tracking-widest text-neutral-600">
+                    {settlement.type}
+                  </span>
+                </div>
+                <p className="mb-2 text-xs uppercase tracking-wider text-neutral-600">
+                  {settlement.economy || "Unknown"} Economy
+                  {settlement.allegiance ? ` • ${settlement.allegiance}` : ""}
+                </p>
+                <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-neutral-500">
+                  {settlement.has_market && (
+                    <span className="flex items-center gap-1">
+                      <CheckIcon className="h-3 w-3 text-orange-500/60" />
+                      Market
+                    </span>
+                  )}
+                  {settlement.has_outfitting && (
+                    <span className="flex items-center gap-1">
+                      <CheckIcon className="h-3 w-3 text-orange-500/60" />
+                      Outfitting
+                    </span>
+                  )}
+                  {settlement.has_shipyard && (
+                    <span className="flex items-center gap-1">
+                      <CheckIcon className="h-3 w-3 text-orange-500/60" />
+                      Shipyard
+                    </span>
+                  )}
+                  {!settlement.has_market && !settlement.has_outfitting && !settlement.has_shipyard && (
+                    <span className="text-neutral-700">No docking services</span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </Panel>
+      )}
 
       {/* ── Footer ── */}
       <div className="mt-6 border-t border-orange-900/20 pt-4">
