@@ -60,7 +60,7 @@ const SystemStarsTable: FunctionComponent<Props> = ({ stars, dispatcher }) => {
             onClick={() =>
               dispatcher.selectBody({
                 body,
-                type: "select-body",
+                type: "display-body-panel",
               })
             }
           >
@@ -101,7 +101,7 @@ const SystemStarsTable: FunctionComponent<Props> = ({ stars, dispatcher }) => {
             onClick={() =>
               dispatcher.selectBody({
                 body,
-                type: "select-body",
+                type: "display-body-panel",
               })
             }
           >

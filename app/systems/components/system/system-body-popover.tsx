@@ -1,7 +1,6 @@
 "use client";
 
 import { type FunctionComponent, useEffect, useRef, useState } from "react";
-import type { SystemDispatcher } from "@/core/events/SystemDispatcher";
 import type { SystemBodyRing, MappedSystemBody } from "@/core/interfaces/SystemBody";
 import type SystemMap from "../../lib/system-map";
 import { XMarkIcon, CheckIcon } from "@heroicons/react/24/outline";
@@ -14,7 +13,6 @@ import Link from "next/link";
 interface Props {
   body: MappedSystemBody | null;
   system: SystemMap;
-  dispatcher: SystemDispatcher;
   close?: () => void;
 }
 
@@ -38,7 +36,7 @@ const MIN_WIDTH = 260;
 const MIN_HEIGHT = 200;
 const DEFAULT_WIDTH = 420;
 
-const SystemBodyPopover: FunctionComponent<Props> = ({ body, system, dispatcher, close }) => {
+const SystemBodyPopover: FunctionComponent<Props> = ({ body, system, close }) => {
   const [position, setPosition] = useState(() => ({
     x: typeof window !== "undefined" ? Math.max(0, window.innerWidth - DEFAULT_WIDTH - 24) : 0,
     y: 80,
@@ -182,18 +180,12 @@ const SystemBodyPopover: FunctionComponent<Props> = ({ body, system, dispatcher,
           </div>
         </div>
 
-        {/* Orbital children link */}
+        {/* Orbital children indicator */}
         {body._children && body._children.length > 0 && (
-          <button
-            className="mt-3 flex items-center gap-1.5 text-xs uppercase tracking-widest text-neutral-500 transition-colors hover:text-sky-400"
-            onClick={() => {
-              dispatcher.selectBody({ body, type: "select-body" });
-              if (close) close();
-            }}
-          >
+          <div className="mt-3 flex items-center gap-1.5 text-xs uppercase tracking-widest text-neutral-500">
             <i className="icarus-terminal-system-orbits text-sm text-sky-500/40"></i>
             <span>{body._children.length} orbital bodies</span>
-          </button>
+          </div>
         )}
 
         {/* Status bar */}

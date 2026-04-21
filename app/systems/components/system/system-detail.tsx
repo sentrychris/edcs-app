@@ -83,7 +83,6 @@ const SystemDetail: FunctionComponent<Props> = ({ params, initialData = null }) 
         <SystemBodyPopover
           body={selectedBody}
           system={systemMap}
-          dispatcher={systemDispatcher}
           close={() => setIsPanelOpen(false)}
         />
       )}

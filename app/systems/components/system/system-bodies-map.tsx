@@ -1,15 +1,13 @@
 "use client";
 
-import { type FunctionComponent, useCallback, useEffect, useRef, useState } from "react";
+import { type FunctionComponent, useEffect, useState } from "react";
 import type { ListenerEvent } from "@/core/interfaces/Dispatcher";
 import type { System } from "@/core/interfaces/System";
-import type { MappedSystemBody } from "@/core/interfaces/SystemBody";
 import type { Station } from "@/core/interfaces/Station";
 import type SystemMap from "../../lib/system-map";
-import { SystemBodyType } from "@/core/constants/system";
 import { systemDispatcher } from "@/core/events/SystemDispatcher";
 import Link from "next/link";
-import SystemBodySVG from "./system-body-svg";
+import SystemBodiesTree from "./system-bodies-tree";
 import SystemMapStatistics from "./system-map-statistics";
 import { stationIconByType } from "@/core/render-utils";
 
@@ -28,202 +26,62 @@ const SystemBodiesMap: FunctionComponent<Props> = ({
   setSelectedBodyDisplayInfo,
   setIsPanelOpen,
 }) => {
-  const [selectedBody, setSelectedBody] = useState<MappedSystemBody>();
-  const [selectedBodyIndex, setSelectedBodyIndex] = useState<number>(0);
-  const [bodyHistory, setBodyHistory] = useState<MappedSystemBody[]>([]);
-  const selectedBodyRef = useRef<MappedSystemBody | undefined>(undefined);
+  const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
-    selectedBodyRef.current = selectedBody;
-  }, [selectedBody]);
-
-  useEffect(() => {
-    const star = systemMap.stars.find((s) => s.is_main_star === 1);
-    setSelectedBody(star);
-
-    const selectBodyListener = (event: ListenerEvent) => {
-      setBodyHistory((prev) =>
-        selectedBodyRef.current ? [...prev, selectedBodyRef.current!] : prev,
-      );
-      setSelectedBody(event.message as MappedSystemBody);
-    };
-
-    const goToParentListener = () => {
-      setBodyHistory((prev) => {
-        const parent = prev[prev.length - 1];
-        if (parent) {
-          setSelectedBody(parent);
-        }
-        return prev.slice(0, -1);
-      });
-    };
-
-    const setIndexListener = (event: ListenerEvent) => {
-      if ((event.message as number) === 0) {
-        setSelectedBody(star);
-        setBodyHistory([]);
-      }
-    };
-
     const displayBodyPanelListener = (event: ListenerEvent) => {
       setSelectedBodyDisplayInfo(event.message);
       setIsPanelOpen(true);
     };
-
-    systemDispatcher.addEventListener("select-body", selectBodyListener);
-    systemDispatcher.addEventListener("go-to-parent", goToParentListener);
-    systemDispatcher.addEventListener("set-index", setIndexListener);
     systemDispatcher.addEventListener("display-body-panel", displayBodyPanelListener);
-
     return () => {
-      systemDispatcher.removeEventListener("select-body", selectBodyListener);
-      systemDispatcher.removeEventListener("go-to-parent", goToParentListener);
-      systemDispatcher.removeEventListener("set-index", setIndexListener);
       systemDispatcher.removeEventListener("display-body-panel", displayBodyPanelListener);
     };
-  }, [setSelectedBodyDisplayInfo, setIsPanelOpen, systemMap.stars]);
+  }, [setSelectedBodyDisplayInfo, setIsPanelOpen]);
 
-  const scrollableBodies = useCallback((node: HTMLDivElement) => {
-    let pos = { top: 0, left: 0, x: 0, y: 0 };
-    if (node) {
-      node.scrollLeft = 0;
-
-      node.addEventListener("mousedown", (e: MouseEvent) => {
-        pos = {
-          left: node.scrollLeft,
-          top: node.scrollTop,
-          x: e.clientX,
-          y: e.clientY,
-        };
-
-        node.addEventListener("mousemove", mouseMoveHandler);
-        node.addEventListener("mouseup", mouseUpHandler);
-      });
-
-      const mouseMoveHandler = (event: MouseEvent) => {
-        const dx = event.clientX - pos.x;
-        const dy = event.clientY - pos.y;
-
-        node.scrollTop = pos.top - dy;
-        node.scrollLeft = pos.left - dx;
-      };
-
-      const mouseUpHandler = () => {
-        node.removeEventListener("mousemove", mouseMoveHandler);
-        node.removeEventListener("mouseup", mouseUpHandler);
-
-        node.style.cursor = "grab";
-        node.style.removeProperty("user-select");
-      };
-    }
-  }, []);
-
-  function renderSystemBodies(map: SystemMap) {
-    const handleSelectedBodyChange = (index: number) => {
-      if (
-        index < 0 ||
-        typeof map.stars[index] === "undefined" ||
-        map.stars[index].type === SystemBodyType.Null
-      ) {
-        index = 0;
-      }
-
-      setSelectedBody(map.stars[index]);
-      setSelectedBodyIndex(index);
-      setBodyHistory([]);
-    };
-
+  const renderStations = (stations: Station[]) => {
+    if (stations.length === 0) return null;
     return (
-      <>
-        <div className="flex content-center items-center">
-          {selectedBody && (
-            <>
-              <div className="flex shrink-0 items-center md:rounded-full md:border-r md:border-neutral-700 md:pe-12">
-                {
-                  <div className={"text-glow__blue me-6 hidden flex-col md:flex"}>
-                    <i
-                      className={
-                        "icarus-terminal-chevron-up text-glow__blue hover:text-glow__blue hover:cursor-pointer"
-                      }
-                      onClick={() => handleSelectedBodyChange(selectedBodyIndex - 1)}
-                    ></i>
-                    <i
-                      className={
-                        "icarus-terminal-chevron-down text-glow__blue hover:text-glow__blue hover:cursor-pointer"
-                      }
-                      onClick={() => handleSelectedBodyChange(selectedBodyIndex + 1)}
-                    ></i>
-                  </div>
-                }
-                {renderSystemBody(selectedBody, bodyHistory[bodyHistory.length - 1])}
-              </div>
-              <div
-                className="system-body__children hidden w-full items-center overflow-x-auto hover:cursor-move md:flex"
-                ref={scrollableBodies}
-              >
-                {renderSystemBodyOrbitingBodies(selectedBody)}
-              </div>
-            </>
-          )}
-        </div>
-      </>
+      <div className="system-body__children mb-4 hidden w-full overflow-x-auto border-b border-sky-900/20 pb-4 md:flex items-center gap-x-20">
+        {stations.sort((a, b) => a.distance_to_arrival - b.distance_to_arrival).map((station) => (
+          <Link
+            key={station.slug}
+            href={`/stations/${station.slug}`}
+            className="me-5 flex items-center text-xs hover:opacity-80"
+          >
+            <i className={`${stationIconByType(station.type)} text-glow`}></i>
+            <div className="ms-3">
+              <span className="text-glow__blue text-xs whitespace-nowrap uppercase hover:underline">
+                {station.name}
+              </span>
+              <div className="text-xs text-neutral-300">{station.distance_to_arrival} ls</div>
+            </div>
+          </Link>
+        ))}
+      </div>
     );
-  }
-
-  function renderSystemStations(stations: Station[]) {
-    return stations.map((station: Station) => {
-      return (
-        <Link key={station.slug} href={`/stations/${station.slug}`} className="me-5 flex items-center text-xs hover:opacity-80">
-          <i className={`${stationIconByType(station.type)} text-glow`}></i>
-          <div className="ms-3">
-            <span className="text-glow__blue uppercase hover:underline hover:text-glow__blue">{station.name}</span>
-            <div className="text-xs text-neutral-300">{station.distance_to_arrival} ls</div>
-          </div>
-        </Link>
-      );
-    });
-  }
-
-  function renderSystemBodyOrbitingBodies(body: MappedSystemBody) {
-    const bodies = body._children && body._children.length > 0 ? body._children : false;
-
-    if (!bodies) {
-      return (
-        <span className="text-glow__blue ms-4 uppercase">
-          {body.name} has no direct orbiting celestial bodies
-        </span>
-      );
-    }
-
-    return bodies.map((body: MappedSystemBody) => renderSystemBody(body));
-  }
-
-  function renderSystemBody(body: MappedSystemBody, parent?: MappedSystemBody) {
-    let classes = "text-glow__white text-sm";
-    if (body.is_main_star) {
-      classes += " w-main-star";
-    } else {
-      classes = " w-40";
-    }
-
-    return (
-      <SystemBodySVG
-        key={body.id64}
-        selected={selectedBody}
-        body={body}
-        parent={parent}
-        orbiting={body._children ? body._children.length : 0}
-        dispatcher={systemDispatcher}
-        className={classes}
-      />
-    );
-  }
+  };
 
   return (
     <div className="mb-5 border border-sky-900/20 bg-black/50 backdrop-blur backdrop-filter">
-      <div className="flex items-center justify-between border-b border-sky-900/20 px-4 py-3">
+      <div
+        role="button"
+        tabIndex={0}
+        aria-expanded={!collapsed}
+        onClick={() => setCollapsed((v) => !v)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            setCollapsed((v) => !v);
+          }
+        }}
+        className="flex cursor-pointer select-none items-center justify-between border-b border-sky-900/20 px-4 py-3 transition-colors hover:bg-sky-500/5"
+      >
         <div className="flex items-center gap-3">
-          <i className="icarus-terminal-system-bodies text-glow__blue" style={{ fontSize: "1.5rem" }}></i>
+          <i
+            className="icarus-terminal-system-bodies text-glow__blue"
+            style={{ fontSize: "1.5rem" }}
+          ></i>
           <div>
             <h2 className="text-glow__blue font-bold uppercase tracking-wide">System Map</h2>
             <p className="text-xs uppercase tracking-wider text-neutral-500">Orbital Telemetry</p>
@@ -234,29 +92,27 @@ const SystemBodiesMap: FunctionComponent<Props> = ({
           {!isLoading && (
             <Link
               href={`/systems/${system.slug}/solar-map`}
+              onClick={(e) => e.stopPropagation()}
               className="text-glow__blue border border-sky-900 px-3 py-1 text-xs uppercase tracking-wider transition-colors hover:border-sky-500"
             >
               View More
             </Link>
           )}
+          <i
+            className={`icarus-terminal-chevron-${collapsed ? "down" : "up"} text-glow__blue text-sm`}
+          />
         </div>
       </div>
-      {!isLoading && (
-        <div className="grid grid-cols-12 px-4 py-3">
-          <div className="col-span-12">
-            <div className="system-body__children hidden w-full items-center overflow-x-auto py-2 hover:cursor-move md:flex">
-              {renderSystemStations(systemMap.stations)}
+      {!collapsed && !isLoading && (
+        <div className="px-4 py-3">
+          {renderStations(system.stations)}
+          {systemMap && systemMap.items.length > 0 ? (
+            <SystemBodiesTree systemMap={systemMap} />
+          ) : (
+            <div className="text-glow__blue mx-auto py-6 text-center text-lg font-bold uppercase">
+              Telemetry data not found for {system.name}
             </div>
-          </div>
-          <div className="col-span-12">
-            {systemMap && systemMap.items.length > 0 ? (
-              renderSystemBodies(systemMap)
-            ) : (
-              <div className="text-glow__blue mx-auto py-6 text-center text-lg font-bold uppercase">
-                Telemetry data not found for {system.name}
-              </div>
-            )}
-          </div>
+          )}
         </div>
       )}
     </div>
