@@ -27,6 +27,7 @@ const SystemBodiesMap: FunctionComponent<Props> = ({
   setIsPanelOpen,
 }) => {
   const [collapsed, setCollapsed] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
     const displayBodyPanelListener = (event: ListenerEvent) => {
@@ -38,6 +39,20 @@ const SystemBodiesMap: FunctionComponent<Props> = ({
       systemDispatcher.removeEventListener("display-body-panel", displayBodyPanelListener);
     };
   }, [setSelectedBodyDisplayInfo, setIsPanelOpen]);
+
+  useEffect(() => {
+    if (!isFullscreen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsFullscreen(false);
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isFullscreen]);
 
   const renderStations = (stations: Station[]) => {
     if (stations.length === 0) return null;
@@ -62,52 +77,106 @@ const SystemBodiesMap: FunctionComponent<Props> = ({
     );
   };
 
+  const containerClass = isFullscreen
+    ? "fixed inset-0 z-50 flex flex-col border border-sky-900/20 bg-black/95 backdrop-blur backdrop-filter"
+    : "mb-5 border border-sky-900/20 bg-black/50 backdrop-blur backdrop-filter";
+
+  const showHeader = !isFullscreen;
+  const showBody = isFullscreen || (!collapsed && !isLoading);
+
   return (
-    <div className="mb-5 border border-sky-900/20 bg-black/50 backdrop-blur backdrop-filter">
-      <div
-        role="button"
-        tabIndex={0}
-        aria-expanded={!collapsed}
-        onClick={() => setCollapsed((v) => !v)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            setCollapsed((v) => !v);
-          }
-        }}
-        className="flex cursor-pointer select-none items-center justify-between border-b border-sky-900/20 px-4 py-3 transition-colors hover:bg-sky-500/5"
-      >
-        <div className="flex items-center gap-3">
-          <i
-            className="icarus-terminal-system-bodies text-glow__blue"
-            style={{ fontSize: "1.5rem" }}
-          ></i>
-          <div>
-            <h2 className="text-glow__blue font-bold uppercase tracking-wide">System Map</h2>
-            <p className="text-xs uppercase tracking-wider text-neutral-500">Orbital Telemetry</p>
+    <div className={containerClass}>
+      {showHeader && (
+        <div
+          role="button"
+          tabIndex={0}
+          aria-expanded={!collapsed}
+          onClick={() => setCollapsed((v) => !v)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              setCollapsed((v) => !v);
+            }
+          }}
+          className="flex cursor-pointer select-none items-center justify-between border-b border-sky-900/20 px-4 py-3 transition-colors hover:bg-sky-500/5"
+        >
+          <div className="flex items-center gap-3">
+            <i
+              className="icarus-terminal-system-bodies text-glow__blue"
+              style={{ fontSize: "1.5rem" }}
+            ></i>
+            <div>
+              <h2 className="text-glow__blue font-bold uppercase tracking-wide">System Map</h2>
+              <p className="text-xs uppercase tracking-wider text-neutral-500">Orbital Telemetry</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            {!isLoading && <SystemMapStatistics system={systemMap} />}
+            {!isLoading && (
+              <Link
+                href={`/systems/${system.slug}/solar-map`}
+                onClick={(e) => e.stopPropagation()}
+                className="text-glow__blue border border-sky-900 px-3 py-1 text-xs uppercase tracking-wider transition-colors hover:border-sky-500"
+              >
+                View More
+              </Link>
+            )}
+            {!isLoading && !collapsed && (
+              <button
+                type="button"
+                aria-label="Enter fullscreen"
+                title="Fullscreen"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsFullscreen(true);
+                }}
+                className="text-glow__blue flex h-7 w-7 items-center justify-center border border-sky-900 transition-colors hover:border-sky-500"
+              >
+                <i className="icarus-terminal-fullscreen text-sm" />
+              </button>
+            )}
+            <i
+              className={`icarus-terminal-chevron-${collapsed ? "down" : "up"} text-glow__blue text-sm`}
+            />
           </div>
         </div>
-        <div className="flex items-center gap-4">
-          {!isLoading && <SystemMapStatistics system={systemMap} />}
-          {!isLoading && (
-            <Link
-              href={`/systems/${system.slug}/solar-map`}
-              onClick={(e) => e.stopPropagation()}
-              className="text-glow__blue border border-sky-900 px-3 py-1 text-xs uppercase tracking-wider transition-colors hover:border-sky-500"
+      )}
+      {isFullscreen && (
+        <div className="flex items-center justify-between border-b border-sky-900/20 px-4 py-3">
+          <div className="flex items-center gap-3">
+            <i
+              className="icarus-terminal-system-bodies text-glow__blue"
+              style={{ fontSize: "1.5rem" }}
+            ></i>
+            <div>
+              <h2 className="text-glow__blue font-bold uppercase tracking-wide">
+                System Map — {system.name}
+              </h2>
+              <p className="text-xs uppercase tracking-wider text-neutral-500">Orbital Telemetry</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            {!isLoading && <SystemMapStatistics system={systemMap} />}
+            <button
+              type="button"
+              aria-label="Exit fullscreen"
+              title="Exit fullscreen (Esc)"
+              onClick={() => setIsFullscreen(false)}
+              className="text-glow__blue flex h-7 w-7 items-center justify-center border border-sky-900 transition-colors hover:border-sky-500"
             >
-              View More
-            </Link>
-          )}
-          <i
-            className={`icarus-terminal-chevron-${collapsed ? "down" : "up"} text-glow__blue text-sm`}
-          />
+              <i className="icarus-terminal-exit text-sm" />
+            </button>
+          </div>
         </div>
-      </div>
-      {!collapsed && !isLoading && (
-        <div className="px-4 py-3">
-          {renderStations(system.stations)}
+      )}
+      {showBody && (
+        <div className={isFullscreen ? "flex-1 overflow-hidden px-4 py-3" : "px-4 py-3"}>
+          {!isFullscreen && renderStations(system.stations)}
           {systemMap && systemMap.items.length > 0 ? (
-            <SystemBodiesTree systemMap={systemMap} />
+            <SystemBodiesTree
+              systemMap={systemMap}
+              height={isFullscreen ? "100%" : undefined}
+            />
           ) : (
             <div className="text-glow__blue mx-auto py-6 text-center text-lg font-bold uppercase">
               Telemetry data not found for {system.name}

@@ -210,9 +210,10 @@ const TreeNodeCard: FunctionComponent<CardProps> = ({ body, size }) => {
 
 interface Props {
   systemMap: SystemMap;
+  height?: number | string;
 }
 
-const SystemBodiesTree: FunctionComponent<Props> = ({ systemMap }) => {
+const SystemBodiesTree: FunctionComponent<Props> = ({ systemMap, height: heightOverride }) => {
   const { nodes, edges, width, height } = useMemo(() => {
     const roots = [...systemMap.stars]
       .filter((s) => s._type !== SystemBodyType.Null || (s._children?.length ?? 0) > 0)
@@ -344,7 +345,7 @@ const SystemBodiesTree: FunctionComponent<Props> = ({ systemMap }) => {
       onMouseUp={endDrag}
       onMouseLeave={endDrag}
       className="relative w-full overflow-auto border border-sky-900/20 bg-black/30"
-      style={{ height: VIEW_H, cursor: "grab" }}
+      style={{ height: heightOverride ?? VIEW_H, cursor: "grab" }}
     >
       <div className="relative" style={{ width: canvasW, height: canvasH }}>
         <svg
