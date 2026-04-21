@@ -1,6 +1,6 @@
 "use client";
 
-import { type FunctionComponent, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import { type FunctionComponent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { MappedSystemBody } from "@/core/interfaces/SystemBody";
 import type SystemMap from "../../lib/system-map";
 import { SystemBodyType } from "@/core/constants/system";
@@ -457,8 +457,6 @@ const SystemBodiesTree: FunctionComponent<Props> = ({ systemMap, height: heightO
 
   const [zoom, setZoom] = useState(1);
 
-  const patternPrefix = useId().replace(/:/g, "");
-
   const bindScrollable = useCallback((node: HTMLDivElement | null) => {
     scrollRef.current = node;
   }, []);
@@ -543,6 +541,31 @@ const SystemBodiesTree: FunctionComponent<Props> = ({ systemMap, height: heightO
     node.style.removeProperty("user-select");
   };
 
+  const canvasW = width + CANVAS_PAD * 2;
+  const canvasH = height + CANVAS_PAD * 2;
+
+  // Tile-based starfield used as a CSS background on the scroll container so
+  // the viewport stays populated even when the scaled tree shrinks below it.
+  // Tile is large and pseudo-randomly scattered to hide seams.
+  const starfieldUrl = useMemo(() => {
+    const TILE = 512;
+    let s = 0x1f123bb5;
+    const rand = () => {
+      s = (s * 1103515245 + 12345) & 0x7fffffff;
+      return s / 0x7fffffff;
+    };
+    const circles: string[] = [];
+    for (let i = 0; i < 80; i++) {
+      const x = (rand() * TILE).toFixed(1);
+      const y = (rand() * TILE).toFixed(1);
+      const r = (0.3 + rand() * rand() * 1.4).toFixed(2);
+      const o = (0.15 + rand() * 0.5).toFixed(2);
+      circles.push(`<circle cx='${x}' cy='${y}' r='${r}' fill='%23e2f1ff' opacity='${o}'/>`);
+    }
+    const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${TILE}' height='${TILE}'>${circles.join("")}</svg>`;
+    return `url("data:image/svg+xml;utf8,${svg}")`;
+  }, []);
+
   if (nodes.length === 0) {
     return (
       <div className="text-glow__blue py-6 text-center text-lg font-bold uppercase">
@@ -550,33 +573,6 @@ const SystemBodiesTree: FunctionComponent<Props> = ({ systemMap, height: heightO
       </div>
     );
   }
-
-  const canvasW = width + CANVAS_PAD * 2;
-  const canvasH = height + CANVAS_PAD * 2;
-
-  // Deterministic starfield — regenerating per render would cause stars to
-  // re-scatter on every state change. Keyed on canvas size only.
-  const stars = useMemo(() => {
-    let s = 0x9e3779b1;
-    const rand = () => {
-      s = (s * 1103515245 + 12345) & 0x7fffffff;
-      return s / 0x7fffffff;
-    };
-    const count = Math.floor((canvasW * canvasH) / 4500);
-    const out: Array<{ x: number; y: number; r: number; o: number }> = [];
-    for (let i = 0; i < count; i++) {
-      out.push({
-        x: rand() * canvasW,
-        y: rand() * canvasH,
-        r: 0.4 + rand() * rand() * 1.6,
-        o: 0.15 + rand() * 0.55,
-      });
-    }
-    return out;
-  }, [canvasW, canvasH]);
-
-  const gridMinorId = `system-tree-grid-minor-${patternPrefix}`;
-  const gridMajorId = `system-tree-grid-major-${patternPrefix}`;
 
   return (
     <div className="relative w-full" style={{ height: heightOverride ?? VIEW_H }}>
@@ -589,7 +585,23 @@ const SystemBodiesTree: FunctionComponent<Props> = ({ systemMap, height: heightO
         className="relative h-full w-full overflow-auto border border-sky-900/20 bg-black/30"
         style={{ cursor: "grab" }}
       >
-        <div style={{ width: canvasW * zoom, height: canvasH * zoom }}>
+        <div
+          style={{
+            width: canvasW * zoom,
+            height: canvasH * zoom,
+            minWidth: "100%",
+            minHeight: "100%",
+            backgroundImage: [
+              starfieldUrl,
+              "linear-gradient(to right, rgba(56, 189, 248, 0.11) 1px, transparent 1px)",
+              "linear-gradient(to bottom, rgba(56, 189, 248, 0.11) 1px, transparent 1px)",
+              "linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px)",
+              "linear-gradient(to bottom, rgba(56, 189, 248, 0.05) 1px, transparent 1px)",
+            ].join(", "),
+            backgroundSize: "512px 512px, 200px 200px, 200px 200px, 40px 40px, 40px 40px",
+            backgroundRepeat: "repeat",
+          }}
+        >
           <div
             className="relative"
             style={{
@@ -599,53 +611,6 @@ const SystemBodiesTree: FunctionComponent<Props> = ({ systemMap, height: heightO
               transformOrigin: "0 0",
             }}
           >
-        <svg
-          className="pointer-events-none absolute inset-0"
-          width={canvasW}
-          height={canvasH}
-          aria-hidden="true"
-        >
-          <defs>
-            <pattern
-              id={gridMinorId}
-              width={40}
-              height={40}
-              patternUnits="userSpaceOnUse"
-            >
-              <path
-                d="M 40 0 L 0 0 0 40"
-                fill="none"
-                stroke="rgba(56, 189, 248, 0.05)"
-                strokeWidth={1}
-              />
-            </pattern>
-            <pattern
-              id={gridMajorId}
-              width={200}
-              height={200}
-              patternUnits="userSpaceOnUse"
-            >
-              <path
-                d="M 200 0 L 0 0 0 200"
-                fill="none"
-                stroke="rgba(56, 189, 248, 0.11)"
-                strokeWidth={1}
-              />
-            </pattern>
-          </defs>
-          <rect width={canvasW} height={canvasH} fill={`url(#${gridMinorId})`} />
-          <rect width={canvasW} height={canvasH} fill={`url(#${gridMajorId})`} />
-          {stars.map((s, i) => (
-            <circle
-              key={`star-${i}`}
-              cx={s.x}
-              cy={s.y}
-              r={s.r}
-              fill="#e2f1ff"
-              opacity={s.o}
-            />
-          ))}
-        </svg>
         <svg
           className="pointer-events-none absolute inset-0"
           width={canvasW}
