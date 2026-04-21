@@ -12,6 +12,8 @@ interface NodeLayout {
   y: number;
   depth: number;
   size: number;
+  visible: number;
+  labelSide: "below" | "right";
 }
 
 interface Edge {
@@ -19,13 +21,22 @@ interface Edge {
   child: NodeLayout;
 }
 
-const COL_W = 340;
-const LABEL_W = 220;
+const LABEL_W = 100;
 const LABEL_H = 40;
-const CELL_V_BUFFER = 36;
-const ROOT_GAP = 56;
+const LABEL_GAP = 6; // gap between node bottom and label top
+const CELL_H_BUFFER = 28; // horizontal breathing room around each sibling
+const ROW_V_GAP = 56; // vertical gap between a row's label strip and the next row's nodes
+const ROOT_GAP = 80; // horizontal gap between separate root-star subtrees
 const CANVAS_PAD = 72;
-const VIEW_H = 600;
+const VIEW_H = 500;
+
+// Moons (depth 2+) stack vertically under their parent planet rather than
+// spreading horizontally like depth 0/1. Deeper submoons indent right to
+// preserve a readable tree shape while keeping the single vertical column.
+const MOON_ROW_GAP = 12; // vertical gap between stacked moons
+const MOON_TOP_GAP = 12; // gap between planet's label-bottom and first moon top
+const MOON_LABEL_GAP = 10; // horizontal gap between a stacked moon and its right-side label
+const MOON_INDENT = 22; // horizontal offset per depth step beyond 2 (submoons)
 
 // Desired on-screen diameter (px) of the body's *visible* circle before sub-type
 // scaling. Glow/ring padding is layered on top via viewBoxFactor; see below.
@@ -56,8 +67,8 @@ const isInteractive = (body: MappedSystemBody): boolean =>
 // Visual size multiplier based on body sub_type. Applied to the depth base
 // so gas giants dwarf rocky/icy bodies while staying within their depth class.
 const subTypeMultiplier = (body: MappedSystemBody): number => {
-  if (isStarLike(body)) return 1.0;
-  if (body._type === SystemBodyType.Barycenter) return 0.55;
+  if (isStarLike(body)) return 1.3;
+  if (body._type === SystemBodyType.Barycenter) return 1.0;
   if (body._type === SystemBodyType.Null) return 0.55;
 
   const st = (body.sub_type ?? "").toLowerCase();
@@ -226,59 +237,201 @@ const SystemBodiesTree: FunctionComponent<Props> = ({ systemMap, height: heightO
     const ns: NodeLayout[] = [];
     const es: Edge[] = [];
 
-    // Tallest cell height a subtree at this depth could occupy; used as a
-    // floor for vertical space even if children are small.
-    const cellHeightFor = (size: number) => size + LABEL_H + CELL_V_BUFFER;
+    // Horizontal width a sibling should occupy, including label width so
+    // labels don't collide between neighbouring siblings.
+    const cellWidthFor = (size: number) =>
+      Math.max(size, LABEL_W) + CELL_H_BUFFER;
 
-    const rootColOffset = Math.round(baseVisibleForDepth(0) * 1.8);
+    interface MoonPlan {
+      body: MappedSystemBody;
+      parent: MappedSystemBody;
+      depth: number;
+      visible: number;
+      size: number;
+    }
 
+    // Walk all descendants of a planet in DFS order, recording the display
+    // size each moon would render at. Used both for sizing the planet's
+    // horizontal cell and for the vertical post-layout pass.
+    const collectMoons = (
+      planet: MappedSystemBody,
+      planetVisible: number,
+    ): MoonPlan[] => {
+      const out: MoonPlan[] = [];
+      const walk = (
+        parent: MappedSystemBody,
+        parentVisible: number,
+        depth: number,
+      ) => {
+        for (const child of parent._children ?? []) {
+          const visible = computeVisibleSize(child, depth, parentVisible);
+          const size = computeBoxSize(child, visible);
+          out.push({ body: child, parent, depth, visible, size });
+          walk(child, visible, depth + 1);
+        }
+      };
+      walk(planet, planetVisible, 2);
+      return out;
+    };
+
+    // Horizontal half-width a planet needs in order to keep its vertical
+    // moon column (with right-side labels) inside its own cell.
+    const planetHalfWidthFor = (
+      planetSize: number,
+      moons: MoonPlan[],
+    ): number => {
+      let right = Math.max(planetSize / 2, LABEL_W / 2);
+      let left = Math.max(planetSize / 2, LABEL_W / 2);
+      for (const m of moons) {
+        const indent = (m.depth - 2) * MOON_INDENT;
+        const r = indent + m.size / 2 + MOON_LABEL_GAP + LABEL_W;
+        if (r > right) right = r;
+        const l = m.size / 2 - indent;
+        if (l > left) left = l;
+      }
+      return Math.max(left, right);
+    };
+
+    // Post-order: lay children out left-to-right, then center the parent
+    // over them. Recursion stops at depth 1 (planets) — moons (depth 2+)
+    // are laid out vertically in a second pass below. y is assigned later
+    // once per-depth row heights are known.
     const layout = (
       body: MappedSystemBody,
       depth: number,
-      yOffset: number,
+      xOffset: number,
       parentVisible?: number,
-    ): { height: number; root: NodeLayout } => {
+    ): { width: number; root: NodeLayout } => {
       const visible = computeVisibleSize(body, depth, parentVisible);
       const size = computeBoxSize(body, visible);
-      const cellH = cellHeightFor(size);
-      const x = depth * COL_W + rootColOffset;
       const children = body._children ?? [];
 
-      if (children.length === 0) {
-        const y = yOffset + cellH / 2;
-        const node: NodeLayout = { body, x, y, depth, size };
+      if (depth >= 1) {
+        const moons = collectMoons(body, visible);
+        const halfW = planetHalfWidthFor(size, moons);
+        const cellW = halfW * 2 + CELL_H_BUFFER;
+        const x = xOffset + cellW / 2;
+        const node: NodeLayout = {
+          body,
+          x,
+          y: 0,
+          depth,
+          size,
+          visible,
+          labelSide: "below",
+        };
         ns.push(node);
-        return { height: cellH, root: node };
+        return { width: cellW, root: node };
       }
 
-      let cursor = yOffset;
+      if (children.length === 0) {
+        const cellW = cellWidthFor(size);
+        const x = xOffset + cellW / 2;
+        const node: NodeLayout = {
+          body,
+          x,
+          y: 0,
+          depth,
+          size,
+          visible,
+          labelSide: "below",
+        };
+        ns.push(node);
+        return { width: cellW, root: node };
+      }
+
+      let cursor = xOffset;
       const childRoots: NodeLayout[] = [];
       for (const child of children) {
         const res = layout(child, depth + 1, cursor, visible);
-        cursor += res.height;
+        cursor += res.width;
         childRoots.push(res.root);
       }
-      const childrenSpan = cursor - yOffset;
-      const span = Math.max(childrenSpan, cellH);
-      const firstY = childRoots[0].y;
-      const lastY = childRoots[childRoots.length - 1].y;
-      const centerY = (firstY + lastY) / 2;
-      const node: NodeLayout = { body, x, y: centerY, depth, size };
+      const cellW = cellWidthFor(size);
+      const span = Math.max(cursor - xOffset, cellW);
+      const firstX = childRoots[0].x;
+      const lastX = childRoots[childRoots.length - 1].x;
+      const centerX = (firstX + lastX) / 2;
+      const node: NodeLayout = {
+        body,
+        x: centerX,
+        y: 0,
+        depth,
+        size,
+        visible,
+        labelSide: "below",
+      };
       ns.push(node);
       for (const cr of childRoots) es.push({ parent: node, child: cr });
-      return { height: span, root: node };
+      return { width: span, root: node };
     };
 
-    let yCursor = 0;
-    let maxDepth = 0;
+    let xCursor = 0;
     for (const root of roots) {
-      const res = layout(root, 0, yCursor, undefined);
-      yCursor += res.height + ROOT_GAP;
-      for (const n of ns) if (n.depth > maxDepth) maxDepth = n.depth;
+      const res = layout(root, 0, xCursor, undefined);
+      xCursor += res.width + ROOT_GAP;
     }
-    const rootFloor = Math.round(baseVisibleForDepth(0) * 3) + LABEL_H + CELL_V_BUFFER;
-    const totalH = Math.max(yCursor - ROOT_GAP, rootFloor);
-    const totalW = (maxDepth + 1) * COL_W + LABEL_W - COL_W + rootColOffset * 2;
+
+    // Resolve row y positions for depths 0 and 1 (stars and planets). Moons
+    // are placed per-planet in the vertical pass that follows.
+    const maxSizePerDepth: Record<number, number> = {};
+    for (const n of ns) {
+      if (n.depth > 1) continue;
+      const prev = maxSizePerDepth[n.depth] ?? 0;
+      if (n.size > prev) maxSizePerDepth[n.depth] = n.size;
+    }
+    const rowCenterY: Record<number, number> = {};
+    let yAccum = 0;
+    for (let d = 0; d <= 1; d++) {
+      const rowH = maxSizePerDepth[d] ?? baseVisibleForDepth(d);
+      rowCenterY[d] = yAccum + rowH / 2;
+      yAccum += rowH + LABEL_GAP + LABEL_H + ROW_V_GAP;
+    }
+    for (const n of ns) {
+      if (n.depth <= 1) n.y = rowCenterY[n.depth];
+    }
+
+    // Vertical moon pass: for each planet, stack its descendants in DFS
+    // order beneath it at the planet's x. Deeper submoons indent right so
+    // their edges don't overlap sibling subtrees above them.
+    let moonStackBottom = yAccum - ROW_V_GAP;
+    const planetNodes = ns.filter((n) => n.depth === 1);
+    for (const planetNode of planetNodes) {
+      const moons = collectMoons(planetNode.body, planetNode.visible);
+      if (moons.length === 0) continue;
+      const bodyToNode = new Map<MappedSystemBody, NodeLayout>();
+      bodyToNode.set(planetNode.body, planetNode);
+      let cursorY =
+        planetNode.y +
+        planetNode.size / 2 +
+        LABEL_GAP +
+        LABEL_H +
+        MOON_TOP_GAP;
+      for (const m of moons) {
+        const indent = (m.depth - 2) * MOON_INDENT;
+        const x = planetNode.x + indent;
+        const y = cursorY + m.size / 2;
+        cursorY = y + m.size / 2 + MOON_ROW_GAP;
+        const moonNode: NodeLayout = {
+          body: m.body,
+          x,
+          y,
+          depth: m.depth,
+          size: m.size,
+          visible: m.visible,
+          labelSide: "right",
+        };
+        ns.push(moonNode);
+        const parentNode = bodyToNode.get(m.parent) ?? planetNode;
+        es.push({ parent: parentNode, child: moonNode });
+        bodyToNode.set(m.body, moonNode);
+      }
+      const thisBottom = cursorY - MOON_ROW_GAP;
+      if (thisBottom > moonStackBottom) moonStackBottom = thisBottom;
+    }
+
+    const totalW = Math.max(xCursor - ROOT_GAP, baseVisibleForDepth(0) * 4);
+    const totalH = Math.max(moonStackBottom, baseVisibleForDepth(0) * 2);
 
     return { nodes: ns, edges: es, width: totalW, height: totalH };
   }, [systemMap]);
@@ -354,12 +507,20 @@ const SystemBodiesTree: FunctionComponent<Props> = ({ systemMap, height: heightO
           height={canvasH}
         >
           {edges.map((e, i) => {
-            const px = e.parent.x + e.parent.size / 2 - 2 + CANVAS_PAD;
-            const py = e.parent.y + CANVAS_PAD;
-            const cx = e.child.x - e.child.size / 2 + 2 + CANVAS_PAD;
-            const cy = e.child.y + CANVAS_PAD;
-            const mx = (px + cx) / 2;
-            const d = `M ${px} ${py} C ${mx} ${py}, ${mx} ${cy}, ${cx} ${cy}`;
+            // Start edge below the parent's label strip (or directly below
+            // the parent's body when its label sits to the right), end at
+            // the child's top edge.
+            const px = e.parent.x + CANVAS_PAD;
+            const parentLabelBelow = e.parent.labelSide === "below";
+            const py =
+              e.parent.y +
+              e.parent.size / 2 +
+              (parentLabelBelow ? LABEL_GAP + LABEL_H : 0) +
+              CANVAS_PAD;
+            const cx = e.child.x + CANVAS_PAD;
+            const cy = e.child.y - e.child.size / 2 - 2 + CANVAS_PAD;
+            const my = (py + cy) / 2;
+            const d = `M ${px} ${py} C ${px} ${my}, ${cx} ${my}, ${cx} ${cy}`;
             return (
               <path
                 key={i}
@@ -385,31 +546,41 @@ const SystemBodiesTree: FunctionComponent<Props> = ({ systemMap, height: heightO
           </div>
         ))}
 
-        {nodes.map((n) => (
-          <div
-            key={`label-${n.body._type}-${n.body.body_id}-${n.body.name}`}
-            className="pointer-events-none absolute text-center"
-            style={{
-              left: n.x - LABEL_W / 2 + CANVAS_PAD,
-              top: n.y + n.size / 2 + 6 + CANVAS_PAD,
-              width: LABEL_W,
-            }}
-          >
-            <div className="text-glow system-tree__node-label truncate text-[0.7rem] font-bold uppercase tracking-wider">
-              {n.body._label ?? n.body.name}
+        {nodes.map((n) => {
+          const rightLabel = n.labelSide === "right";
+          const style: React.CSSProperties = rightLabel
+            ? {
+                left: n.x + n.size / 2 + MOON_LABEL_GAP + CANVAS_PAD,
+                top: n.y - LABEL_H / 2 + CANVAS_PAD,
+                width: LABEL_W,
+              }
+            : {
+                left: n.x - LABEL_W / 2 + CANVAS_PAD,
+                top: n.y + n.size / 2 + LABEL_GAP + CANVAS_PAD,
+                width: LABEL_W,
+              };
+          return (
+            <div
+              key={`label-${n.body._type}-${n.body.body_id}-${n.body.name}`}
+              className={`pointer-events-none absolute ${rightLabel ? "text-left" : "text-center"}`}
+              style={style}
+            >
+              <div className="text-glow system-tree__node-label truncate text-[0.7rem] font-bold uppercase tracking-wider">
+                {n.body._label ?? n.body.name}
+              </div>
+              {n.body.sub_type && (
+                <div className="truncate text-[0.6rem] uppercase tracking-widest text-neutral-500">
+                  {n.body.sub_type}
+                </div>
+              )}
+              {!n.body.sub_type && n.body._description && (
+                <div className="truncate text-[0.6rem] uppercase tracking-widest text-neutral-500">
+                  {n.body._description}
+                </div>
+              )}
             </div>
-            {n.body.sub_type && (
-              <div className="truncate text-[0.6rem] uppercase tracking-widest text-neutral-500">
-                {n.body.sub_type}
-              </div>
-            )}
-            {!n.body.sub_type && n.body._description && (
-              <div className="truncate text-[0.6rem] uppercase tracking-widest text-neutral-500">
-                {n.body._description}
-              </div>
-            )}
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
