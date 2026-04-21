@@ -23,19 +23,19 @@ interface Edge {
 
 const LABEL_W = 100;
 const LABEL_H = 40;
-const LABEL_GAP = 6; // gap between node bottom and label top
+const LABEL_GAP = 38; // gap between node bottom and label top
 const CELL_H_BUFFER = 28; // horizontal breathing room around each sibling
 const ROW_V_GAP = 56; // vertical gap between a row's label strip and the next row's nodes
 const ROOT_GAP = 80; // horizontal gap between separate root-star subtrees
 const CANVAS_PAD = 72;
-const VIEW_H = 500;
+const VIEW_H = 520;
 
 // Moons (depth 2+) stack vertically under their parent planet rather than
 // spreading horizontally like depth 0/1. Deeper submoons indent right to
 // preserve a readable tree shape while keeping the single vertical column.
-const MOON_ROW_GAP = 12; // vertical gap between stacked moons
-const MOON_TOP_GAP = 12; // gap between planet's label-bottom and first moon top
-const MOON_LABEL_GAP = 10; // horizontal gap between a stacked moon and its right-side label
+const MOON_ROW_GAP = 32; // vertical gap between stacked moons
+const MOON_TOP_GAP = 28; // gap between planet's label-bottom and first moon top
+const MOON_LABEL_GAP = 28; // horizontal gap between a stacked moon and its right-side label
 const MOON_INDENT = 22; // horizontal offset per depth step beyond 2 (submoons)
 
 // Desired on-screen diameter (px) of the body's *visible* circle before sub-type
@@ -99,7 +99,13 @@ const viewBoxFactor = (body: MappedSystemBody): number => {
   return 1.25;
 };
 
-const bodyRadius = (body: MappedSystemBody): number => body._r ?? 2000;
+// Fixed reference size for the node's SVG viewBox. viewBoxFactor scales this
+// to reserve padding for glow/rings. Per-body radius is constant in the tree —
+// on-screen sizing is driven by the outer width/height (see computeBoxSize),
+// not by the SVG-internal radius, so every body fills the same fraction of
+// its viewBox regardless of its real _r.
+const VIEWBOX_BASE = 2000;
+const TREE_BODY_RADIUS = 3000;
 
 const computeVisibleSize = (
   body: MappedSystemBody,
@@ -129,8 +135,8 @@ const TreeNodeCard: FunctionComponent<CardProps> = ({ body, size }) => {
     systemDispatcher.selectBody({ body, type: "display-body-panel" });
   };
 
-  const radius = bodyRadius(body);
-  const extent = radius * viewBoxFactor(body);
+  const radius = TREE_BODY_RADIUS;
+  const extent = VIEWBOX_BASE * viewBoxFactor(body);
   const viewBox = `${-extent} ${-extent} ${extent * 2} ${extent * 2}`;
   const maskId = `tree-ring-mask-${body._type}-${body.body_id}`;
 
@@ -403,15 +409,15 @@ const SystemBodiesTree: FunctionComponent<Props> = ({ systemMap, height: heightO
       bodyToNode.set(planetNode.body, planetNode);
       let cursorY =
         planetNode.y +
-        planetNode.size / 2 +
+        planetNode.visible / 2 +
         LABEL_GAP +
         LABEL_H +
         MOON_TOP_GAP;
       for (const m of moons) {
         const indent = (m.depth - 2) * MOON_INDENT;
         const x = planetNode.x + indent;
-        const y = cursorY + m.size / 2;
-        cursorY = y + m.size / 2 + MOON_ROW_GAP;
+        const y = cursorY + m.visible / 2;
+        cursorY = y + m.visible / 2 + MOON_ROW_GAP;
         const moonNode: NodeLayout = {
           body: m.body,
           x,
@@ -514,11 +520,11 @@ const SystemBodiesTree: FunctionComponent<Props> = ({ systemMap, height: heightO
             const parentLabelBelow = e.parent.labelSide === "below";
             const py =
               e.parent.y +
-              e.parent.size / 2 +
+              e.parent.visible / 2 +
               (parentLabelBelow ? LABEL_GAP + LABEL_H : 0) +
               CANVAS_PAD;
             const cx = e.child.x + CANVAS_PAD;
-            const cy = e.child.y - e.child.size / 2 - 2 + CANVAS_PAD;
+            const cy = e.child.y - e.child.visible / 2 - 2 + CANVAS_PAD;
             const my = (py + cy) / 2;
             const d = `M ${px} ${py} C ${px} ${my}, ${cx} ${my}, ${cx} ${cy}`;
             return (
@@ -550,13 +556,13 @@ const SystemBodiesTree: FunctionComponent<Props> = ({ systemMap, height: heightO
           const rightLabel = n.labelSide === "right";
           const style: React.CSSProperties = rightLabel
             ? {
-                left: n.x + n.size / 2 + MOON_LABEL_GAP + CANVAS_PAD,
+                left: n.x + n.visible / 2 + MOON_LABEL_GAP + CANVAS_PAD,
                 top: n.y - LABEL_H / 2 + CANVAS_PAD,
                 width: LABEL_W,
               }
             : {
                 left: n.x - LABEL_W / 2 + CANVAS_PAD,
-                top: n.y + n.size / 2 + LABEL_GAP + CANVAS_PAD,
+                top: n.y + n.visible / 2 + LABEL_GAP + CANVAS_PAD,
                 width: LABEL_W,
               };
           return (
