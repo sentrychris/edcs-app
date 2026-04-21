@@ -66,12 +66,12 @@ const Footer: FunctionComponent = () => {
         <div className="flex flex-col gap-3 text-[0.65em] uppercase tracking-widest items-center md:items-end">
           <div className="flex items-center gap-1 text-neutral-500">
             <i className="icarus-terminal-shield text-glow__blue"></i>
-            <span>Made by</span>
+            <span>Developed by</span>
             <a
               href="https://github.com/sentrychris"
               className="text-glow__blue"
             >
-              Chris Korovin
+              Chris
             </a>
           </div>
           <div className="flex flex-wrap gap-2 text-neutral-700">

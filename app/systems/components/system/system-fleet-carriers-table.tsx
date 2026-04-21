@@ -170,7 +170,7 @@ const SystemFleetCarriersTable: FunctionComponent<Props> = ({ fleetCarriers }) =
     />
   );
 
-  return <Table header={header} columns={columns} data={rows} meta={meta} links={links} page={handlePage} />;
+  return <Table collapsible header={header} columns={columns} data={rows} meta={meta} links={links} page={handlePage} />;
 };
 
 export default SystemFleetCarriersTable;

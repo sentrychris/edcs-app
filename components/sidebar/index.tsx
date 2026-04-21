@@ -61,7 +61,7 @@ const Sidebar: FunctionComponent<Props> = ({ articles, user }) => {
           <>
             <div className="min-w-0 flex-1">
               <p className="text-glow__blue text-xs font-bold uppercase tracking-widest">ED:CS Terminal</p>
-              <p className="truncate text-xs uppercase tracking-wider text-neutral-600">Made by Chris Korovin</p>
+              <p className="truncate text-xs uppercase tracking-wider text-neutral-600">Galactic Intelligence</p>
             </div>
             <div className="ml-auto flex shrink-0 items-center gap-1.5 text-neutral-700" style={{ fontSize: "0.6rem" }}>
               <span className="fx-dot-green h-1.5 w-1.5"></span>

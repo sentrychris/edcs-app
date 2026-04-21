@@ -1,6 +1,6 @@
 import type { JSX } from "react";
 import type { Meta, Links } from "@/core/interfaces/Pagination";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAnimateTable } from "@/core/hooks/animate";
 import PaginationLinks from "./pagination-links";
 import Panel from "./panel";
@@ -26,12 +26,25 @@ interface Props<T extends RequiredAttribute> {
   links?: Links;
   page?: (link: string) => void;
   header?: JSX.Element;
+  collapsible?: boolean;
+  defaultCollapsed?: boolean;
 }
 
-function Table<T extends RequiredAttribute>({ columns, data, meta, links, page, header }: Props<T>) {
+function Table<T extends RequiredAttribute>({
+  columns,
+  data,
+  meta,
+  links,
+  page,
+  header,
+  collapsible = false,
+  defaultCollapsed = false,
+}: Props<T>) {
   type Mode = { accessor?: string; render?: RenderColumn<T> };
   const isRender = (ctx: Mode): ctx is Required<Mode> => !!ctx.render;
   const isAccessor = (ctx: Mode): ctx is Required<Mode> => !!ctx.accessor;
+
+  const [collapsed, setCollapsed] = useState(defaultCollapsed);
 
   useEffect(useAnimateTable);
 
@@ -93,29 +106,56 @@ function Table<T extends RequiredAttribute>({ columns, data, meta, links, page, 
     if (page) page(link);
   };
 
+  const resolvedHeader = collapsible ? (
+    <div
+      role="button"
+      tabIndex={0}
+      aria-expanded={!collapsed}
+      onClick={() => setCollapsed((v) => !v)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          setCollapsed((v) => !v);
+        }
+      }}
+      className="flex items-stretch cursor-pointer select-none hover:bg-sky-500/5 transition-colors"
+    >
+      <div className="flex-1 min-w-0">{header}</div>
+      <div className="flex items-center px-5 text-glow__blue border-b border-sky-900/20">
+        <i className={`icarus-terminal-chevron-${collapsed ? "down" : "up"} text-sm`} />
+      </div>
+    </div>
+  ) : (
+    header
+  );
+
   return (
     <Panel variant="muted" cornerClassName="z-10">
 
-      {header}
-      <div className="overflow-x-auto pb-1 pt-2">
-        <table className="table--layout table--animated table--interactive w-full text-left text-sm text-gray-500">
-          <thead className="border-b border-sky-900/20 uppercase">
-            <tr>
-              {Object.keys(columns).map((key) => (
-                <th
-                  key={`columnHeader_${key}`}
-                  scope="col"
-                  className="px-6 py-3 text-xs font-bold tracking-widest text-glow__blue"
-                >
-                  {"title" in columns[key] ? columns[key].title : key}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          {renderBody(data)}
-        </table>
-      </div>
-      {links && meta && <PaginationLinks metadata={meta} links={links} paginate={paginate} />}
+      {resolvedHeader}
+      {!collapsed && (
+        <>
+          <div className="overflow-x-auto pb-1 pt-2">
+            <table className="table--layout table--animated table--interactive w-full text-left text-sm text-gray-500">
+              <thead className="border-b border-sky-900/20 uppercase">
+                <tr>
+                  {Object.keys(columns).map((key) => (
+                    <th
+                      key={`columnHeader_${key}`}
+                      scope="col"
+                      className="px-6 py-3 text-xs font-bold tracking-widest text-glow__blue"
+                    >
+                      {"title" in columns[key] ? columns[key].title : key}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              {renderBody(data)}
+            </table>
+          </div>
+          {links && meta && <PaginationLinks metadata={meta} links={links} paginate={paginate} />}
+        </>
+      )}
     </Panel>
   );
 }

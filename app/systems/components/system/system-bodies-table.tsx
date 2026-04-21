@@ -165,7 +165,7 @@ const SystemBodiesTable: FunctionComponent<Props> = ({ bodies, systemSlug }) => 
     <Heading bordered icon="icarus-terminal-system-orbits" title="Orbital Bodies" subtitle="Planetary Survey Records" className="px-5 py-4" />
   );
 
-  return <Table header={header} columns={columns} data={rows} meta={meta} links={links} page={handlePage} />;
+  return <Table collapsible header={header} columns={columns} data={rows} meta={meta} links={links} page={handlePage} />;
 };
 
 export default SystemBodiesTable;

@@ -167,7 +167,7 @@ const SystemStarsTable: FunctionComponent<Props> = ({ stars, dispatcher }) => {
   );
 
   return (
-    <Table header={header} columns={columns} data={rows} meta={meta} links={links} page={handlePage} />
+    <Table collapsible header={header} columns={columns} data={rows} meta={meta} links={links} page={handlePage} />
   );
 };
 

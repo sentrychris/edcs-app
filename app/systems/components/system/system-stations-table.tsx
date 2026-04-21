@@ -146,7 +146,7 @@ const SystemStationsTable: FunctionComponent<Props> = ({ stations, dispatcher })
     <Heading bordered icon="icarus-terminal-outpost" title="System Stations" subtitle="Docking & Logistics Network" className="px-5 py-4" />
   );
 
-  return <Table header={header} columns={columns} data={rows} meta={meta} links={links} page={handlePage} />;
+  return <Table collapsible header={header} columns={columns} data={rows} meta={meta} links={links} page={handlePage} />;
 };
 
 export default SystemStationsTable;
