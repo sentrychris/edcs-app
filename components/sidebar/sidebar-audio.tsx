@@ -14,6 +14,7 @@ const SidebarAudio = ({ articles }: Props) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [collapsed, setCollapsed] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const current = articles[currentIndex];
@@ -54,24 +55,47 @@ const SidebarAudio = ({ articles }: Props) => {
   return (
     <div className="border-t border-sky-900/20 px-4 py-4">
       {/* Section header */}
-      <div className="mb-3 flex items-center justify-between border-b border-sky-900/20 pb-3">
+      <div
+        role="button"
+        tabIndex={0}
+        aria-expanded={!collapsed}
+        aria-controls="sidebar-audio-panel"
+        onClick={() => setCollapsed((v) => !v)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            setCollapsed((v) => !v);
+          }
+        }}
+        className={`flex cursor-pointer select-none items-center justify-between border-b border-sky-900/20 ${collapsed ? "pb-0" : "mb-3 pb-3"} transition-colors hover:bg-sky-500/5`}
+      >
         <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-neutral-600">
           <i className="icarus-terminal-sound text-sky-500/50"></i>
           <span>Galnet Broadcast</span>
         </div>
-        {isPlaying && (
-          <div className="flex items-end gap-px h-3.5">
-            <div className="w-0.5 bg-sky-500 rounded-sm fx-eq-bar" style={{ animationDelay: "0s" }}></div>
-            <div className="w-0.5 bg-sky-500 rounded-sm fx-eq-bar" style={{ animationDelay: "0.15s" }}></div>
-            <div className="w-0.5 bg-sky-500 rounded-sm fx-eq-bar" style={{ animationDelay: "0.3s" }}></div>
-            <div className="w-0.5 bg-sky-500 rounded-sm fx-eq-bar" style={{ animationDelay: "0.1s" }}></div>
-            <div className="w-0.5 bg-sky-500 rounded-sm fx-eq-bar" style={{ animationDelay: "0.25s" }}></div>
-          </div>
-        )}
+        <div className="flex items-center gap-3">
+          {isPlaying && (
+            <div className="flex items-end gap-px h-3.5">
+              <div className="w-0.5 bg-sky-500 rounded-sm fx-eq-bar" style={{ animationDelay: "0s" }}></div>
+              <div className="w-0.5 bg-sky-500 rounded-sm fx-eq-bar" style={{ animationDelay: "0.15s" }}></div>
+              <div className="w-0.5 bg-sky-500 rounded-sm fx-eq-bar" style={{ animationDelay: "0.3s" }}></div>
+              <div className="w-0.5 bg-sky-500 rounded-sm fx-eq-bar" style={{ animationDelay: "0.1s" }}></div>
+              <div className="w-0.5 bg-sky-500 rounded-sm fx-eq-bar" style={{ animationDelay: "0.25s" }}></div>
+            </div>
+          )}
+          <i
+            className={`icarus-terminal-chevron-${collapsed ? "down" : "up"} text-sky-500/60 text-sm`}
+            aria-hidden="true"
+          />
+        </div>
       </div>
 
       {/* Player panel */}
-      <div className="relative border border-sky-900/20 p-3">
+      <div
+        id="sidebar-audio-panel"
+        hidden={collapsed}
+        className="relative border border-sky-900/20 p-3"
+      >
         <PanelCorners size="sm" color="border-sky-500/70" />
 
         {/* Track info */}
