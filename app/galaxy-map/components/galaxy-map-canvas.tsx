@@ -191,7 +191,7 @@ function starAppearance(seed: number): [number, number, number, number] {
   for (let i = 0; i < STAR_CLASSES.length; i++) {
     const [thr, r, g, b, sz] = STAR_CLASSES[i];
     if (h1 < thr) {
-      const lum = 0.20 + h2;
+      const lum = 0.18 + h2 * 0.05;
       // const lum = 0.15 + h2 * 0.05;
       return [r * lum, g * lum, b * lum, sz * (0.8 + h3 * 0.4)];
     }
