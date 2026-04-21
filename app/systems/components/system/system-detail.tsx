@@ -12,7 +12,7 @@ import TrackSystemVisit from "@/components/sidebar/track-system-visit";
 import SystemMap from "../../lib/system-map";
 import SystemHeader from "./system-header";
 import SystemInformationBar from "./system-information-bar";
-import SystemBodyPopover from "./system-body-popover";
+import SystemBodyModal from "./system-body-modal";
 import SystemStarsTable from "./system-stars-table";
 import SystemBodiesTable from "./system-bodies-table";
 import SystemBodiesMap from "./system-bodies-map";
@@ -78,9 +78,9 @@ const SystemDetail: FunctionComponent<Props> = ({ params, initialData = null }) 
         )}
       </div>
 
-      {/* ── Body Detail Popout ── */}
+      {/* ── Body Detail Modal ── */}
       {isPanelOpen && selectedBody && systemMap && (
-        <SystemBodyPopover
+        <SystemBodyModal
           body={selectedBody}
           system={systemMap}
           close={() => setIsPanelOpen(false)}

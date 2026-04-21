@@ -7,7 +7,7 @@ import { XMarkIcon, CheckIcon } from "@heroicons/react/24/outline";
 import PanelCorners from "@/components/panel-corners";
 import SectionHeader from "@/components/section-header";
 import { SystemBodyType } from "@/core/constants/system";
-import { formatDate, formatNumber } from "@/core/string-utils";
+import { formatDate, formatNumber, formatOrbitalPeriod } from "@/core/string-utils";
 import Link from "next/link";
 
 interface Props {
@@ -32,18 +32,18 @@ const Yes = () => <span className="text-green-400">Yes</span>;
 const No = () => <span className="text-red-400/80">No</span>;
 
 
-const MIN_WIDTH = 260;
+const MIN_WIDTH = 420;
 const MIN_HEIGHT = 200;
 const DEFAULT_WIDTH = 420;
 
-const SystemBodyPopover: FunctionComponent<Props> = ({ body, system, close }) => {
+const SystemBodyModal: FunctionComponent<Props> = ({ body, system, close }) => {
   const [position, setPosition] = useState(() => ({
-    x: typeof window !== "undefined" ? Math.max(0, window.innerWidth - DEFAULT_WIDTH - 24) : 0,
+    x: typeof window !== "undefined" ? Math.max(0, window.innerWidth - DEFAULT_WIDTH - 256) : 0,
     y: 80,
   }));
   const [size, setSize] = useState(() => ({
     width: DEFAULT_WIDTH,
-    height: typeof window !== "undefined" ? Math.min(Math.round(window.innerHeight * 0.8), 560) : 560,
+    height: typeof window !== "undefined" ? Math.min(Math.round(window.innerHeight), 600) : 600,
   }));
 
   const [isDragging, setIsDragging] = useState(false);
@@ -298,10 +298,7 @@ const SystemBodyPopover: FunctionComponent<Props> = ({ body, system, close }) =>
         {/* Orbital data */}
         <section>
           <SectionHeader icon="icarus-terminal-system-orbits" title="Orbital Mechanics" />
-          <StatRow
-            label="Orbital Period"
-            value={body.orbital_period ? `${body.orbital_period.toFixed(4)} D` : "—"}
-          />
+          <StatRow label="Orbital Period" value={formatOrbitalPeriod(body.orbital_period)} />
           <StatRow
             label="Inclination"
             value={body.orbital_inclination ? `${body.orbital_inclination.toFixed(4)}°` : "—"}
@@ -370,4 +367,4 @@ const SystemBodyPopover: FunctionComponent<Props> = ({ body, system, close }) =>
   );
 };
 
-export default SystemBodyPopover;
+export default SystemBodyModal;

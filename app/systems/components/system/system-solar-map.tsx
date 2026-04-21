@@ -7,6 +7,7 @@ import type { System } from "@/core/interfaces/System";
 import type { MappedSystemBody } from "@/core/interfaces/SystemBody";
 import { getResource } from "@/core/api";
 import { SystemBodyType } from "@/core/constants/system";
+import { formatOrbitalPeriod } from "@/core/string-utils";
 import SystemMap from "../../lib/system-map";
 import { systemState } from "../../lib/state";
 import Loader from "@/components/loader";
@@ -1240,7 +1241,7 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
               {!!selectedBody.orbital_period && (
                 <BodyRow
                   label="Orbital Period"
-                  value={`${selectedBody.orbital_period.toFixed(1)} d`}
+                  value={formatOrbitalPeriod(selectedBody.orbital_period)}
                 />
               )}
               {!!selectedBody.semi_major_axis && (

@@ -229,7 +229,7 @@ export default class SystemMap {
       station.parents = this.inferStationParents(nearestPlanet, nearestStar);
       this.buildStationServices(station);
 
-      // Attach planetary bases to their parent body for display in the body popover
+      // Attach planetary bases to their parent body
       if (PLANETARY_BASES.includes(station.type) && station.body?.id) {
         const parentBody = this.items.find((item) => item.name === station.body?.name);
         if (parentBody) {

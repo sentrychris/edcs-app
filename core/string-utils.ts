@@ -16,6 +16,28 @@ export function formatNumber(n: number) {
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+/**
+ * Format an orbital period (in days, possibly negative for retrograde orbits)
+ * as a compact "xY xM xD xh" string. Uses 365-day years and 30-day months so
+ * it stays a readable approximation rather than a calendar conversion.
+ */
+export function formatOrbitalPeriod(days: number | null | undefined): string {
+  if (days == null || !isFinite(days) || days === 0) return "—";
+  const totalHours = Math.abs(days) * 24;
+  const y = Math.floor(totalHours / (365 * 24));
+  let rem = totalHours - y * 365 * 24;
+  const mo = Math.floor(rem / (30 * 24));
+  rem -= mo * 30 * 24;
+  const d = Math.floor(rem / 24);
+  const h = Math.floor(rem - d * 24);
+  const parts: string[] = [];
+  if (y) parts.push(`${y}Y`);
+  if (mo) parts.push(`${mo}M`);
+  if (d) parts.push(`${d}D`);
+  if (h) parts.push(`${h}h`);
+  return parts.length > 0 ? parts.join(" ") : "<1h";
+}
+
 export function escapeRegExp(text: string) {
   return text.replace(/[[\]{}()*+?.,\-\\^$|#\s]/g, "\\$&");
 }

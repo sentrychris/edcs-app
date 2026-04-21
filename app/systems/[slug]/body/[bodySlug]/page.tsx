@@ -3,7 +3,7 @@ import type { SystemBodyResource, SystemBodyRing } from "@/core/interfaces/Syste
 import type { Station } from "@/core/interfaces/Station";
 import { settings } from "@/core/config";
 import { getResource } from "@/core/api";
-import { formatDate, formatNumber } from "@/core/string-utils";
+import { formatDate, formatNumber, formatOrbitalPeriod } from "@/core/string-utils";
 import { PLANETARY_BASES, SystemBodyType } from "@/core/constants/system";
 import { stationIconByType } from "@/core/render-utils";
 import { CheckIcon } from "@heroicons/react/24/outline";
@@ -206,7 +206,7 @@ export default async function Page({ params }: Props) {
           {/* Orbital mechanics */}
           <Panel variant="muted" className="fx-chamfer p-5">
             <SectionHeader icon="icarus-terminal-system-orbits" title="Orbital Mechanics" />
-            <StatRow label="Orbital Period"    value={body.orbital?.orbital_period     != null ? `${body.orbital.orbital_period.toFixed(4)} D`     : "—"} />
+            <StatRow label="Orbital Period"    value={formatOrbitalPeriod(body.orbital?.orbital_period)} />
             <StatRow label="Inclination"       value={body.orbital?.orbital_inclination != null ? `${body.orbital.orbital_inclination.toFixed(4)}°` : "—"} />
             <StatRow label="Eccentricity"      value={body.orbital?.orbital_eccentricity != null ? body.orbital.orbital_eccentricity.toFixed(6)     : "—"} />
             <StatRow label="Arg of Periapsis"  value={body.orbital?.arg_of_periapsis    != null ? body.orbital.arg_of_periapsis.toFixed(4)          : "—"} />
