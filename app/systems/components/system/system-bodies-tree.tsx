@@ -641,20 +641,41 @@ const SystemBodiesTree: FunctionComponent<Props> = ({ systemMap, height: heightO
           })}
         </svg>
 
-        {nodes.map((n) => (
-          <div
-            key={`node-${n.body._type}-${n.body.body_id}-${n.body.name}`}
-            className="absolute flex items-center justify-center"
-            style={{
-              left: n.x - n.size / 2 + CANVAS_PAD,
-              top: n.y - n.size / 2 + CANVAS_PAD,
-              width: n.size,
-              height: n.size,
-            }}
-          >
-            <TreeNodeCard body={n.body} size={n.size} />
-          </div>
-        ))}
+        {nodes.map((n) => {
+          const landable = n.body.is_landable === 1;
+          // Anchor to the 45° bottom-right point on the visible circle
+          // (size/2 + r·cos45). Icon is sized relative to the visible circle
+          // but clamped so it stays legible on small moons and unobtrusive
+          // on gas giants.
+          const iconSize = Math.max(12, Math.min(28, Math.round(n.visible)));
+          const anchor = n.size / 2 + n.visible * 0.354;
+          return (
+            <div
+              key={`node-${n.body._type}-${n.body.body_id}-${n.body.name}`}
+              className="absolute flex items-center justify-center"
+              style={{
+                left: n.x - n.size / 2 + CANVAS_PAD,
+                top: n.y - n.size / 2 + CANVAS_PAD,
+                width: n.size,
+                height: n.size,
+              }}
+            >
+              <TreeNodeCard body={n.body} size={n.size} />
+              {landable && (
+                <i
+                  aria-hidden="true"
+                  className="icarus-terminal-planet-lander text-sky-300/60 pointer-events-none absolute"
+                  style={{
+                    left: anchor - iconSize / 2,
+                    top: anchor - iconSize / 2,
+                    fontSize: iconSize,
+                    lineHeight: 1,
+                  }}
+                />
+              )}
+            </div>
+          );
+        })}
 
         {nodes.map((n) => {
           const rightLabel = n.labelSide === "right";
