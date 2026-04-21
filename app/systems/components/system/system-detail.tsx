@@ -57,7 +57,7 @@ const SystemDetail: FunctionComponent<Props> = ({ params, initialData = null }) 
         />
       )}
 
-      <div className="flex flex-col gap-8 py-5">
+      <div className="flex flex-col gap-y-5">
         {!loading && systemMap && (
           <SystemStarsTable
             stars={systemMap.stars as Required<MappedSystemBody>[]}

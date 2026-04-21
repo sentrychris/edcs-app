@@ -67,15 +67,15 @@ export default async function Home() {
       {/* ── Content Grid ── */}
       <div className="grid grid-cols-1 gap-x-5 md:grid-cols-2 lg:grid-cols-3">
         {/* ── Galnet Panel ── */}
-        <div className="col-span-1 pt-3">
+        <div className="col-span-1 pt-3 flex flex-col">
           <ShipDisplay />
-          <GalnetList className="mt-4" articles={news} />
+          <GalnetList className="mt-5" articles={news} />
         </div>
 
         {/* ── Systems Panel ── */}
-        <div className="col-span-1 pt-3 lg:col-span-2">
-          <SystemsStatisticsBar className="fx-fade-in" callInterval={10000} flushCache={0} />
-          <SystemsTable systems={systems} />
+        <div className="col-span-1 pt-3 lg:col-span-2 flex flex-col">
+          <SystemsStatisticsBar className="h-full fx-fade-in" callInterval={10000} flushCache={0} />
+          <SystemsTable className="mt-5 h-full" systems={systems} />
         </div>
       </div>
     </>

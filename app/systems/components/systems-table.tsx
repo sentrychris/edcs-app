@@ -150,8 +150,7 @@ const SystemsTable: FunctionComponent<Props> = ({ className = "", systems }) => 
   return (
     <div className={className}>
       {/* ── Query Panel ── */}
-      <Panel variant="muted" className="mb-4">
-
+      <Panel variant="muted" className="mb-5">
         <Heading bordered icon="icarus-terminal-route" title="Query Parameters" subtitle="Cartographic Database Filter" iconSize="1.2rem" className="px-4 py-3">
           <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-neutral-600">
             <span className="h-1.5 w-1.5 rounded-full bg-sky-500/60"></span>

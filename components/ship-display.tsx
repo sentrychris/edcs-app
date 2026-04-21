@@ -26,7 +26,7 @@ const ShipDisplay: FunctionComponent = () => {
 
       <div className="p-4">
         {/* Section header */}
-        <Heading bordered icon="icarus-terminal-scan" title="Ship Profile" subtitle="Cobra Mk III — Holographic" className="mb-4 pb-4">
+        <Heading bordered icon="icarus-terminal-scan" title="Ship Profile" subtitle="Health & Diagnostics" className="mb-4 pb-4">
           <span className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-neutral-500">
             <span className="fx-dot-blue h-1.5 w-1.5"></span>
             Active

@@ -74,7 +74,7 @@ const SystemsStatisticsBar: FunctionComponent<Props> = ({
   ];
 
   return (
-    <Panel variant="muted" className={cn("fx-panel-scan mb-4", className)} cornerClassName="z-10">
+    <Panel variant="muted" className={cn("fx-panel-scan", className)} cornerClassName="z-10">
 
       <Heading bordered icon="icarus-terminal-route" title="Cartographic Database" subtitle="Systems Intelligence" className="px-4 py-3 md:px-5 md:py-4" />
 

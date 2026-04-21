@@ -37,8 +37,8 @@ const STARS = [
 const WAYPOINTS = [
   { cx: 45, cy: 30, label: "SOL" },
   { cx: 420, cy: 140, label: "COLONIA" },
-  { cx: 260, cy: 310, label: "BEAGLE POINT" },
-  { cx: 460, cy: 370, label: "SAG.A*" },
+  { cx: 260, cy: 310, label: "SGR.A*" },
+  { cx: 460, cy: 370, label: "UNKNOWN" },
 ];
 
 const ERROR_MARKERS = [
@@ -69,30 +69,21 @@ export default function NotFound() {
           </div>
         </div>
 
-        <div className="text-center">
+        <div className="text-center mb-6">
           <p className="mb-3 text-xs uppercase tracking-[0.2em] text-neutral-500 sm:tracking-[0.5em]">
             frontier developments ── universal cartographics
           </p>
-          <h1 className="text-glow__blue mb-3 text-6xl font-bold uppercase tracking-[0.4em] md:text-8xl">
+          <h1 className="text-red-900/60 mb-3 text-2xl font-bold uppercase tracking-[0.4em] md:text-4xl">
             404
           </h1>
           <p className="text-xs uppercase tracking-[0.15em] text-neutral-500 sm:tracking-[0.35em]">
             navigation failure ── sector uncharted ── route not found
           </p>
         </div>
-
-        <div className="mt-6 flex items-center gap-6 border-t border-sky-900/20 pt-4 text-xs uppercase tracking-widest text-neutral-700">
-          <span className="h-px flex-1 bg-neutral-800"></span>
-          <span className="flex items-center gap-2">
-            <i className="icarus-terminal-route"></i>
-            ROUTE RESOLUTION FAILED
-          </span>
-          <span className="h-px flex-1 bg-neutral-800"></span>
-        </div>
       </Panel>
 
       {/* ── Content Grid ── */}
-      <div className="grid grid-cols-1 gap-x-5 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-x-5 md:grid-cols-2 lg:grid-cols-4">
         {/* ── Galaxy Map Panel ── */}
         <div className="col-span-1 flex h-full flex-col pt-3 lg:col-span-2">
           <Panel className="fx-panel-scan flex flex-1 flex-col p-4" corners="lg">
@@ -117,7 +108,7 @@ export default function NotFound() {
                     <path
                       d="M 50 0 L 0 0 0 50"
                       fill="none"
-                      stroke="rgba(120,200,255,0.09)"
+                      stroke="rgba(120,200,255,0.08)"
                       strokeWidth="0.5"
                     />
                   </pattern>
@@ -148,9 +139,9 @@ export default function NotFound() {
                   </filter>
                   <linearGradient id="nf-scanGrad" x1="0" y1="0" x2="1" y2="0">
                     <stop offset="0%" stopColor="transparent" />
-                    <stop offset="20%" stopColor="rgba(120,200,255,0.35)" />
-                    <stop offset="50%" stopColor="rgba(120,200,255,0.85)" />
-                    <stop offset="80%" stopColor="rgba(120,200,255,0.35)" />
+                    <stop offset="20%" stopColor="rgba(120,200,255,0.05)" />
+                    <stop offset="50%" stopColor="rgba(120,200,255,0.09)" />
+                    <stop offset="80%" stopColor="rgba(120,200,255,0.05)" />
                     <stop offset="100%" stopColor="transparent" />
                   </linearGradient>
                   <linearGradient id="nf-radarSweep" x1="0" y1="0" x2="1" y2="1">
@@ -452,8 +443,8 @@ export default function NotFound() {
                 ))}
 
                 {/* Scanning line sweep */}
-                <rect x="0" y="0" width="500" height="2" fill="url(#nf-scanGrad)">
-                  <animate attributeName="y" from="-2" to="402" dur="9s" repeatCount="indefinite" />
+                <rect x="0" y="0" width="500" height="1" fill="url(#nf-scanGrad)">
+                  <animate attributeName="y" from="-2" to="402" dur="7s" repeatCount="indefinite" />
                   <animate
                     attributeName="opacity"
                     values="0;0.7;0.7;0"
@@ -477,7 +468,7 @@ export default function NotFound() {
         </div>
 
         {/* ── Diagnostic Panel ── */}
-        <div className="col-span-1 flex h-full flex-col pt-3">
+        <div className="col-span-1 lg:col-span-2 flex h-full flex-col pt-3">
           <Panel className="flex flex-1 flex-col p-4" corners="md">
             <div className="mb-4 flex items-center gap-2 text-xs uppercase tracking-widest text-neutral-600">
               <span className="fx-dot-blue h-1.5 w-1.5"></span>
