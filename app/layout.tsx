@@ -18,7 +18,7 @@ import "@/css/main.css";
 
 const jura = Jura({ subsets: ["latin"] });
 
-const title = `ED:CS`;
+const title = "ED:CS | Galactic Intelligence Platform";
 const description =
   "All the latest news and updates from the Elite: Dangerous galaxy.";
 

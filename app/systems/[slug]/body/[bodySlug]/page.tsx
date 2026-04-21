@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
     openGraph: {
       ...(await parent).openGraph,
       url: `${settings.app.url}/systems/${params.slug}/body/${params.bodySlug}`,
-      title: `${body.name} | ${(await parent).title?.absolute}`,
+      title: `${body.name} | Survey Report | ${(await parent).title?.absolute}`,
       description: `Survey report for ${body.name}: ${body.sub_type} in ${body.system?.name}.`,
     },
     description: `Survey report for ${body.name}: ${body.sub_type} in ${body.system?.name}.`,

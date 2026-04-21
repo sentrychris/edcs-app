@@ -30,11 +30,11 @@ export async function generateMetadata(
   const stationName = station?.data?.name ?? "Station Detail";
 
   return {
-    title: `${stationName} | ${(await parent).title?.absolute}`,
+    title: `${stationName} | Docking Facility | ${(await parent).title?.absolute}`,
     openGraph: {
       ...(await parent).openGraph,
       url: `${settings.app.url}/stations/${params.slug}`,
-      title: `${stationName} | ${(await parent).title?.absolute}`,
+      title: `${stationName} | Docking Facility | ${(await parent).title?.absolute}`,
       description: `Station information including market, services, and commodities.`,
     },
     description: `Station information including market, services, and commodities.`,

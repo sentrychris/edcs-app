@@ -39,11 +39,11 @@ export async function generateMetadata(
   const systemName = system?.data?.name ?? "Star System Detail";
 
   return {
-    title: `${systemName} | ${(await parent).title?.absolute}`,
+    title: `${systemName} | System Report | ${(await parent).title?.absolute}`,
     openGraph: {
       ...(await parent).openGraph,
       url: `${settings.app.url}/systems/${params.slug}`,
-      title: `${systemName} | ${(await parent).title?.absolute}`,
+      title: `${systemName} | System Report | ${(await parent).title?.absolute}`,
       description: `Star system information including stars, orbital bodies, settlements, and more.`,
     },
     description: `Star system information including stars, orbital bodies, settlements, and more.`,
