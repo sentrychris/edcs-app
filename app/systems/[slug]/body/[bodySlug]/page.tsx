@@ -294,8 +294,8 @@ export default async function Page({ params }: Props) {
       )}
 
       {/* ── Footer ── */}
-      <div className="mt-6 border-t border-sky-900/20 pt-4">
-        <div className="flex items-center justify-between text-xs uppercase tracking-widest text-neutral-700">
+      <div className="mt-3 border-t border-sky-900/20 pt-4">
+        <div className="flex items-center justify-between text-xs uppercase tracking-widest text-neutral-400">
           <Link
             href={`/systems/${params.slug}`}
             className="flex items-center gap-2 transition-colors hover:text-sky-400"

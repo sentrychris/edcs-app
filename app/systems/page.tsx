@@ -60,8 +60,8 @@ export default async function Page() {
         </div>
       </Panel>
 
-      <SystemsStatisticsBar className="fx-fade-in" callInterval={10000} flushCache={0} />
-      <SystemsTable systems={systems} />
+      <SystemsStatisticsBar className="fx-fade-in" callInterval={30000} flushCache={0} />
+      <SystemsTable className="mt-5" systems={systems} />
     </>
   );
 }
