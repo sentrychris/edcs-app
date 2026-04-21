@@ -1,6 +1,6 @@
 "use client";
 
-import { type FunctionComponent, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type FunctionComponent, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { MappedSystemBody } from "@/core/interfaces/SystemBody";
 import type SystemMap from "../../lib/system-map";
 import { SystemBodyType } from "@/core/constants/system";
@@ -132,7 +132,7 @@ interface CardProps {
   size: number;
 }
 
-const TreeNodeCard: FunctionComponent<CardProps> = ({ body, size }) => {
+const TreeNodeCard: FunctionComponent<CardProps> = memo(function TreeNodeCard({ body, size }) {
   const interactive = isInteractive(body);
   const handleClick = () => {
     if (!interactive) return;
@@ -227,7 +227,7 @@ const TreeNodeCard: FunctionComponent<CardProps> = ({ body, size }) => {
       </g>
     </svg>
   );
-};
+});
 
 interface Props {
   systemMap: SystemMap;
@@ -566,6 +566,110 @@ const SystemBodiesTree: FunctionComponent<Props> = ({ systemMap, height: heightO
     return `url("data:image/svg+xml;utf8,${svg}")`;
   }, []);
 
+  // The scaled-layer contents depend only on layout — hoist them into their
+  // own memos so zoom/pan state changes (which only mutate the outer wrapper's
+  // transform) don't rebuild the edge/node/label JSX trees.
+  const edgesMarkup = useMemo(
+    () =>
+      edges.map((e, i) => {
+        const px = e.parent.x + CANVAS_PAD;
+        const parentLabelBelow = e.parent.labelSide === "below";
+        const py =
+          e.parent.y +
+          e.parent.visible / 2 +
+          (parentLabelBelow ? LABEL_GAP + LABEL_H : 0) +
+          CANVAS_PAD;
+        const cx = e.child.x + CANVAS_PAD;
+        const cy = e.child.y - e.child.visible / 2 - 2 + CANVAS_PAD;
+        const my = (py + cy) / 2;
+        const d = `M ${px} ${py} C ${px} ${my}, ${cx} ${my}, ${cx} ${cy}`;
+        return (
+          <path
+            key={i}
+            d={d}
+            className={`system-tree__edge ${e.parent.depth === 0 ? "system-tree__edge--root" : ""}`}
+          />
+        );
+      }),
+    [edges],
+  );
+
+  const nodesMarkup = useMemo(
+    () =>
+      nodes.map((n) => {
+        const landable = n.body.is_landable === 1;
+        const iconSize = Math.max(12, Math.min(28, Math.round(n.visible)));
+        const anchor = n.size / 2 + n.visible * 0.354;
+        return (
+          <div
+            key={`node-${n.body._type}-${n.body.body_id}-${n.body.name}`}
+            className="absolute flex items-center justify-center"
+            style={{
+              left: n.x - n.size / 2 + CANVAS_PAD,
+              top: n.y - n.size / 2 + CANVAS_PAD,
+              width: n.size,
+              height: n.size,
+            }}
+          >
+            <TreeNodeCard body={n.body} size={n.size} />
+            {landable && (
+              <i
+                aria-hidden="true"
+                className="icarus-terminal-planet-lander text-sky-300/60 pointer-events-none absolute"
+                style={{
+                  left: anchor - iconSize / 2,
+                  top: anchor - iconSize / 2,
+                  fontSize: iconSize,
+                  lineHeight: 1,
+                }}
+              />
+            )}
+          </div>
+        );
+      }),
+    [nodes],
+  );
+
+  const labelsMarkup = useMemo(
+    () =>
+      nodes.map((n) => {
+        const rightLabel = n.labelSide === "right";
+        const style: React.CSSProperties = rightLabel
+          ? {
+              left: n.x + n.visible / 2 + MOON_LABEL_GAP + CANVAS_PAD,
+              top: n.y - LABEL_H / 2 + CANVAS_PAD,
+              width: LABEL_W,
+            }
+          : {
+              left: n.x - LABEL_W / 2 + CANVAS_PAD,
+              top: n.y + n.visible / 2 + LABEL_GAP + CANVAS_PAD,
+              width: LABEL_W,
+            };
+        return (
+          <div
+            key={`label-${n.body._type}-${n.body.body_id}-${n.body.name}`}
+            className={`pointer-events-none absolute ${rightLabel ? "text-left" : "text-center"}`}
+            style={style}
+          >
+            <div className="text-glow system-tree__node-label truncate text-[0.7rem] font-bold uppercase tracking-wider">
+              {n.body._label ?? n.body.name}
+            </div>
+            {n.body.sub_type && (
+              <div className="truncate text-[0.6rem] uppercase tracking-widest text-neutral-500">
+                {n.body.sub_type}
+              </div>
+            )}
+            {!n.body.sub_type && n.body._description && (
+              <div className="truncate text-[0.6rem] uppercase tracking-widest text-neutral-500">
+                {n.body._description}
+              </div>
+            )}
+          </div>
+        );
+      }),
+    [nodes],
+  );
+
   if (nodes.length === 0) {
     return (
       <div className="text-glow__blue py-6 text-center text-lg font-bold uppercase">
@@ -616,102 +720,12 @@ const SystemBodiesTree: FunctionComponent<Props> = ({ systemMap, height: heightO
           width={canvasW}
           height={canvasH}
         >
-          {edges.map((e, i) => {
-            // Start edge below the parent's label strip (or directly below
-            // the parent's body when its label sits to the right), end at
-            // the child's top edge.
-            const px = e.parent.x + CANVAS_PAD;
-            const parentLabelBelow = e.parent.labelSide === "below";
-            const py =
-              e.parent.y +
-              e.parent.visible / 2 +
-              (parentLabelBelow ? LABEL_GAP + LABEL_H : 0) +
-              CANVAS_PAD;
-            const cx = e.child.x + CANVAS_PAD;
-            const cy = e.child.y - e.child.visible / 2 - 2 + CANVAS_PAD;
-            const my = (py + cy) / 2;
-            const d = `M ${px} ${py} C ${px} ${my}, ${cx} ${my}, ${cx} ${cy}`;
-            return (
-              <path
-                key={i}
-                d={d}
-                className={`system-tree__edge ${e.parent.depth === 0 ? "system-tree__edge--root" : ""}`}
-              />
-            );
-          })}
+          {edgesMarkup}
         </svg>
 
-        {nodes.map((n) => {
-          const landable = n.body.is_landable === 1;
-          // Anchor to the 45° bottom-right point on the visible circle
-          // (size/2 + r·cos45). Icon is sized relative to the visible circle
-          // but clamped so it stays legible on small moons and unobtrusive
-          // on gas giants.
-          const iconSize = Math.max(12, Math.min(28, Math.round(n.visible)));
-          const anchor = n.size / 2 + n.visible * 0.354;
-          return (
-            <div
-              key={`node-${n.body._type}-${n.body.body_id}-${n.body.name}`}
-              className="absolute flex items-center justify-center"
-              style={{
-                left: n.x - n.size / 2 + CANVAS_PAD,
-                top: n.y - n.size / 2 + CANVAS_PAD,
-                width: n.size,
-                height: n.size,
-              }}
-            >
-              <TreeNodeCard body={n.body} size={n.size} />
-              {landable && (
-                <i
-                  aria-hidden="true"
-                  className="icarus-terminal-planet-lander text-sky-300/60 pointer-events-none absolute"
-                  style={{
-                    left: anchor - iconSize / 2,
-                    top: anchor - iconSize / 2,
-                    fontSize: iconSize,
-                    lineHeight: 1,
-                  }}
-                />
-              )}
-            </div>
-          );
-        })}
+        {nodesMarkup}
 
-        {nodes.map((n) => {
-          const rightLabel = n.labelSide === "right";
-          const style: React.CSSProperties = rightLabel
-            ? {
-                left: n.x + n.visible / 2 + MOON_LABEL_GAP + CANVAS_PAD,
-                top: n.y - LABEL_H / 2 + CANVAS_PAD,
-                width: LABEL_W,
-              }
-            : {
-                left: n.x - LABEL_W / 2 + CANVAS_PAD,
-                top: n.y + n.visible / 2 + LABEL_GAP + CANVAS_PAD,
-                width: LABEL_W,
-              };
-          return (
-            <div
-              key={`label-${n.body._type}-${n.body.body_id}-${n.body.name}`}
-              className={`pointer-events-none absolute ${rightLabel ? "text-left" : "text-center"}`}
-              style={style}
-            >
-              <div className="text-glow system-tree__node-label truncate text-[0.7rem] font-bold uppercase tracking-wider">
-                {n.body._label ?? n.body.name}
-              </div>
-              {n.body.sub_type && (
-                <div className="truncate text-[0.6rem] uppercase tracking-widest text-neutral-500">
-                  {n.body.sub_type}
-                </div>
-              )}
-              {!n.body.sub_type && n.body._description && (
-                <div className="truncate text-[0.6rem] uppercase tracking-widest text-neutral-500">
-                  {n.body._description}
-                </div>
-              )}
-            </div>
-          );
-        })}
+        {labelsMarkup}
           </div>
         </div>
       </div>

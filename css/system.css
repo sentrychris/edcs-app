@@ -516,19 +516,12 @@
   stroke-dasharray: 6 5;
   filter: drop-shadow(0 0 3px rgb(56 189 248 / 0.55));
   opacity: 0.65;
-  animation: system-tree__flow 4s linear infinite;
 }
 
 .system-tree__edge--root {
   stroke: rgb(186 230 253);
   stroke-width: 1.5;
   opacity: 0.8;
-}
-
-@keyframes system-tree__flow {
-  to {
-    stroke-dashoffset: -22;
-  }
 }
 
 .system-tree__node-label {
