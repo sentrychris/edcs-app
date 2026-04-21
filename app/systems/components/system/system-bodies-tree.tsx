@@ -1,6 +1,6 @@
 "use client";
 
-import { type FunctionComponent, useCallback, useMemo, useRef } from "react";
+import { type FunctionComponent, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import type { MappedSystemBody } from "@/core/interfaces/SystemBody";
 import type SystemMap from "../../lib/system-map";
 import { SystemBodyType } from "@/core/constants/system";
@@ -29,6 +29,10 @@ const ROW_V_GAP = 56; // vertical gap between a row's label strip and the next r
 const ROOT_GAP = 80; // horizontal gap between separate root-star subtrees
 const CANVAS_PAD = 72;
 const VIEW_H = 520;
+
+const MIN_ZOOM = 0.4;
+const MAX_ZOOM = 3;
+const ZOOM_STEP = 1.2;
 
 // Moons (depth 2+) stack vertically under their parent planet rather than
 // spreading horizontally like depth 0/1. Deeper submoons indent right to
@@ -451,8 +455,62 @@ const SystemBodiesTree: FunctionComponent<Props> = ({ systemMap, height: heightO
     startY: number;
   }>({ dragging: false, startLeft: 0, startTop: 0, startX: 0, startY: 0 });
 
+  const [zoom, setZoom] = useState(1);
+
+  const patternPrefix = useId().replace(/:/g, "");
+
   const bindScrollable = useCallback((node: HTMLDivElement | null) => {
     scrollRef.current = node;
+  }, []);
+
+  // Zoom toward a viewport point (cursor, or container center when omitted),
+  // preserving the content coordinate under that point across the zoom change.
+  const zoomAt = useCallback((next: number, clientX?: number, clientY?: number) => {
+    const node = scrollRef.current;
+    setZoom((prev) => {
+      const target = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, next));
+      if (!node || target === prev) return target;
+      const rect = node.getBoundingClientRect();
+      const vx = clientX !== undefined ? clientX - rect.left : node.clientWidth / 2;
+      const vy = clientY !== undefined ? clientY - rect.top : node.clientHeight / 2;
+      const cx = (node.scrollLeft + vx) / prev;
+      const cy = (node.scrollTop + vy) / prev;
+      requestAnimationFrame(() => {
+        if (!scrollRef.current) return;
+        scrollRef.current.scrollLeft = cx * target - vx;
+        scrollRef.current.scrollTop = cy * target - vy;
+      });
+      return target;
+    });
+  }, []);
+
+  // Ctrl/Cmd + wheel zooms (also fired by trackpad pinch). Plain wheel keeps
+  // its native scroll behavior. Attached manually so we can preventDefault —
+  // React's synthetic wheel handler is passive.
+  useEffect(() => {
+    const node = scrollRef.current;
+    if (!node) return;
+    const onWheel = (e: WheelEvent) => {
+      if (!e.ctrlKey && !e.metaKey) return;
+      e.preventDefault();
+      const factor = e.deltaY < 0 ? ZOOM_STEP : 1 / ZOOM_STEP;
+      setZoom((prev) => {
+        const target = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, prev * factor));
+        if (target === prev) return prev;
+        const rect = node.getBoundingClientRect();
+        const vx = e.clientX - rect.left;
+        const vy = e.clientY - rect.top;
+        const cx = (node.scrollLeft + vx) / prev;
+        const cy = (node.scrollTop + vy) / prev;
+        requestAnimationFrame(() => {
+          node.scrollLeft = cx * target - vx;
+          node.scrollTop = cy * target - vy;
+        });
+        return target;
+      });
+    };
+    node.addEventListener("wheel", onWheel, { passive: false });
+    return () => node.removeEventListener("wheel", onWheel);
   }, []);
 
   const onMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -496,17 +554,98 @@ const SystemBodiesTree: FunctionComponent<Props> = ({ systemMap, height: heightO
   const canvasW = width + CANVAS_PAD * 2;
   const canvasH = height + CANVAS_PAD * 2;
 
+  // Deterministic starfield — regenerating per render would cause stars to
+  // re-scatter on every state change. Keyed on canvas size only.
+  const stars = useMemo(() => {
+    let s = 0x9e3779b1;
+    const rand = () => {
+      s = (s * 1103515245 + 12345) & 0x7fffffff;
+      return s / 0x7fffffff;
+    };
+    const count = Math.floor((canvasW * canvasH) / 4500);
+    const out: Array<{ x: number; y: number; r: number; o: number }> = [];
+    for (let i = 0; i < count; i++) {
+      out.push({
+        x: rand() * canvasW,
+        y: rand() * canvasH,
+        r: 0.4 + rand() * rand() * 1.6,
+        o: 0.15 + rand() * 0.55,
+      });
+    }
+    return out;
+  }, [canvasW, canvasH]);
+
+  const gridMinorId = `system-tree-grid-minor-${patternPrefix}`;
+  const gridMajorId = `system-tree-grid-major-${patternPrefix}`;
+
   return (
-    <div
-      ref={bindScrollable}
-      onMouseDown={onMouseDown}
-      onMouseMove={onMouseMove}
-      onMouseUp={endDrag}
-      onMouseLeave={endDrag}
-      className="relative w-full overflow-auto border border-sky-900/20 bg-black/30"
-      style={{ height: heightOverride ?? VIEW_H, cursor: "grab" }}
-    >
-      <div className="relative" style={{ width: canvasW, height: canvasH }}>
+    <div className="relative w-full" style={{ height: heightOverride ?? VIEW_H }}>
+      <div
+        ref={bindScrollable}
+        onMouseDown={onMouseDown}
+        onMouseMove={onMouseMove}
+        onMouseUp={endDrag}
+        onMouseLeave={endDrag}
+        className="relative h-full w-full overflow-auto border border-sky-900/20 bg-black/30"
+        style={{ cursor: "grab" }}
+      >
+        <div style={{ width: canvasW * zoom, height: canvasH * zoom }}>
+          <div
+            className="relative"
+            style={{
+              width: canvasW,
+              height: canvasH,
+              transform: `scale(${zoom})`,
+              transformOrigin: "0 0",
+            }}
+          >
+        <svg
+          className="pointer-events-none absolute inset-0"
+          width={canvasW}
+          height={canvasH}
+          aria-hidden="true"
+        >
+          <defs>
+            <pattern
+              id={gridMinorId}
+              width={40}
+              height={40}
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M 40 0 L 0 0 0 40"
+                fill="none"
+                stroke="rgba(56, 189, 248, 0.05)"
+                strokeWidth={1}
+              />
+            </pattern>
+            <pattern
+              id={gridMajorId}
+              width={200}
+              height={200}
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M 200 0 L 0 0 0 200"
+                fill="none"
+                stroke="rgba(56, 189, 248, 0.11)"
+                strokeWidth={1}
+              />
+            </pattern>
+          </defs>
+          <rect width={canvasW} height={canvasH} fill={`url(#${gridMinorId})`} />
+          <rect width={canvasW} height={canvasH} fill={`url(#${gridMajorId})`} />
+          {stars.map((s, i) => (
+            <circle
+              key={`star-${i}`}
+              cx={s.x}
+              cy={s.y}
+              r={s.r}
+              fill="#e2f1ff"
+              opacity={s.o}
+            />
+          ))}
+        </svg>
         <svg
           className="pointer-events-none absolute inset-0"
           width={canvasW}
@@ -587,6 +726,40 @@ const SystemBodiesTree: FunctionComponent<Props> = ({ systemMap, height: heightO
             </div>
           );
         })}
+          </div>
+        </div>
+      </div>
+      <div className="pointer-events-none absolute bottom-3 right-3 flex flex-col gap-1">
+        <button
+          type="button"
+          aria-label="Zoom in"
+          title="Zoom in"
+          onClick={() => zoomAt(zoom * ZOOM_STEP)}
+          disabled={zoom >= MAX_ZOOM - 0.001}
+          className="text-glow__blue pointer-events-auto flex h-7 w-7 items-center justify-center border border-sky-900 bg-black/60 text-sm transition-colors hover:border-sky-500 disabled:opacity-40 disabled:hover:border-sky-900"
+        >
+          +
+        </button>
+        <button
+          type="button"
+          aria-label="Zoom out"
+          title="Zoom out"
+          onClick={() => zoomAt(zoom / ZOOM_STEP)}
+          disabled={zoom <= MIN_ZOOM + 0.001}
+          className="text-glow__blue pointer-events-auto flex h-7 w-7 items-center justify-center border border-sky-900 bg-black/60 text-sm transition-colors hover:border-sky-500 disabled:opacity-40 disabled:hover:border-sky-900"
+        >
+          −
+        </button>
+        <button
+          type="button"
+          aria-label="Reset zoom"
+          title="Reset zoom"
+          onClick={() => zoomAt(1)}
+          disabled={Math.abs(zoom - 1) < 0.001}
+          className="text-glow__blue pointer-events-auto flex h-7 w-7 items-center justify-center border border-sky-900 bg-black/60 text-xs transition-colors hover:border-sky-500 disabled:opacity-40 disabled:hover:border-sky-900"
+        >
+          1:1
+        </button>
       </div>
     </div>
   );
