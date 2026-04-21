@@ -6,6 +6,7 @@ import type { MappedSystemBody } from "@/core/interfaces/SystemBody";
 import type { Links, Meta } from "@/core/interfaces/Pagination";
 import { formatDate, formatNumber } from "@/core/string-utils";
 import Link from "next/link";
+import { SystemBodyType } from "@/core/constants/system";
 import Table from "@/components/table";
 import Heading from "@/components/heading";
 
@@ -41,7 +42,7 @@ const buildPaginationProps = (
 const SystemStarsTable: FunctionComponent<Props> = ({ stars, dispatcher }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const filtered = stars.filter((s) => s.name !== "Additional Objects");
+  const filtered = stars.filter((s) => s._type === SystemBodyType.Star);
   const { rows, meta, links } = buildPaginationProps(filtered, currentPage);
 
   const handlePage = (link: string) => {

@@ -70,6 +70,7 @@ export interface MappedSystemBody extends Partial<RawSystemBody> {
   _type: string;
   _label?: string;
   _description?: string;
+  _barycenter_token?: string;
   _r?: number;
   _small?: boolean;
   _orbits_star?: boolean;

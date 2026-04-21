@@ -8,8 +8,8 @@ interface Props {
 }
 
 const SystemMapStatistics: FunctionComponent<Props> = ({ system }) => {
-  const starCount = system.stars.filter((s) => s.type !== SystemBodyType.Null).length;
-  const filteredStars = system.stars.filter((s) => s.type !== SystemBodyType.Null);
+  const starCount = system.stars.filter((s) => s._type === SystemBodyType.Star).length;
+  const filteredStars = system.stars.filter((s) => s._type === SystemBodyType.Star);
 
   return (
     <div className="hidden items-center gap-1 text-xs md:flex">

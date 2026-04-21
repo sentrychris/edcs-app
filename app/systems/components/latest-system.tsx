@@ -29,7 +29,8 @@ const LatestSystem: FunctionComponent<Props> = ({ className }) => {
     return null;
   }
 
-  const starCount = system.stars.filter((s) => s.type !== SystemBodyType.Null).length;
+  const starCount = system.stars.filter((s) => s._type === SystemBodyType.Star).length;
+
 
   return (
     <div className={`${className} uppercase`}>
@@ -52,7 +53,7 @@ const LatestSystem: FunctionComponent<Props> = ({ className }) => {
         <p>
           {starCount}{" "}
           {pluralizeTextFromArray(
-            system.stars.filter((s) => s.type !== SystemBodyType.Null),
+            system.stars.filter((s) => s._type === SystemBodyType.Star),
             { singular: "star", plural: "stars" },
           )}{" "}
           ·{" "}

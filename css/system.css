@@ -132,6 +132,26 @@
   stroke: none;
 }
 
+/* Barycenter: synthetic node representing the shared centre of mass of two
+   or more stars. Rendered as a dashed ring so it reads as a virtual point
+   rather than a physical body. */
+.system-map__system-object[data-system-object-type="Barycenter"]
+  .system-map__planet {
+  fill: none;
+  stroke: rgb(120 200 255 / 0.55);
+  stroke-width: 80;
+  stroke-dasharray: 200 180;
+  filter: drop-shadow(0 0 2rem rgb(120 200 255 / 0.35));
+}
+
+.system-map__system-object[data-system-object-type="Barycenter"]
+  .system-map__planet-surface {
+  fill: none;
+  stroke: rgb(120 200 255 / 0.25);
+  stroke-width: 40;
+  stroke-dasharray: 120 120;
+}
+
 .system-map__system-object[data-system-object-type="Star"][data-system-object-sub-type="Supermassive Black Hole" i]
   .system-map__planet-surface,
 .system-map__system-object[data-system-object-type="Star"][data-system-object-sub-type="Black Hole" i]

@@ -568,7 +568,7 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
 
     // maxAu is computed from star-orbiting bodies only (top-level scale).
     const starOrbitingBodies = [
-      ...systemMap.stars.filter((s) => s._type !== SystemBodyType.Null),
+      ...systemMap.stars.filter((s) => s._type === SystemBodyType.Star),
       ...systemMap.planets.filter((p) => p._orbits_star),
     ];
     const maxAu = starOrbitingBodies.reduce(
@@ -652,7 +652,7 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
       }
     }
 
-    for (const star of systemMap.stars.filter((s) => s._type !== SystemBodyType.Null)) {
+    for (const star of systemMap.stars.filter((s) => s._type === SystemBodyType.Star)) {
       addBody(star, -1, true);
     }
 
@@ -860,7 +860,7 @@ const SystemSolarMap: FunctionComponent<Props> = ({ params }) => {
   };
 
   const starCount = systemMap
-    ? systemMap.stars.filter((s) => s._type !== SystemBodyType.Null).length
+    ? systemMap.stars.filter((s) => s._type === SystemBodyType.Star).length
     : 0;
   const planetCount = systemMap ? systemMap.planets.length : 0;
   const stationCount = system.stations?.length ?? 0;

@@ -34,4 +34,5 @@ export enum SystemBodyType {
   Star = "Star",
   Planet = "Planet",
   Null = "Null",
+  Barycenter = "Barycenter",
 }

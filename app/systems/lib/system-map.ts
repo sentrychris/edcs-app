@@ -58,6 +58,13 @@ export default class SystemMap {
     // Flat list of all bodies and stations used for lookups and length checks
     this.items = [...bodies, ...(stations as unknown as MappedSystemBody[])];
 
+    // Synthetic nodes for bodies that orbit shared multi-star barycenters
+    // (name prefixes like "AB 1", "ABC 1 a") — created before the Null node
+    // so they collect barycenter-orbiting bodies that would otherwise fall
+    // into the generic orphan bucket.
+    const barycenterNodes = this.createBarycenterNodes();
+    this.stars.push(...barycenterNodes);
+
     // Synthetic node that collects bodies orbiting null barycenters with no star parent
     this.stars.push(this.createNullNode());
 
@@ -162,8 +169,12 @@ export default class SystemMap {
   //   - its first non-null parent equals `target.body_id` (i.e. `target` is the
   //     closest non-barycenter ancestor, not just a transitive star ancestor)
   //
+  // Barycenter nodes match by name-token prefix (e.g. "AB 1" belongs to the
+  // "AB" barycenter). Only top-level barycenter-orbiting bodies land here —
+  // their moons follow via normal Planet-parent links.
+  //
   // For the Null node, we collect orphaned bodies whose entire parent chain
-  // consists only of null barycenters (no star or planet parent at all).
+  // consists only of null barycenters and don't have a barycenter token.
   private isDirectChild(candidate: MappedSystemBody, target: MappedSystemBody): boolean {
     if (!candidate.parents?.length) return false;
 
@@ -183,8 +194,19 @@ export default class SystemMap {
           firstNonNull === target.body_id
         );
 
+      case SystemBodyType.Barycenter:
+        return (
+          primaryType === SystemBodyType.Null &&
+          firstNonNull === null &&
+          this.extractBarycenterToken(candidate.name) === target._barycenter_token
+        );
+
       case SystemBodyType.Null:
-        return primaryType === SystemBodyType.Null && firstNonNull === null;
+        return (
+          primaryType === SystemBodyType.Null &&
+          firstNonNull === null &&
+          this.extractBarycenterToken(candidate.name) === null
+        );
     }
 
     return false;
@@ -333,5 +355,50 @@ export default class SystemMap {
       _children: [],
       slug: "",
     };
+  }
+
+  // Scan the flat body list for name tokens like "AB" or "ABC" that indicate
+  // a shared multi-star barycenter, and create one synthetic node per unique
+  // token so those bodies have somewhere to hang in the hierarchy.
+  private createBarycenterNodes(): MappedSystemBody[] {
+    const tokens = new Set<string>();
+
+    for (const body of this.planets) {
+      if (!body.parents?.length) continue;
+      const [primaryType] = Object.entries(body.parents[0])[0];
+      if (primaryType !== SystemBodyType.Null) continue;
+      if (this.firstNonNullParentId(body.parents) !== null) continue;
+
+      const token = this.extractBarycenterToken(body.name);
+      if (token) tokens.add(token);
+    }
+
+    let syntheticId = -1;
+    return [...tokens].sort().map((token) => ({
+      body_id: syntheticId--,
+      distance_to_arrival: -1,
+      name: `${token} Barycenter`,
+      type: SystemBodyType.Barycenter,
+      _type: SystemBodyType.Barycenter,
+      _label: `${token} Barycenter`,
+      _description: `Shared barycenter of stars ${token.split("").join(", ")}`,
+      _barycenter_token: token,
+      _r: 1100,
+      _small: false,
+      _orbits_star: false,
+      _children: [],
+      slug: "",
+    }));
+  }
+
+  // Parse the multi-letter token that appears between the system name and
+  // the body's numeric index. E.g. "Col 285 Sector QP-M b21-2 AB 1" → "AB",
+  // "Trappist-1 1" → null (single-digit index, no letter token).
+  //
+  // Returns null when the body isn't a multi-star barycenter child.
+  private extractBarycenterToken(name: string): string | null {
+    const stripped = name.replace(new RegExp(`^${escapeRegExp(this.name)} `, "i"), "");
+    const match = stripped.match(/^([A-Z]{2,})\s+\d/);
+    return match ? match[1] : null;
   }
 }
