@@ -113,7 +113,7 @@ export default function BinaryPairPage() {
             <div className="space-y-3 text-xs uppercase tracking-wide text-neutral-500">
               <p>
                 Neither star orbits the other — both orbit their shared{" "}
-                <span className="text-sky-400/80">barycenter</span>, the system's true center
+                <span className="text-sky-400/80">barycenter</span>, the system&apos;s true center
                 of mass. The more massive star orbits closer to it.
               </p>
               <p>

@@ -129,11 +129,11 @@ export default function HierarchicalTriplePage() {
               <p>
                 Stars A and B form a tight{" "}
                 <span className="text-sky-400/80">binary pair</span>, revolving around
-                their common center of mass. From Star C's perspective, A+B behave as a single
+                their common center of mass. From Star C&apos;s perspective, A+B behave as a single
                 combined mass.
               </p>
               <p>
-                Star C's gravity causes the binary barycenter to{" "}
+                Star C&apos;s gravity causes the binary barycenter to{" "}
                 <span className="text-sky-400/80">wobble slightly</span> relative
                 to the system center. The simulation exaggerates this effect for visibility.
               </p>

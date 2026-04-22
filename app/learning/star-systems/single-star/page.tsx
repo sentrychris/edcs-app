@@ -118,7 +118,7 @@ export default function SingleStarPage() {
               <p>
                 The <span className="text-green-400/80">habitable zone</span> is the range of
                 orbital distances where liquid water can exist on a rocky surface, determined
-                by the star's luminosity and temperature.
+                by the star&apos;s luminosity and temperature.
               </p>
               <p>
                 The <span className="text-sky-400/80">snow line</span> marks the distance
@@ -127,7 +127,7 @@ export default function SingleStarPage() {
               </p>
               <p>
                 Inner rocky worlds form in the hot, volatile-poor region closer to the star.
-                Their orbits remain stable as long as they don't enter{" "}
+                Their orbits remain stable as long as they don&apos;t enter{" "}
                 <span className="text-sky-400/80">orbital resonance</span> with each other.
               </p>
             </div>
