@@ -157,6 +157,21 @@ export default async function Page({ params }: Props) {
         </div>
       </div>
 
+      {/* ── Breadcrumb / survey nav ── */}
+      <div className="mb-5 flex items-center justify-between text-xs uppercase tracking-widest text-neutral-500">
+        <Link
+          href={`/systems/${params.slug}`}
+          className="flex items-center gap-2 transition-colors hover:text-sky-400"
+        >
+          <i className="icarus-terminal-chevron-left text-xs" />
+          Back to {body.system?.name}
+        </Link>
+        <span className="flex items-center gap-2 text-neutral-700">
+          <i className="icarus-terminal-scan text-sky-500/20" />
+          SURVEY REPORT — {body.name}
+        </span>
+      </div>
+
       {/* ── Stats grid ── */}
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
 
@@ -293,22 +308,6 @@ export default async function Page({ params }: Props) {
         </Panel>
       )}
 
-      {/* ── Footer ── */}
-      <div className="mt-3 border-t border-sky-900/20 pt-4">
-        <div className="flex items-center justify-between text-xs uppercase tracking-widest text-neutral-400">
-          <Link
-            href={`/systems/${params.slug}`}
-            className="flex items-center gap-2 transition-colors hover:text-sky-400"
-          >
-            <i className="icarus-terminal-chevron-left text-xs" />
-            Back to {body.system?.name}
-          </Link>
-          <span className="flex items-center gap-2 text-neutral-800">
-            <i className="icarus-terminal-scan text-sky-500/20" />
-            SURVEY REPORT — {body.name}
-          </span>
-        </div>
-      </div>
     </>
   );
 }
