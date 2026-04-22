@@ -128,7 +128,7 @@ export default function SingleStarPage() {
               <p>
                 Inner rocky worlds form in the hot, volatile-poor region closer to the star.
                 Their orbits remain stable as long as they don&apos;t enter{" "}
-                <span className="text-sky-400/80">orbital resonance</span> with each other.
+                <Link className="text-sky-400/80 hover:text-sky-300" href="/learning/orbital-mechanics/orbital-resonance">orbital resonance</Link> with each other.
               </p>
             </div>
           </Panel>

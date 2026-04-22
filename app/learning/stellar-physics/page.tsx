@@ -18,6 +18,15 @@ const topics = [
     tags:        ["Main Sequence", "Spectral Types", "Habitable Zones"],
     status:      "available",
   },
+  {
+    href:        "/learning/stellar-physics/stellar-remnants",
+    icon:        "icarus-terminal-star",
+    title:       "Stellar Remnants",
+    subtitle:    "White Dwarfs, Neutron Stars & Black Holes",
+    description: "What stars leave behind when nuclear fusion ends. Three distinct endpoints determined by initial mass — each with radically different properties and exploration value.",
+    tags:        ["White Dwarf", "Neutron Star", "Black Hole"],
+    status:      "available",
+  },
 ];
 
 export default function StellarPhysicsPage() {

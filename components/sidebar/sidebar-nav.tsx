@@ -14,7 +14,7 @@ const navItems = [
   { name: "Route Plotter", href: "/route-plotter", icon: "icarus-terminal-route" },
   { name: "Distance Search", href: "/distance-search", icon: "icarus-terminal-scan" },
   { name: "Galnet News", href: "/galnet", icon: "icarus-terminal-notifications" },
-  { name: "Learning", href: "/learning", icon: "icarus-terminal-info" },
+  { name: "Learning", href: "/learning", icon: "icarus-terminal-economy" },
 ];
 
 const SidebarNav = ({ collapsed = false }: Props) => {

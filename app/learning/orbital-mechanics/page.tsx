@@ -18,6 +18,33 @@ const configurations = [
     tags:        ["Equilibrium", "Gravity", "Stability"],
     status:      "available",
   },
+  {
+    href:        "/learning/orbital-mechanics/orbital-resonance",
+    icon:        "icarus-terminal-system-orbits",
+    title:       "Orbital Resonance",
+    subtitle:    "Period Locking & Resonance Chains",
+    description: "When orbital periods form simple integer ratios, repeated gravitational nudges lock bodies into stable — or destabilising — resonance chains.",
+    tags:        ["Resonance", "Period Ratios", "Stability"],
+    status:      "available",
+  },
+  {
+    href:        "/learning/orbital-mechanics/roche-limit",
+    icon:        "icarus-terminal-planet-ringed",
+    title:       "Roche Limit",
+    subtitle:    "Tidal Disruption & Ring Formation",
+    description: "The critical orbital distance inside which tidal forces overwhelm a body's self-gravity, tearing it apart and spreading its remains into a ring system.",
+    tags:        ["Tidal Forces", "Ring Formation", "Disruption"],
+    status:      "available",
+  },
+  {
+    href:        "/learning/orbital-mechanics/tidal-locking",
+    icon:        "icarus-terminal-planet",
+    title:       "Tidal Locking",
+    subtitle:    "Synchronous Rotation & Permanent Hemispheres",
+    description: "How tidal forces gradually brake a body's spin until rotation and orbit synchronise, permanently fixing one face toward the primary.",
+    tags:        ["Synchronous Rotation", "Near Side", "Habitability"],
+    status:      "available",
+  },
 ];
 
 export default function OrbitalMechanicsPage() {
