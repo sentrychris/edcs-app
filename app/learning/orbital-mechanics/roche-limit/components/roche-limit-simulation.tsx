@@ -243,7 +243,7 @@ export default function RocheLimitSimulation() {
       // ── Satellite position & shape ─────────────────────────────────────
       let satR      = STABLE_R;
       let elongation = 1.0;
-      let satAlpha  = 1.0;
+      const satAlpha  = 1.0;
       let showSat   = true;
 
       if (phase === "orbit") {
