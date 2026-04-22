@@ -10,6 +10,7 @@ const STAR_CLASSES = [
     color: "#9BB0FF",
     glow:  "rgba(155,176,255,0.55)",
     label: "O-TYPE",
+    labelOffset: 6,
     temp:  ">30,000 K",
     mass:  ">16 M☉",
     displayR: 56,
@@ -22,6 +23,7 @@ const STAR_CLASSES = [
     color: "#AABFFF",
     glow:  "rgba(170,191,255,0.50)",
     label: "B-TYPE",
+    labelOffset: 3,
     temp:  "10–30K K",
     mass:  "2–16 M☉",
     displayR: 42,
@@ -34,6 +36,7 @@ const STAR_CLASSES = [
     color: "#D8E2FF",
     glow:  "rgba(216,226,255,0.45)",
     label: "A-TYPE",
+    labelOffset: 1.2,
     temp:  "7,500–10K K",
     mass:  "1.4–2 M☉",
     displayR: 31,
@@ -46,6 +49,7 @@ const STAR_CLASSES = [
     color: "#FFFDE0",
     glow:  "rgba(255,253,220,0.40)",
     label: "F-TYPE",
+    labelOffset: 1,
     temp:  "6,000–7,500 K",
     mass:  "1.0–1.4 M☉",
     displayR: 23,
@@ -58,6 +62,7 @@ const STAR_CLASSES = [
     color: "#FFD580",
     glow:  "rgba(255,213,128,0.45)",
     label: "G-TYPE",
+    labelOffset: 1,
     temp:  "5,200–6,000 K",
     mass:  "0.8–1.0 M☉",
     displayR: 18,
@@ -70,6 +75,7 @@ const STAR_CLASSES = [
     color: "#FFAF50",
     glow:  "rgba(255,175,80,0.45)",
     label: "K-TYPE",
+    labelOffset: 1,
     temp:  "3,700–5,200 K",
     mass:  "0.45–0.8 M☉",
     displayR: 13,
@@ -82,6 +88,7 @@ const STAR_CLASSES = [
     color: "#FF6840",
     glow:  "rgba(255,104,64,0.45)",
     label: "M-TYPE",
+    labelOffset: 1,
     temp:  "2,400–3,700 K",
     mass:  "0.08–0.45 M☉",
     displayR: 9,
@@ -183,7 +190,7 @@ export default function StellarClassificationSimulation() {
         ctx.font      = `bold ${Math.max(9, 11 * scale)}px 'Jura', monospace`;
         ctx.fillStyle = star.color;
         ctx.textAlign = "center";
-        ctx.fillText(star.class, x, baseline - star.displayR * scale * 1.15 - 28 * scale - 6);
+        ctx.fillText(star.class, x, baseline - star.displayR * scale * 1.15 - 28 * scale - 6 * star.labelOffset);
 
         // Thin tick
         ctx.beginPath();
