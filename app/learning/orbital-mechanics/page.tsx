@@ -4,54 +4,23 @@ import Panel from "@/components/panel";
 import SectionHeader from "@/components/section-header";
 
 export const metadata: Metadata = {
-  title: "Star Systems | Learning Resources | ED:CS",
-  description: "Explore how different star system configurations form and remain gravitationally stable.",
+  title: "Orbital Mechanics | Learning Resources | ED:CS",
+  description: "Interactive simulations exploring the forces and equilibria that govern orbital motion.",
 };
 
 const configurations = [
   {
-    href:        "/learning/star-systems/single-star",
-    icon:        "icarus-terminal-star",
-    title:       "Single Star",
-    subtitle:    "Stellar Zones & Planetary Orbits",
-    description: "The simplest system configuration. A lone star with a defined habitable zone, snow line, and orbiting bodies at varying distances.",
-    tags:        ["Common", "Habitable Zone", "Planetary Science"],
-    frequency:   "~56% of known systems",
-    status:      "available",
-  },
-  {
-    href:        "/learning/star-systems/binary-pair",
+    href:        "/learning/orbital-mechanics/lagrange-points",
     icon:        "icarus-terminal-system-orbits",
-    title:       "Binary Pair",
-    subtitle:    "Two Stars, One Barycenter",
-    description: "Two stars locked in mutual orbit around a shared center of mass. The most common multi-star configuration, with complex overlapping habitable zones.",
-    tags:        ["Multi-Star", "Barycenter", "Orbital Mechanics"],
-    frequency:   "~33% of known systems",
-    status:      "available",
-  },
-  {
-    href:        "/learning/star-systems/hierarchical-triple",
-    icon:        "icarus-terminal-star",
-    title:       "Hierarchical Triple",
-    subtitle:    "Binary Pair + Distant Companion",
-    description: "A stable three-star configuration where a tight inner binary is orbited by a third, more distant star. Long-term stability requires a large separation ratio.",
-    tags:        ["Triple Star", "Hierarchical", "Stability"],
-    frequency:   "~8% of known systems",
-    status:      "available",
-  },
-  {
-    href:        "/learning/star-systems/circumbinary-planet",
-    icon:        "icarus-terminal-planet",
-    title:       "Circumbinary Planet",
-    subtitle:    "P-Type Orbit Around a Binary Pair",
-    description: "A planet orbiting both stars in a binary system from the outside. Must clear the chaotic forbidden zone before settling into a stable P-type orbit.",
-    tags:        ["Planet", "P-Type Orbit", "Forbidden Zone"],
-    frequency:   "Rare — ~1% of binary systems",
+    title:       "Lagrange Points",
+    subtitle:    "Five Equilibria in Every Two-Body System",
+    description: "Every pair of orbiting bodies shares five gravitational equilibrium points. Two are stable — objects placed there stay indefinitely. Three are unstable but strategically valuable.",
+    tags:        ["Equilibrium", "Gravity", "Stability"],
     status:      "available",
   },
 ];
 
-export default function StarSystemsIndexPage() {
+export default function OrbitalMechanicsPage() {
   return (
     <>
       {/* ── Terminal header ── */}
@@ -60,13 +29,13 @@ export default function StarSystemsIndexPage() {
           <div className="flex items-center gap-3">
             <span>MODULE:LEARNING</span>
             <span className="hidden sm:inline text-neutral-800">■</span>
-            <span className="hidden sm:inline">DATABASE:STELLAR-MECHANICS</span>
+            <span className="hidden sm:inline">DATABASE:ORBITAL-MECHANICS</span>
             <span className="hidden md:inline text-neutral-800">■</span>
             <span className="hidden md:inline">CLASS:UNRESTRICTED</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="fx-dot-blue h-1.5 w-1.5" />
-            <span>{configurations.length} configurations indexed</span>
+            <span>{configurations.length} simulation{configurations.length !== 1 ? "s" : ""} indexed</span>
           </div>
         </div>
       </div>
@@ -74,13 +43,13 @@ export default function StarSystemsIndexPage() {
       {/* ── Hero ── */}
       <Panel className="fx-chamfer fx-panel-scan mb-5 px-6 py-5">
         <div className="flex items-start gap-3">
-          <i className="icarus-terminal-star text-glow__blue mt-0.5 text-2xl" />
+          <i className="icarus-terminal-system-orbits text-glow__blue mt-0.5 text-2xl" />
           <div>
             <h1 className="text-glow__white mb-1 text-2xl font-bold uppercase tracking-wide md:text-3xl">
-              Star Systems
+              Orbital Mechanics
             </h1>
             <p className="text-glow__blue text-sm font-bold uppercase tracking-widest">
-              Gravitational Mechanics &amp; System Configurations
+              Forces, Equilibria &amp; Resonance
             </p>
           </div>
         </div>
@@ -93,14 +62,14 @@ export default function StarSystemsIndexPage() {
           Learning Resources
         </Link>
         <span className="flex items-center gap-2 text-neutral-700">
-          <i className="icarus-terminal-star text-sky-500/20" />
-          MODULE — STAR SYSTEMS
+          <i className="icarus-terminal-system-orbits text-sky-500/20" />
+          MODULE — ORBITAL MECHANICS
         </span>
       </div>
 
-      {/* ── Configuration list ── */}
+      {/* ── Simulation list ── */}
       <Panel variant="muted" className="fx-chamfer p-5">
-        <SectionHeader icon="icarus-terminal-scan" title="System Configurations" />
+        <SectionHeader icon="icarus-terminal-scan" title="Simulations" />
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {configurations.map((config) => (
             <Link key={config.href} href={config.href} className="group flex h-full flex-col">
@@ -127,12 +96,6 @@ export default function StarSystemsIndexPage() {
                 <p className="mb-3 flex-1 text-xs uppercase tracking-wide text-neutral-500">
                   {config.description}
                 </p>
-
-                <div className="mb-3 border-t border-sky-900/20 pt-3">
-                  <span className="text-[0.6rem] uppercase tracking-widest text-neutral-700">
-                    {config.frequency}
-                  </span>
-                </div>
 
                 <div className="flex flex-wrap gap-1.5">
                   {config.tags.map((tag) => (
