@@ -113,7 +113,7 @@ const SvgFilters: FunctionComponent = () => {
             </feComponentTransfer>
             <feComposite operator="over" in="shadow" in2="SourceGraphic" />
           </filter>
-          <filter id="svg-filter__star-glow--light">
+          <filter id="svg-filter__star-glow--light" x="-200%" y="-200%" width="500%" height="500%">
             <feMorphology id="morph" operator="dilate" radius="2000" />
             <feOffset dx="0" dy="0" />
             <feGaussianBlur stdDeviation="500" result="offset-blur" />

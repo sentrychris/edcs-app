@@ -88,10 +88,9 @@ const subTypeMultiplier = (body: MappedSystemBody): number => {
 };
 
 // ViewBox padding factor: how much empty space to reserve around the body in
-// the SVG coordinate space so the CSS drop-shadow glow has room to render.
-// Tree stars use a tree-scoped CSS override (system.css) that disables the
-// oversized SVG url() filter and swaps the 15rem drop-shadow for a small
-// rem-based one, so the padding here just needs to fit that smaller glow.
+// the SVG coordinate space so glow effects have room to render. Stars use the
+// SVG filter (svg-filter__star-glow--light) whose expanded filter region renders
+// via overflow:visible, so the factor here just needs to contain rings/orbits.
 const viewBoxFactor = (body: MappedSystemBody): number => {
   const hasRings = body.rings && body.rings.length > 0;
   const st = body.sub_type ?? "";
