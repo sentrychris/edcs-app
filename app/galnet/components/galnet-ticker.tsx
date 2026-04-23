@@ -9,7 +9,7 @@ interface Props {
   articles: Pick<Galnet, "title" | "slug" | "audio_file" | "uploaded_at">[];
 }
 
-const SCROLL_PX_PER_SEC = 80;
+const SCROLL_PX_PER_SEC = 50;
 
 const NewsTicker: FunctionComponent<Props> = ({ articles }) => {
   const [currentTime, setCurrentTime] = useState("00:00");
@@ -119,17 +119,18 @@ const NewsTicker: FunctionComponent<Props> = ({ articles }) => {
   const currentDate = getCurrentEliteDate();
 
   const renderArticles = (keyPrefix: string, ariaHidden = false) =>
-    articles.map((article, i) => (
+    articles.map((article, i) => (<div className="flex items-center gap-x-3">
+      <i className="icarus-terminal-notifications text-sky-500/50"></i>
       <Link
         key={`${keyPrefix}-${article.slug}-${i}`}
         href={`/galnet/news/${article.slug}`}
-        className="me-12 text-xs hover:underline"
+        className="me-12 text-xs hover:underline flex items-center gap-x-3"
         aria-hidden={ariaHidden || undefined}
         tabIndex={ariaHidden ? -1 : undefined}
       >
         {article.uploaded_at} - {article.title}
       </Link>
-    ));
+    </div>));
 
   return (
     <div className="relative flex items-center bg-black/50 backdrop-filter backdrop-blur">
