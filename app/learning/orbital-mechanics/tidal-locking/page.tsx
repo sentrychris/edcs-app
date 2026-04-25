@@ -60,7 +60,7 @@ export default function TidalLockingPage() {
       </div>
 
       {/* ── Hero ── */}
-      <Panel className="fx-chamfer fx-panel-scan mb-5 px-6 py-5">
+      <Panel className="fx-chamfer fx-panel-scan mb-5 px-4 py-4 md:px-6 md:py-5">
         <div className="flex items-start gap-3">
           <i className="icarus-terminal-planet text-glow__blue mt-0.5 text-2xl" />
           <div>
@@ -80,7 +80,7 @@ export default function TidalLockingPage() {
           <i className="icarus-terminal-chevron-left text-xs" />
           Orbital Mechanics
         </Link>
-        <span className="flex items-center gap-2 text-neutral-700">
+        <span className="hidden items-center gap-2 text-neutral-700 sm:flex">
           <i className="icarus-terminal-planet text-sky-500/20" />
           SIMULATION — TIDAL LOCKING
         </span>
@@ -95,7 +95,7 @@ export default function TidalLockingPage() {
             <div className="border-b border-sky-900/20 px-4 py-3">
               <SectionHeader icon="icarus-terminal-planet" title="Locked vs Unlocked Rotation" className="mb-0 border-0 pb-0" />
             </div>
-            <div className="relative min-h-0 flex-1">
+            <div className="relative min-h-[360px] flex-1">
               <TidalLockingSimulation />
             </div>
             <div className="border-t border-sky-900/20 px-4 py-3">
@@ -120,7 +120,7 @@ export default function TidalLockingPage() {
         {/* ── Info panels ── */}
         <div className="flex h-full flex-col space-y-5">
 
-          <Panel variant="muted" className="fx-chamfer p-5">
+          <Panel variant="muted" className="fx-chamfer p-4 md:p-5">
             <SectionHeader icon="icarus-terminal-scan" title="Key Parameters" />
             <div className="grid grid-cols-2 gap-2">
               <StatBadge label="Lock condition" value="Tspin = Torbit"  />
@@ -130,7 +130,7 @@ export default function TidalLockingPage() {
             </div>
           </Panel>
 
-          <Panel variant="muted" className="fx-chamfer p-5">
+          <Panel variant="muted" className="fx-chamfer p-4 md:p-5">
             <SectionHeader icon="icarus-terminal-info" title="How It Happens" />
             <div className="space-y-3 text-xs uppercase tracking-wide text-neutral-500">
               <p>
@@ -154,7 +154,7 @@ export default function TidalLockingPage() {
             </div>
           </Panel>
 
-          <Panel variant="muted" className="fx-chamfer p-5">
+          <Panel variant="muted" className="fx-chamfer p-4 md:p-5">
             <SectionHeader icon="icarus-terminal-warning" title="Habitability Impact" />
             <div className="space-y-2 text-xs uppercase tracking-wide text-neutral-600">
               {[
@@ -175,7 +175,7 @@ export default function TidalLockingPage() {
       </div>
 
       {/* ── Examples ── */}
-      <Panel variant="muted" className="fx-chamfer mt-5 p-5">
+      <Panel variant="muted" className="fx-chamfer mt-5 p-4 md:p-5">
         <SectionHeader icon="icarus-terminal-scan" title="Known Examples" />
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {examples.map((ex) => (
