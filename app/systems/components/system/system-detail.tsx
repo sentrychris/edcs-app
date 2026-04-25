@@ -16,6 +16,7 @@ import SystemBodyModal from "./system-body-modal";
 import SystemStarsTable from "./system-stars-table";
 import SystemBodiesTable from "./system-bodies-table";
 import SystemBodiesMap from "./system-bodies-map";
+import SystemMobileSummary from "./system-mobile-summary";
 import SystemStationsTable from "./system-stations-table";
 import SystemFleetCarriersTable from "./system-fleet-carriers-table";
 
@@ -48,13 +49,22 @@ const SystemDetail: FunctionComponent<Props> = ({ params, initialData = null }) 
       <SystemInformationBar information={system.information} />
 
       {!loading && systemMap && (
-        <SystemBodiesMap
-          isLoading={isLoading}
-          system={system}
-          systemMap={systemMap}
-          setIsPanelOpen={setIsPanelOpen}
-          setSelectedBodyDisplayInfo={setSelectedBody}
-        />
+        <>
+          <SystemMobileSummary
+            className="md:hidden"
+            systemMap={systemMap}
+            fleetCarrierCount={system.fleet_carriers?.length ?? 0}
+          />
+          <div className="hidden md:block">
+            <SystemBodiesMap
+              isLoading={isLoading}
+              system={system}
+              systemMap={systemMap}
+              setIsPanelOpen={setIsPanelOpen}
+              setSelectedBodyDisplayInfo={setSelectedBody}
+            />
+          </div>
+        </>
       )}
 
       <div className="flex flex-col gap-y-5">
