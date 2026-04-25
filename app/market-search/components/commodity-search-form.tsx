@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import SystemSearchInput from "@/app/route-plotter/components/system-search-input";
-import type { CommodityFilters } from "./commodity-search-panel";
+import SystemSearchInput from "@/components/system-search-input";
+import type { CommodityFilters } from "@/core/interfaces/MarketSearch";
+import NumberField from "./number-field";
 
 interface Props {
   initialCommodity: string;
@@ -155,33 +156,5 @@ export default function CommoditySearchForm({ initialCommodity, initialNearSyste
         </div>
       )}
     </form>
-  );
-}
-
-interface NumberFieldProps {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-  min?: number;
-  max?: number;
-  disabled?: boolean;
-}
-
-function NumberField({ label, value, onChange, min, max, disabled }: NumberFieldProps) {
-  return (
-    <div>
-      <label className="mb-1 block text-xs font-bold uppercase tracking-widest text-neutral-400">
-        {label}
-      </label>
-      <input
-        type="number"
-        min={min}
-        max={max}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        disabled={disabled}
-        className="h-[37px] w-full border border-sky-900/20 bg-transparent pl-4 text-xs uppercase tracking-wider text-neutral-200 outline-none transition-colors focus:border-sky-500/60 focus:outline-none disabled:opacity-40"
-      />
-    </div>
   );
 }

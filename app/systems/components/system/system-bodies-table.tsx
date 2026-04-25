@@ -1,12 +1,12 @@
 "use client";
 
-import { type FunctionComponent, useState } from "react";
+import type { FunctionComponent } from "react";
 import type { MappedSystemBody } from "@/core/interfaces/SystemBody";
 import { SystemBodyType } from "@/core/constants/system";
 import { formatDate } from "@/core/string-utils";
+import { useInMemoryPagination } from "@/core/hooks/in-memory-pagination";
 import Link from "next/link";
 import Table from "@/components/table";
-import type { Links, Meta } from "@/core/interfaces/Pagination";
 import Heading from "@/components/heading";
 
 type SystemBody = Required<MappedSystemBody>;
@@ -16,45 +16,8 @@ interface Props {
   systemSlug: string;
 }
 
-const PER_PAGE = 10;
-
-const buildPaginationProps = (
-  allBodies: SystemBody[],
-  currentPage: number,
-): { rows: SystemBody[]; meta: Meta; links: Links } => {
-  const total = allBodies.length;
-  const lastPage = Math.max(1, Math.ceil(total / PER_PAGE));
-  const from = (currentPage - 1) * PER_PAGE;
-  const to = Math.min(from + PER_PAGE, total);
-
-  const meta: Meta = {
-    current_page: currentPage,
-    from: from + 1,
-    path: "",
-    per_page: PER_PAGE,
-    to,
-  };
-
-  const links: Links = {
-    first: `?page=1`,
-    last: `?page=${lastPage}`,
-    prev: currentPage > 1 ? `?page=${currentPage - 1}` : null,
-    next: currentPage < lastPage ? `?page=${currentPage + 1}` : null,
-  };
-
-  return { rows: allBodies.slice(from, to), meta, links };
-};
-
 const SystemBodiesTable: FunctionComponent<Props> = ({ bodies, systemSlug }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const { rows, meta, links } = buildPaginationProps(bodies, currentPage);
-
-  const handlePage = (link: string) => {
-    const params = new URLSearchParams(link.replace(/^[^?]*/, ""));
-    const page = parseInt(params.get("page") ?? "1", 10);
-    setCurrentPage(page);
-  };
+  const { rows, meta, links, setPage } = useInMemoryPagination(bodies);
 
   const isOrbitingPlanet = (body: SystemBody) => {
     return body.parents.find((parent) => {
@@ -165,7 +128,7 @@ const SystemBodiesTable: FunctionComponent<Props> = ({ bodies, systemSlug }) => 
     <Heading bordered icon="icarus-terminal-system-orbits" title="Orbital Bodies" subtitle="Planetary Survey Records" className="px-5 py-4" />
   );
 
-  return <Table collapsible header={header} columns={columns} data={rows} meta={meta} links={links} page={handlePage} />;
+  return <Table collapsible header={header} columns={columns} data={rows} meta={meta} links={links} page={setPage} />;
 };
 
 export default SystemBodiesTable;

@@ -1,51 +1,20 @@
 "use client";
 
-import { type FunctionComponent, useState } from "react";
-import type { SystemDispatcher } from "@/core/events/SystemDispatcher";
+import type { FunctionComponent } from "react";
 import type { Station } from "@/core/interfaces/Station";
-import type { Links, Meta } from "@/core/interfaces/Pagination";
 import { formatDate } from "@/core/string-utils";
 import { stationIconByType } from "@/core/render-utils";
+import { useInMemoryPagination } from "@/core/hooks/in-memory-pagination";
 import Table from "@/components/table";
 import Link from "next/link";
 import Heading from "@/components/heading";
 
 interface Props {
   stations: Station[];
-  dispatcher: SystemDispatcher;
 }
 
-const PER_PAGE = 10;
-
-const buildPaginationProps = (
-  allRows: Station[],
-  currentPage: number,
-): { rows: Station[]; meta: Meta; links: Links } => {
-  const total = allRows.length;
-  const lastPage = Math.max(1, Math.ceil(total / PER_PAGE));
-  const from = (currentPage - 1) * PER_PAGE;
-  const to = Math.min(from + PER_PAGE, total);
-
-  const meta: Meta = { current_page: currentPage, from: from + 1, path: "", per_page: PER_PAGE, to };
-  const links: Links = {
-    first: `?page=1`,
-    last: `?page=${lastPage}`,
-    prev: currentPage > 1 ? `?page=${currentPage - 1}` : null,
-    next: currentPage < lastPage ? `?page=${currentPage + 1}` : null,
-  };
-
-  return { rows: allRows.slice(from, to), meta, links };
-};
-
-const SystemStationsTable: FunctionComponent<Props> = ({ stations, dispatcher }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const { rows, meta, links } = buildPaginationProps(stations, currentPage);
-
-  const handlePage = (link: string) => {
-    const params = new URLSearchParams(link.replace(/^[^?]*/, ""));
-    setCurrentPage(parseInt(params.get("page") ?? "1", 10));
-  };
+const SystemStationsTable: FunctionComponent<Props> = ({ stations }) => {
+  const { rows, meta, links, setPage } = useInMemoryPagination(stations);
 
   const columns = {
     name: {
@@ -146,7 +115,7 @@ const SystemStationsTable: FunctionComponent<Props> = ({ stations, dispatcher })
     <Heading bordered icon="icarus-terminal-outpost" title="System Stations" subtitle="Docking & Logistics Network" className="px-5 py-4" />
   );
 
-  return <Table collapsible header={header} columns={columns} data={rows} meta={meta} links={links} page={handlePage} />;
+  return <Table collapsible header={header} columns={columns} data={rows} meta={meta} links={links} page={setPage} />;
 };
 
 export default SystemStationsTable;

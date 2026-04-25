@@ -11,6 +11,8 @@ import Link from "next/link";
 import Panel from "@/components/panel";
 import BodySvg from "./components/body-svg";
 import SectionHeader from "@/components/section-header";
+import TerminalHeader from "@/components/terminal-header";
+import BreadcrumbNav from "@/components/breadcrumb-nav";
 
 interface Props {
   params: { slug: string; bodySlug: string };
@@ -60,21 +62,11 @@ export default async function Page({ params }: Props) {
   return (
     <>
       {/* ── Survey Terminal header ── */}
-      <div className="fx-chamfer relative mb-5 border border-sky-900/40 bg-black/50 backdrop-blur backdrop-filter px-4 py-3 md:px-6 md:py-4">
-        <div className="flex flex-wrap items-center justify-between gap-2 text-xs uppercase tracking-widest text-neutral-600">
-          <div className="flex items-center gap-3">
-            <span>MODULE:SURVEY</span>
-            <span className="hidden sm:inline text-neutral-800">■</span>
-            <span className="hidden sm:inline">DATABASE:{isStar ? "STELLAR" : "PLANETARY"}</span>
-            <span className="hidden md:inline text-neutral-800">■</span>
-            <span className="hidden md:inline">CLASS:UNRESTRICTED</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="fx-dot-blue h-1.5 w-1.5" />
-            <span>SCAN: COMPLETE</span>
-          </div>
-        </div>
-      </div>
+      <TerminalHeader
+        moduleLabel="MODULE:SURVEY"
+        protocolLabel={`DATABASE:${isStar ? "STELLAR" : "PLANETARY"}`}
+        statusLabel="SCAN: COMPLETE"
+      />
 
       {/* ── Hero panel ── */}
       <div className="fx-chamfer fx-panel-scan relative mb-5 border border-sky-900/40 bg-black/50 backdrop-blur backdrop-filter">
@@ -158,19 +150,12 @@ export default async function Page({ params }: Props) {
       </div>
 
       {/* ── Breadcrumb / survey nav ── */}
-      <div className="mb-5 flex items-center justify-between text-xs uppercase tracking-widest text-neutral-500">
-        <Link
-          href={`/systems/${params.slug}`}
-          className="flex items-center gap-2 transition-colors hover:text-sky-400"
-        >
-          <i className="icarus-terminal-chevron-left text-xs" />
-          Back to {body.system?.name}
-        </Link>
-        <span className="hidden items-center gap-2 text-neutral-700 sm:flex">
-          <i className="icarus-terminal-scan text-sky-500/20" />
-          SURVEY REPORT — {body.name}
-        </span>
-      </div>
+      <BreadcrumbNav
+        backHref={`/systems/${params.slug}`}
+        backLabel={`Back to ${body.system?.name}`}
+        rightIcon="icarus-terminal-scan"
+        rightLabel={`SURVEY REPORT — ${body.name}`}
+      />
 
       {/* ── Stats grid ── */}
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">

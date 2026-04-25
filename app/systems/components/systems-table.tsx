@@ -74,7 +74,7 @@ const SystemsTable: FunctionComponent<Props> = ({ className = "", systems }) => 
         }
       }
     } else {
-      if (debouncedInformationQuery[field]?.length > 1) {
+      if (debouncedInformationQuery[field as keyof typeof debouncedInformationQuery]?.length > 1) {
         for (const [key, val] of Object.entries(informationQuery)) {
           if (val.length > 0) {
             params[key] = val;

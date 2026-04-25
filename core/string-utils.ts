@@ -43,7 +43,7 @@ export function escapeRegExp(text: string) {
 }
 
 export function pluralizeTextFromArray(
-  arr: any[],
+  arr: readonly unknown[],
   { singular, plural }: { singular: string; plural: string },
 ) {
   return arr.length === 1 ? singular : plural;

@@ -1,17 +1,15 @@
 "use client";
 
-import { type FunctionComponent, useState } from "react";
+import type { FunctionComponent } from "react";
 import type { FleetCarrier } from "@/core/interfaces/FleetCarrier";
-import type { Links, Meta } from "@/core/interfaces/Pagination";
 import { formatDate } from "@/core/string-utils";
+import { useInMemoryPagination } from "@/core/hooks/in-memory-pagination";
 import Table from "@/components/table";
 import Heading from "@/components/heading";
 
 interface Props {
   fleetCarriers: FleetCarrier[];
 }
-
-const PER_PAGE = 10;
 
 const SERVICE_ABBREVIATIONS: Record<string, string> = {
   "Universal Cartographics": "UC",
@@ -46,35 +44,8 @@ const serviceAbbreviation = (service: string): string => {
     .slice(0, 3);
 };
 
-const buildPaginationProps = (
-  allRows: FleetCarrier[],
-  currentPage: number,
-): { rows: FleetCarrier[]; meta: Meta; links: Links } => {
-  const total = allRows.length;
-  const lastPage = Math.max(1, Math.ceil(total / PER_PAGE));
-  const from = (currentPage - 1) * PER_PAGE;
-  const to = Math.min(from + PER_PAGE, total);
-
-  const meta: Meta = { current_page: currentPage, from: from + 1, path: "", per_page: PER_PAGE, to };
-  const links: Links = {
-    first: `?page=1`,
-    last: `?page=${lastPage}`,
-    prev: currentPage > 1 ? `?page=${currentPage - 1}` : null,
-    next: currentPage < lastPage ? `?page=${currentPage + 1}` : null,
-  };
-
-  return { rows: allRows.slice(from, to), meta, links };
-};
-
 const SystemFleetCarriersTable: FunctionComponent<Props> = ({ fleetCarriers }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const { rows, meta, links } = buildPaginationProps(fleetCarriers, currentPage);
-
-  const handlePage = (link: string) => {
-    const params = new URLSearchParams(link.replace(/^[^?]*/, ""));
-    setCurrentPage(parseInt(params.get("page") ?? "1", 10));
-  };
+  const { rows, meta, links, setPage } = useInMemoryPagination(fleetCarriers);
 
   const columns = {
     name: {
@@ -170,7 +141,7 @@ const SystemFleetCarriersTable: FunctionComponent<Props> = ({ fleetCarriers }) =
     />
   );
 
-  return <Table collapsible header={header} columns={columns} data={rows} meta={meta} links={links} page={handlePage} />;
+  return <Table collapsible header={header} columns={columns} data={rows} meta={meta} links={links} page={setPage} />;
 };
 
 export default SystemFleetCarriersTable;

@@ -6,6 +6,7 @@ import type { SystemDistance } from "@/core/interfaces/SystemDistance";
 import { getCollection } from "@/core/api";
 import Panel from "@/components/panel";
 import Heading from "@/components/heading";
+import SearchStatusPanel from "@/components/search-status-panel";
 import DistanceSearchForm from "./distance-search-form";
 import DistanceResults3D from "./distance-results-3d";
 import DistanceResultsList from "./distance-results-list";
@@ -72,25 +73,15 @@ export default function DistanceSearchView({ initialSlug, initialLy }: Props) {
       </Panel>
 
       {/* ── Error ── */}
-      {error && (
-        <Panel className="px-4 py-4 md:px-6 md:py-5">
-          <div className="flex items-center gap-3 text-red-400/80">
-            <i className="icarus-terminal-warning text-base"></i>
-            <p className="text-xs uppercase tracking-widest">{error}</p>
-          </div>
-        </Panel>
-      )}
+      {error && <SearchStatusPanel state="error" icon="icarus-terminal-warning" message={error} />}
 
       {/* ── Loading ── */}
       {isLoading && (
-        <Panel className="flex items-center justify-center px-4 py-16">
-          <div className="flex flex-col items-center gap-4">
-            <i className="icarus-terminal-system-orbits text-glow__blue text-3xl"></i>
-            <p className="text-xs uppercase tracking-widest text-neutral-500">
-              Scanning proximity...
-            </p>
-          </div>
-        </Panel>
+        <SearchStatusPanel
+          state="loading"
+          icon="icarus-terminal-system-orbits"
+          message="Scanning proximity..."
+        />
       )}
 
       {/* ── Results ── */}

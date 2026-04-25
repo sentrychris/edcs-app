@@ -1,6 +1,6 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { settings } from "@/core/config";
-import Panel from "@/components/panel";
+import TerminalHeader from "@/components/terminal-header";
 import RoutePlotterView from "./components/route-plotter-view";
 
 interface Props {
@@ -29,21 +29,12 @@ export default function Page({ searchParams }: Props) {
   return (
     <>
       {/* ── Navigation header bar ── */}
-      <Panel className="mb-5 px-4 py-3 md:px-6 md:py-4">
-        <div className="flex flex-wrap items-center justify-between gap-2 text-xs uppercase tracking-widest text-neutral-600">
-          <div className="flex items-center gap-3">
-            <span>MODULE:NAVIGATION</span>
-            <span className="hidden text-neutral-800 sm:inline">■</span>
-            <span className="hidden sm:inline">PROTOCOL:ROUTE-PLANNER</span>
-            <span className="hidden text-neutral-800 md:inline">■</span>
-            <span className="hidden md:inline">CLASS:UNRESTRICTED</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="fx-dot-blue h-1.5 w-1.5"></span>
-            <span>NAVIGATION: ACTIVE</span>
-          </div>
-        </div>
-      </Panel>
+      <TerminalHeader
+        variant="panel"
+        moduleLabel="MODULE:NAVIGATION"
+        protocolLabel="PROTOCOL:ROUTE-PLANNER"
+        statusLabel="NAVIGATION: ACTIVE"
+      />
 
       <RoutePlotterView
         initialFrom={searchParams.from ?? ""}

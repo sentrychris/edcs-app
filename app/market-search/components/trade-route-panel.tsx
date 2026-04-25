@@ -2,23 +2,15 @@
 
 import { useState } from "react";
 import { getResource } from "@/core/api";
-import type { MarketTradeRoute } from "@/core/interfaces/MarketSearch";
+import type { MarketTradeRoute, TradeRouteFilters } from "@/core/interfaces/MarketSearch";
 import Panel from "@/components/panel";
 import Heading from "@/components/heading";
+import SearchStatusPanel from "@/components/search-status-panel";
 import TradeRouteForm from "./trade-route-form";
 import TradeRouteList from "./trade-route-list";
 
 interface Props {
   initialNearSystem: string;
-}
-
-export interface TradeRouteFilters {
-  near_system: string;
-  ly: number;
-  min_stock: number;
-  min_demand: number;
-  min_profit: number;
-  limit: number;
 }
 
 export default function TradeRoutePanel({ initialNearSystem }: Props) {
@@ -70,22 +62,10 @@ export default function TradeRoutePanel({ initialNearSystem }: Props) {
         />
       </Panel>
 
-      {error && (
-        <Panel className="px-4 py-4 md:px-6 md:py-5">
-          <div className="flex items-center gap-3 text-red-400/80">
-            <i className="icarus-terminal-warning text-base"></i>
-            <p className="text-xs uppercase tracking-widest">{error}</p>
-          </div>
-        </Panel>
-      )}
+      {error && <SearchStatusPanel state="error" icon="icarus-terminal-warning" message={error} />}
 
       {isLoading && (
-        <Panel className="flex items-center justify-center px-4 py-16">
-          <div className="flex flex-col items-center gap-4">
-            <i className="icarus-terminal-route text-glow__blue text-3xl"></i>
-            <p className="text-xs uppercase tracking-widest text-neutral-500">Pairing markets...</p>
-          </div>
-        </Panel>
+        <SearchStatusPanel state="loading" icon="icarus-terminal-route" message="Pairing markets..." />
       )}
 
       {routes && !isLoading && <TradeRouteList routes={routes} />}

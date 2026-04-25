@@ -2,24 +2,16 @@
 
 import { useState } from "react";
 import { getResource } from "@/core/api";
-import type { CommoditySearchResult } from "@/core/interfaces/MarketSearch";
+import type { CommodityFilters, CommoditySearchResult } from "@/core/interfaces/MarketSearch";
 import Panel from "@/components/panel";
 import Heading from "@/components/heading";
+import SearchStatusPanel from "@/components/search-status-panel";
 import CommoditySearchForm from "./commodity-search-form";
 import CommodityListingTable from "./commodity-listing-table";
 
 interface Props {
   initialCommodity: string;
   initialNearSystem: string;
-}
-
-export interface CommodityFilters {
-  commodity: string;
-  near_system: string;
-  ly: number;
-  min_stock: number;
-  min_demand: number;
-  limit: number;
 }
 
 export default function CommoditySearchPanel({ initialCommodity, initialNearSystem }: Props) {
@@ -78,22 +70,10 @@ export default function CommoditySearchPanel({ initialCommodity, initialNearSyst
         />
       </Panel>
 
-      {error && (
-        <Panel className="px-4 py-4 md:px-6 md:py-5">
-          <div className="flex items-center gap-3 text-red-400/80">
-            <i className="icarus-terminal-warning text-base"></i>
-            <p className="text-xs uppercase tracking-widest">{error}</p>
-          </div>
-        </Panel>
-      )}
+      {error && <SearchStatusPanel state="error" icon="icarus-terminal-warning" message={error} />}
 
       {isLoading && (
-        <Panel className="flex items-center justify-center px-4 py-16">
-          <div className="flex flex-col items-center gap-4">
-            <i className="icarus-terminal-economy text-glow__blue text-3xl"></i>
-            <p className="text-xs uppercase tracking-widest text-neutral-500">Querying market index...</p>
-          </div>
-        </Panel>
+        <SearchStatusPanel state="loading" icon="icarus-terminal-economy" message="Querying market index..." />
       )}
 
       {result && !isLoading && (

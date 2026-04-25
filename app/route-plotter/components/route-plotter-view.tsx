@@ -5,6 +5,7 @@ import type { SystemRouteWaypoint } from "@/core/interfaces/SystemRoute";
 import { getResource } from "@/core/api";
 import Panel from "@/components/panel";
 import Heading from "@/components/heading";
+import SearchStatusPanel from "@/components/search-status-panel";
 import RoutePlotterForm from "./route-plotter-form";
 import RoutePlot3D from "./route-plot-3d";
 import RouteJumpList from "./route-jump-list";
@@ -58,25 +59,15 @@ export default function RoutePlotterView({ initialFrom, initialTo, initialLy }: 
       </Panel>
 
       {/* ── Error ── */}
-      {error && (
-        <Panel className="px-4 py-4 md:px-6 md:py-5">
-          <div className="flex items-center gap-3 text-red-400/80">
-            <i className="icarus-terminal-warning text-base"></i>
-            <p className="text-xs uppercase tracking-widest">{error}</p>
-          </div>
-        </Panel>
-      )}
+      {error && <SearchStatusPanel state="error" icon="icarus-terminal-warning" message={error} />}
 
       {/* ── Loading ── */}
       {isLoading && (
-        <Panel className="flex items-center justify-center px-4 py-16">
-          <div className="flex flex-col items-center gap-4">
-            <i className="icarus-terminal-route text-glow__blue text-3xl"></i>
-            <p className="text-xs uppercase tracking-widest text-neutral-500">
-              Calculating optimal route...
-            </p>
-          </div>
-        </Panel>
+        <SearchStatusPanel
+          state="loading"
+          icon="icarus-terminal-route"
+          message="Calculating optimal route..."
+        />
       )}
 
       {/* ── Results ── */}

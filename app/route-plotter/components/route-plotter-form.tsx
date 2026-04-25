@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import SystemSearchInput from "./system-search-input";
+import SystemSearchInput from "@/components/system-search-input";
 
 interface Props {
   initialFrom: string;

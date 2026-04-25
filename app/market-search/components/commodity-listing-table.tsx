@@ -1,10 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import type { MarketCommodityListing } from "@/core/interfaces/MarketSearch";
+import type { CommodityFilters, MarketCommodityListing } from "@/core/interfaces/MarketSearch";
 import Panel from "@/components/panel";
 import Heading from "@/components/heading";
-import type { CommodityFilters } from "./commodity-search-panel";
 
 interface Props {
   title: string;

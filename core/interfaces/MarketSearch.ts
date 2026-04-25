@@ -38,3 +38,21 @@ export interface MarketTradeRoute {
   buy_from: MarketCommodityListing;
   sell_to: MarketCommodityListing;
 }
+
+export interface CommodityFilters {
+  commodity: string;
+  near_system: string;
+  ly: number;
+  min_stock: number;
+  min_demand: number;
+  limit: number;
+}
+
+export interface TradeRouteFilters {
+  near_system: string;
+  ly: number;
+  min_stock: number;
+  min_demand: number;
+  min_profit: number;
+  limit: number;
+}

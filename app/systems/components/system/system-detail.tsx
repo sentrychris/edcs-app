@@ -4,7 +4,6 @@ import type { FunctionComponent } from "react";
 import type { System } from "@/core/interfaces/System";
 import type { MappedSystemBody } from "@/core/interfaces/SystemBody";
 import { useMemo, useState } from "react";
-import { systemDispatcher } from "@/core/events/SystemDispatcher";
 import { useResource } from "@/core/hooks/resource";
 import { systemState } from "../../lib/state";
 import Loader from "@/components/loader";
@@ -81,7 +80,7 @@ const SystemDetail: FunctionComponent<Props> = ({ params, initialData = null }) 
           />
         )}
         {!loading && system.stations && system.stations.length > 0 && (
-          <SystemStationsTable stations={system.stations} dispatcher={systemDispatcher} />
+          <SystemStationsTable stations={system.stations} />
         )}
         {!loading && system.fleet_carriers && system.fleet_carriers.length > 0 && (
           <SystemFleetCarriersTable fleetCarriers={system.fleet_carriers} />

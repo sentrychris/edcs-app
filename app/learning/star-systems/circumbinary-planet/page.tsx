@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Panel from "@/components/panel";
 import SectionHeader from "@/components/section-header";
+import TerminalHeader from "@/components/terminal-header";
+import BreadcrumbNav from "@/components/breadcrumb-nav";
 import CircumbinarySimulation from "./components/circumbinary-simulation";
 
 export const metadata: Metadata = {
@@ -20,21 +21,11 @@ export default function CircumbinaryPlanetPage() {
   return (
     <>
       {/* ── Terminal header ── */}
-      <div className="fx-chamfer relative mb-5 border border-sky-900/40 bg-black/50 backdrop-blur backdrop-filter px-4 py-3 md:px-6 md:py-4">
-        <div className="flex flex-wrap items-center justify-between gap-2 text-xs uppercase tracking-widest text-neutral-600">
-          <div className="flex items-center gap-3">
-            <span>MODULE:LEARNING</span>
-            <span className="hidden sm:inline text-neutral-800">■</span>
-            <span className="hidden sm:inline">DATABASE:STELLAR-MECHANICS</span>
-            <span className="hidden md:inline text-neutral-800">■</span>
-            <span className="hidden md:inline">CLASS:UNRESTRICTED</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="fx-dot-blue h-1.5 w-1.5" />
-            <span>SIMULATION: ACTIVE</span>
-          </div>
-        </div>
-      </div>
+      <TerminalHeader
+        moduleLabel="MODULE:LEARNING"
+        protocolLabel="DATABASE:STELLAR-MECHANICS"
+        statusLabel="SIMULATION: ACTIVE"
+      />
 
       {/* ── Hero ── */}
       <Panel className="fx-chamfer fx-panel-scan mb-5 px-4 py-4 md:px-6 md:py-5">
@@ -52,16 +43,12 @@ export default function CircumbinaryPlanetPage() {
       </Panel>
 
       {/* ── Breadcrumb ── */}
-      <div className="mb-5 flex items-center justify-between text-xs uppercase tracking-widest text-neutral-500">
-        <Link href="/learning/star-systems" className="flex items-center gap-2 transition-colors hover:text-sky-400">
-          <i className="icarus-terminal-chevron-left text-xs" />
-          Star Systems
-        </Link>
-        <span className="hidden items-center gap-2 text-neutral-700 sm:flex">
-          <i className="icarus-terminal-planet text-sky-500/20" />
-          CONFIGURATION — CIRCUMBINARY PLANET
-        </span>
-      </div>
+      <BreadcrumbNav
+        backHref="/learning/star-systems"
+        backLabel="Star Systems"
+        rightIcon="icarus-terminal-planet"
+        rightLabel="CONFIGURATION — CIRCUMBINARY PLANET"
+      />
 
       {/* ── Main content ── */}
       <div className="grid grid-cols-1 items-stretch gap-5 lg:grid-cols-3">

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import SystemSearchInput from "@/app/route-plotter/components/system-search-input";
+import SystemSearchInput from "@/components/system-search-input";
 import type { System } from "@/core/interfaces/System";
 import { getResource } from "@/core/api";
 
