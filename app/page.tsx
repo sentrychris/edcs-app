@@ -67,13 +67,13 @@ export default async function Home() {
       {/* ── Content Grid ── */}
       <div className="grid grid-cols-1 gap-x-5 md:grid-cols-2 lg:grid-cols-3">
         {/* ── Galnet Panel ── */}
-        <div className="col-span-1 pt-3">
+        <div className="order-2 col-span-1 pt-3 md:order-none">
           <ShipDisplay />
           <GalnetList className="mt-5" articles={news} />
         </div>
 
         {/* ── Systems Panel ── */}
-        <div className="col-span-1 pt-3 lg:col-span-2">
+        <div className="order-1 col-span-1 pt-3 md:order-none lg:col-span-2">
           <SystemsStatisticsBar className="fx-fade-in" callInterval={10000} flushCache={0} />
           <SystemsTable className="mt-5" systems={systems} />
         </div>
