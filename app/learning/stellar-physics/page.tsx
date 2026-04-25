@@ -38,6 +38,15 @@ const topics = [
     tags:        ["Fusion", "Onion Shell", "Element Origins"],
     status:      "available",
   },
+  {
+    href:        "/learning/stellar-physics/binary-stars",
+    icon:        "icarus-terminal-star",
+    title:       "Binary Stars",
+    subtitle:    "Roche Lobes, Mass Transfer & Accretion",
+    description: "How stellar pairs interact. Animated mass-transfer binary showing the L1 stream, accretion disk, and hot spot — the path to novae and Type Ia supernovae.",
+    tags:        ["Roche Lobe", "Accretion", "Type Ia SN"],
+    status:      "available",
+  },
 ];
 
 export default function StellarPhysicsPage() {
