@@ -1,7 +1,6 @@
 "use client";
 
 import { type FunctionComponent, useState } from "react";
-import type { SystemDispatcher } from "@/core/events/SystemDispatcher";
 import type { MappedSystemBody } from "@/core/interfaces/SystemBody";
 import type { Links, Meta } from "@/core/interfaces/Pagination";
 import { formatDate, formatNumber } from "@/core/string-utils";
@@ -14,7 +13,7 @@ type SystemStar = Required<MappedSystemBody>;
 
 interface Props {
   stars: SystemStar[];
-  dispatcher: SystemDispatcher;
+  systemSlug: string;
 }
 
 const PER_PAGE = 10;
@@ -39,7 +38,7 @@ const buildPaginationProps = (
   return { rows: allRows.slice(from, to), meta, links };
 };
 
-const SystemStarsTable: FunctionComponent<Props> = ({ stars, dispatcher }) => {
+const SystemStarsTable: FunctionComponent<Props> = ({ stars, systemSlug }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const filtered = stars.filter((s) => s._type === SystemBodyType.Star);
@@ -55,18 +54,13 @@ const SystemStarsTable: FunctionComponent<Props> = ({ stars, dispatcher }) => {
       title: "Name",
       render: (body: SystemStar) => {
         return (
-          <span
-            className="hover:text-glow__blue text-blue-200 hover:cursor-pointer hover:underline"
-            onClick={() =>
-              dispatcher.selectBody({
-                body,
-                type: "display-body-panel",
-              })
-            }
+          <Link
+            href={`/systems/${systemSlug}/body/${body.slug}`}
+            className="hover:text-glow__blue flex items-center text-blue-200 hover:underline"
           >
             <i className={`icarus-terminal-star text-glow me-2 text-sm`}></i>
             {body.name}
-          </span>
+          </Link>
         );
       },
     },
@@ -96,17 +90,12 @@ const SystemStarsTable: FunctionComponent<Props> = ({ stars, dispatcher }) => {
       title: "Bodies",
       render: (body: SystemStar) => {
         return (
-          <span
-            className="hover:text-glow__blue text-blue-200 hover:cursor-pointer hover:underline"
-            onClick={() =>
-              dispatcher.selectBody({
-                body,
-                type: "display-body-panel",
-              })
-            }
+          <Link
+            href={`/systems/${systemSlug}/body/${body.slug}`}
+            className="hover:text-glow__blue text-blue-200 hover:underline"
           >
             {body._children?.length ?? 0}
-          </span>
+          </Link>
         );
       },
     },

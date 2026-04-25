@@ -71,7 +71,7 @@ const SystemDetail: FunctionComponent<Props> = ({ params, initialData = null }) 
         {!loading && systemMap && (
           <SystemStarsTable
             stars={systemMap.stars as Required<MappedSystemBody>[]}
-            dispatcher={systemDispatcher}
+            systemSlug={slug}
           />
         )}
         {!loading && systemMap && (

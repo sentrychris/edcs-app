@@ -18,7 +18,7 @@ const SystemMobileSummary: FunctionComponent<Props> = ({
   const stats: Array<{ label: string; value: number; icon: string }> = [
     { label: "Stars",          value: starCount,            icon: "icarus-terminal-star" },
     { label: "Bodies",         value: systemMap.planets.length, icon: "icarus-terminal-planet" },
-    { label: "Stations",       value: systemMap.stations.length, icon: "icarus-terminal-station" },
+    { label: "Stations",       value: systemMap.stations.length, icon: "icarus-terminal-outpost" },
     { label: "Fleet Carriers", value: fleetCarrierCount,    icon: "icarus-terminal-megaship" },
   ];
 
