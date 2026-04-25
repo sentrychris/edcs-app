@@ -29,6 +29,15 @@ const topics = [
     tags:        ["White Dwarf", "Neutron Star", "Black Hole"],
     status:      "available",
   },
+  {
+    href:        "/learning/stellar-physics/stellar-nucleosynthesis",
+    icon:        "icarus-terminal-star",
+    title:       "Stellar Nucleosynthesis",
+    subtitle:    "How Stars Forge the Elements",
+    description: "The onion-shell structure of a massive star moments before supernova. Each layer fuses a different fuel — and every atom heavier than helium was made this way.",
+    tags:        ["Fusion", "Onion Shell", "Element Origins"],
+    status:      "available",
+  },
 ];
 
 export default function StellarPhysicsPage() {
