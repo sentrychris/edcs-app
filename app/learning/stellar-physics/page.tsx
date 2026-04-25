@@ -56,6 +56,15 @@ const topics = [
     tags:        ["Type Ia", "Core Collapse", "Hypernova"],
     status:      "available",
   },
+  {
+    href:        "/learning/stellar-physics/star-formation",
+    icon:        "icarus-terminal-star",
+    title:       "Star Formation",
+    subtitle:    "Protostars, Disks & Bipolar Jets",
+    description: "How stars are born — from molecular cloud collapse to protostar with accretion disk and bipolar jets, all the way to main-sequence ignition.",
+    tags:        ["Protostar", "Accretion Disk", "Bipolar Jets"],
+    status:      "available",
+  },
 ];
 
 export default function StellarPhysicsPage() {

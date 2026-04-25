@@ -61,6 +61,16 @@ const configurations = [
     frequency:   "~3% of known systems",
     status:      "available",
   },
+  {
+    href:        "/learning/star-systems/open-cluster",
+    icon:        "icarus-terminal-system-orbits",
+    title:       "Open Cluster",
+    subtitle:    "Stellar Nurseries & Co-Moving Groups",
+    description: "Hundreds to thousands of stars born from the same molecular cloud, weakly bound and slowly dispersing. Pleiades, Hyades, and the embedded clusters of stellar formation.",
+    tags:        ["Cluster", "Stellar Nursery", "Pleiades"],
+    frequency:   "~10⁵ in the galaxy",
+    status:      "available",
+  },
 ];
 
 export default function StarSystemsIndexPage() {

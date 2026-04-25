@@ -56,6 +56,15 @@ const topics = [
     tags:        ["Dynamo", "Solar Wind", "Auroras"],
     status:      "available",
   },
+  {
+    href:        "/learning/planetary-science/rings-moons",
+    icon:        "icarus-terminal-planet-ringed",
+    title:       "Rings & Moons",
+    subtitle:    "Ring Structure, Shepherds & Moon Systems",
+    description: "Saturn-like ring systems with their bands, gaps, and shepherd moons. How ring divisions form via orbital resonance and why rings are paper-thin yet vast.",
+    tags:        ["Ring System", "Shepherd Moons", "Cassini Division"],
+    status:      "available",
+  },
 ];
 
 export default function PlanetarySciencePage() {

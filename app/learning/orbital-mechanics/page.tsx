@@ -56,6 +56,15 @@ const configurations = [
     tags:        ["Ellipses", "Equal Areas", "T² ∝ a³"],
     status:      "available",
   },
+  {
+    href:        "/learning/orbital-mechanics/hill-sphere",
+    icon:        "icarus-terminal-system-orbits",
+    title:       "Hill Sphere",
+    subtitle:    "The Region of Gravitational Dominance",
+    description: "The radius around a body where its gravity wins over the parent's. Sets the limit on stable moons, captured satellites, and why close-in planets can't hold companions.",
+    tags:        ["Hill Radius", "Sphere of Influence", "Moon Stability"],
+    status:      "available",
+  },
 ];
 
 export default function OrbitalMechanicsPage() {
