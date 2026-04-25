@@ -1,5 +1,6 @@
 import { memo } from "react";
 import Link from "next/link";
+import SponsorBanner from "./sponsor-banner";
 
 interface Props {
   backHref: string;
@@ -36,33 +37,8 @@ const BreadcrumbNav = ({ backHref, backLabel, rightIcon, rightLabel }: Props) =>
       <span className="ml-1 h-1 w-1 bg-sky-500/50 transition-colors group-hover:bg-sky-400" />
     </Link>
 
-    {/* ── Sirius Inc sponsor banner — desktop only, fills the gap ── */}
-    <div className="fx-btn-sweep relative hidden min-w-0 flex-1 items-center justify-center gap-3 overflow-hidden border border-amber-900/40 bg-amber-950/10 px-4 py-1.5 backdrop-blur backdrop-filter lg:flex">
-      <span className="pointer-events-none absolute -left-px -top-px h-1.5 w-1.5 border-l border-t border-amber-500/40" />
-      <span className="pointer-events-none absolute -right-px -top-px h-1.5 w-1.5 border-r border-t border-amber-500/40" />
-      <span className="pointer-events-none absolute -bottom-px -left-px h-1.5 w-1.5 border-b border-l border-amber-500/40" />
-      <span className="pointer-events-none absolute -bottom-px -right-px h-1.5 w-1.5 border-b border-r border-amber-500/40" />
-
-      {/* "SPONSORED" tag */}
-      <span className="shrink-0 border border-amber-500/30 bg-black/40 px-1.5 py-0.5 text-[0.55rem] uppercase tracking-widest text-amber-500/70">
-        Sponsored
-      </span>
-
-      {/* Brand */}
-      <span className="shrink-0 text-[0.7rem] font-bold uppercase tracking-widest text-amber-300/90">
-        <span className="mr-1 text-amber-400/80">⬡</span>SIRIUS INC
-      </span>
-
-      <span className="hidden shrink-0 text-neutral-700 xl:inline">::</span>
-
-      {/* Tagline */}
-      <span className="hidden truncate text-[0.65rem] uppercase tracking-widest text-neutral-400 xl:inline">
-        Powering the Frontier — FSD · Power Plants · Fuel Systems
-      </span>
-
-      {/* Trailing pulse */}
-      <span className="ml-1 h-1 w-1 shrink-0 bg-amber-500/60" />
-    </div>
+    {/* ── Rotating sponsor banner — desktop only, fills the gap ── */}
+    <SponsorBanner />
 
     {/* ── Context chip — current location indicator ── */}
     {rightLabel && (
