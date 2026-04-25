@@ -68,7 +68,7 @@ export default function OrbitalMechanicsPage() {
       </div>
 
       {/* ── Hero ── */}
-      <Panel className="fx-chamfer fx-panel-scan mb-5 px-6 py-5">
+      <Panel className="fx-chamfer fx-panel-scan mb-5 px-4 py-4 md:px-6 md:py-5">
         <div className="flex items-start gap-3">
           <i className="icarus-terminal-system-orbits text-glow__blue mt-0.5 text-2xl" />
           <div>
@@ -88,14 +88,14 @@ export default function OrbitalMechanicsPage() {
           <i className="icarus-terminal-chevron-left text-xs" />
           Learning Resources
         </Link>
-        <span className="flex items-center gap-2 text-neutral-700">
+        <span className="hidden items-center gap-2 text-neutral-700 sm:flex">
           <i className="icarus-terminal-system-orbits text-sky-500/20" />
           MODULE — ORBITAL MECHANICS
         </span>
       </div>
 
       {/* ── Simulation list ── */}
-      <Panel variant="muted" className="fx-chamfer p-5">
+      <Panel variant="muted" className="fx-chamfer p-4 md:p-5">
         <SectionHeader icon="icarus-terminal-scan" title="Simulations" />
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {configurations.map((config) => (

@@ -153,21 +153,89 @@ export default function StellarClassificationSimulation() {
       ctx.clearRect(0, 0, w, h);
       timeRef.current += 1;
 
-      const n      = STAR_CLASSES.length;
-      const colW   = w / (n + 1);
-      // Scale star radii so the largest (O) fits comfortably with glow
-      const maxR   = STAR_CLASSES[0].displayR;
-      const scale  = Math.min(1.0, (h * 0.26) / maxR);
-      // Baseline: where the bottom of the stars sit
-      const baseline = h * 0.62;
+      const n = STAR_CLASSES.length;
+
+      // Below this width the horizontal 7-up sequence squashes the stars and
+      // overlaps the temperature/mass labels — fall back to a 2-column grid.
+      const compact = w < 480;
+      const maxR = STAR_CLASSES[0].displayR;
 
       // ── Temperature gradient backdrop ───────────────────────────────────
-      const bgGrad = ctx.createLinearGradient(0, 0, w, 0);
+      // Horizontal in the desktop layout, vertical in compact mode (since
+      // temperature progresses top-to-bottom there).
+      const bgGrad = compact
+        ? ctx.createLinearGradient(0, 0, 0, h)
+        : ctx.createLinearGradient(0, 0, w, 0);
       bgGrad.addColorStop(0,   "rgba(100,120,255,0.04)");
       bgGrad.addColorStop(0.5, "rgba(255,255,240,0.02)");
       bgGrad.addColorStop(1,   "rgba(255,80,40,0.04)");
       ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, w, h);
+
+      if (compact) {
+        // ── 2-column grid layout (mobile) ─────────────────────────────────
+        const cols   = 2;
+        const rows   = Math.ceil(n / cols);
+        const cellW  = w / cols;
+        const cellH  = h / rows;
+        // Reserve fixed bands at the top (class label) and bottom
+        // (temp/mass/scoopable dot) of every cell, then size stars to fit
+        // the remaining vertical space without overlapping either band.
+        const TOP_BAND    = 22;
+        const BOTTOM_BAND = 36;
+        const innerH      = Math.max(0, cellH - TOP_BAND - BOTTOM_BAND);
+        const scale       = Math.min(innerH / 2 / maxR, (cellW * 0.32) / maxR);
+
+        STAR_CLASSES.forEach((star, i) => {
+          const col     = i % cols;
+          const row     = Math.floor(i / cols);
+          const cellTop = row * cellH;
+          const sx      = col * cellW + cellW / 2;
+          const sy      = cellTop + TOP_BAND + innerH / 2;
+
+          const pulse = 1 + Math.sin(timeRef.current * star.pulseSpeed + i) * star.pulseAmp;
+          const r = star.displayR * scale * pulse;
+
+          drawStar(sx, sy, r, star.color, star.glow);
+
+          // Class label — anchored to top of cell
+          ctx.font      = "bold 12px 'Jura', monospace";
+          ctx.fillStyle = star.color;
+          ctx.textAlign = "center";
+          ctx.fillText(star.class, sx, cellTop + 14);
+
+          // Temperature & mass — anchored to bottom of cell
+          ctx.font      = "8px 'Jura', monospace";
+          ctx.fillStyle = "rgba(180,180,180,0.55)";
+          ctx.fillText(star.temp, sx, cellTop + cellH - 24);
+          ctx.fillStyle = "rgba(120,160,200,0.45)";
+          ctx.fillText(star.mass, sx, cellTop + cellH - 14);
+
+          // Scoopable dot
+          if (star.scoopable) {
+            ctx.beginPath();
+            ctx.arc(sx, cellTop + cellH - 5, 2.5, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(80,200,120,0.6)";
+            ctx.fill();
+          }
+        });
+
+        // ── HOT → COOL axis (vertical in compact mode) ───────────────────
+        ctx.font      = "9px 'Jura', monospace";
+        ctx.textAlign = "left";
+        ctx.fillStyle = "rgba(100,140,220,0.35)";
+        ctx.fillText("HOT", 6, 12);
+        ctx.fillStyle = "rgba(220,100,80,0.35)";
+        ctx.fillText("COOL", 6, h - 4);
+
+        frameRef.current = requestAnimationFrame(tick);
+        return;
+      }
+
+      // ── Horizontal layout (desktop) ─────────────────────────────────────
+      const colW   = w / (n + 1);
+      const scale  = Math.min(1.0, (h * 0.26) / maxR);
+      const baseline = h * 0.62;
 
       // ── Thin main-sequence baseline ─────────────────────────────────────
       ctx.beginPath();

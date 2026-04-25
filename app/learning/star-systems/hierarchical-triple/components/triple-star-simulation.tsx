@@ -24,6 +24,10 @@ const OUTER_SPEED       = 0.005;
 const TOTAL_MASS  = STARS[0].mass + STARS[1].mass + STARS[2].mass;
 const BINARY_MASS = STARS[0].mass + STARS[1].mass;
 
+// World-space half-extent, used to scale the system into the canvas: covers
+// Star C's full orbit plus its radius and label, with a small margin.
+const MAX_EXTENT = OUTER_RADIUS * (BINARY_MASS / TOTAL_MASS) + STARS[0].radius + 24;
+
 export default function TripleStarSimulation() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const frameRef  = useRef<number>(0);
@@ -95,6 +99,14 @@ export default function TripleStarSimulation() {
       const cx = w / 2;
       const cy = h / 2;
 
+      // Scale world-space distances so the full system fits inside the canvas
+      // even on narrow viewports. Cap at 1 so it never grows past the original
+      // desktop layout.
+      const scale  = Math.min(1, Math.min(w, h) / 2 / MAX_EXTENT);
+      const sep    = BINARY_SEPARATION * scale;
+      const outerR = OUTER_RADIUS * scale;
+      const sr     = STARS.map((s) => Math.max(s.radius * scale, 3));
+
       ctx.clearRect(0, 0, w, h);
 
       angleRef.current.inner += BINARY_SPEED;
@@ -103,27 +115,26 @@ export default function TripleStarSimulation() {
       const { inner, outer } = angleRef.current;
 
       // ── Binary barycenter (wobbles due to C's gravity) ──────────────────
-      const barycentricOffset = STARS[2].mass / TOTAL_MASS;
-      const binaryBaryX = cx + Math.cos(outer + Math.PI) * OUTER_RADIUS * (STARS[2].mass / TOTAL_MASS) * 1.2;
-      const binaryBaryY = cy + Math.sin(outer + Math.PI) * OUTER_RADIUS * (STARS[2].mass / TOTAL_MASS) * 1.2;
+      const binaryBaryX = cx + Math.cos(outer + Math.PI) * outerR * (STARS[2].mass / TOTAL_MASS) * 1.2;
+      const binaryBaryY = cy + Math.sin(outer + Math.PI) * outerR * (STARS[2].mass / TOTAL_MASS) * 1.2;
 
       // ── Binary star positions ────────────────────────────────────────────
       const fracA = STARS[1].mass / BINARY_MASS;
       const fracB = STARS[0].mass / BINARY_MASS;
-      const ax = binaryBaryX + Math.cos(inner)           * BINARY_SEPARATION * fracA;
-      const ay = binaryBaryY + Math.sin(inner)           * BINARY_SEPARATION * fracA;
-      const bx = binaryBaryX + Math.cos(inner + Math.PI) * BINARY_SEPARATION * fracB;
-      const by = binaryBaryY + Math.sin(inner + Math.PI) * BINARY_SEPARATION * fracB;
+      const ax = binaryBaryX + Math.cos(inner)           * sep * fracA;
+      const ay = binaryBaryY + Math.sin(inner)           * sep * fracA;
+      const bx = binaryBaryX + Math.cos(inner + Math.PI) * sep * fracB;
+      const by = binaryBaryY + Math.sin(inner + Math.PI) * sep * fracB;
 
       // ── Star C (outer orbiter) ───────────────────────────────────────────
       const cFrac = BINARY_MASS / TOTAL_MASS;
-      const cxPos = cx + Math.cos(outer) * OUTER_RADIUS * cFrac;
-      const cyPos = cy + Math.sin(outer) * OUTER_RADIUS * cFrac;
+      const cxPos = cx + Math.cos(outer) * outerR * cFrac;
+      const cyPos = cy + Math.sin(outer) * outerR * cFrac;
 
       // ── Draw orbit guides ────────────────────────────────────────────────
-      drawOrbitRing(binaryBaryX, binaryBaryY, BINARY_SEPARATION * fracA, "rgba(255,220,100,0.15)");
-      drawOrbitRing(binaryBaryX, binaryBaryY, BINARY_SEPARATION * fracB, "rgba(160,200,255,0.15)");
-      drawOrbitRing(cx, cy, OUTER_RADIUS * cFrac, "rgba(255,130,80,0.12)");
+      drawOrbitRing(binaryBaryX, binaryBaryY, sep * fracA, "rgba(255,220,100,0.15)");
+      drawOrbitRing(binaryBaryX, binaryBaryY, sep * fracB, "rgba(160,200,255,0.15)");
+      drawOrbitRing(cx, cy, outerR * cFrac, "rgba(255,130,80,0.12)");
 
       // ── Binary connector line ────────────────────────────────────────────
       ctx.beginPath();
@@ -140,14 +151,14 @@ export default function TripleStarSimulation() {
       drawDot(binaryBaryX, binaryBaryY, "rgba(200,200,100,0.35)");
 
       // ── Stars ────────────────────────────────────────────────────────────
-      drawGlow(ax, ay, STARS[0].radius, STARS[0].color, STARS[0].glowColor);
-      drawGlow(bx, by, STARS[1].radius, STARS[1].color, STARS[1].glowColor);
-      drawGlow(cxPos, cyPos, STARS[2].radius, STARS[2].color, STARS[2].glowColor);
+      drawGlow(ax, ay, sr[0], STARS[0].color, STARS[0].glowColor);
+      drawGlow(bx, by, sr[1], STARS[1].color, STARS[1].glowColor);
+      drawGlow(cxPos, cyPos, sr[2], STARS[2].color, STARS[2].glowColor);
 
       // ── Labels ───────────────────────────────────────────────────────────
-      drawLabel(ax, ay, STARS[0].radius, STARS[0].label, "rgba(255,210,100,0.7)");
-      drawLabel(bx, by, STARS[1].radius, STARS[1].label, "rgba(160,200,255,0.7)");
-      drawLabel(cxPos, cyPos, STARS[2].radius, STARS[2].label, "rgba(255,130,80,0.7)");
+      drawLabel(ax, ay, sr[0], STARS[0].label, "rgba(255,210,100,0.7)");
+      drawLabel(bx, by, sr[1], STARS[1].label, "rgba(160,200,255,0.7)");
+      drawLabel(cxPos, cyPos, sr[2], STARS[2].label, "rgba(255,130,80,0.7)");
 
       frameRef.current = requestAnimationFrame(tick);
     };

@@ -59,7 +59,7 @@ export default function LearningPage() {
       </div>
 
       {/* ── Hero ── */}
-      <Panel className="fx-chamfer fx-panel-scan mb-5 px-6 py-5">
+      <Panel className="fx-chamfer fx-panel-scan mb-5 px-4 py-4 md:px-6 md:py-5">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <h1 className="text-glow__white mb-1 text-2xl font-bold uppercase tracking-wide md:text-3xl">
@@ -77,7 +77,7 @@ export default function LearningPage() {
       </Panel>
 
       {/* ── Module list ── */}
-      <Panel variant="muted" className="fx-chamfer p-5">
+      <Panel variant="muted" className="fx-chamfer p-4 md:p-5">
         <SectionHeader icon="icarus-terminal-scan" title="Available Modules" />
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {modules.map((mod) => (

@@ -37,7 +37,7 @@ export default function SingleStarPage() {
       </div>
 
       {/* ── Hero ── */}
-      <Panel className="fx-chamfer fx-panel-scan mb-5 px-6 py-5">
+      <Panel className="fx-chamfer fx-panel-scan mb-5 px-4 py-4 md:px-6 md:py-5">
         <div className="flex items-start gap-3">
           <i className="icarus-terminal-star text-glow__blue mt-0.5 text-2xl" />
           <div>
@@ -57,7 +57,7 @@ export default function SingleStarPage() {
           <i className="icarus-terminal-chevron-left text-xs" />
           Star Systems
         </Link>
-        <span className="flex items-center gap-2 text-neutral-700">
+        <span className="hidden items-center gap-2 text-neutral-700 sm:flex">
           <i className="icarus-terminal-star text-sky-500/20" />
           CONFIGURATION — SINGLE STAR
         </span>
@@ -72,7 +72,7 @@ export default function SingleStarPage() {
             <div className="border-b border-sky-900/20 px-4 py-3">
               <SectionHeader icon="icarus-terminal-star" title="Single Star System" className="mb-0 border-0 pb-0" />
             </div>
-            <div className="relative min-h-0 flex-1">
+            <div className="relative min-h-[360px] flex-1">
               <SingleStarSimulation />
             </div>
             <div className="border-t border-sky-900/20 px-4 py-3">
@@ -100,7 +100,7 @@ export default function SingleStarPage() {
 
         {/* ── Info panels ── */}
         <div className="flex h-full flex-col space-y-5">
-          <Panel variant="muted" className="fx-chamfer p-5">
+          <Panel variant="muted" className="fx-chamfer p-4 md:p-5">
             <SectionHeader icon="icarus-terminal-scan" title="System Parameters" />
             <div className="grid grid-cols-2 gap-2">
               <StatBadge label="Star type"   value="G-type" />
@@ -112,7 +112,7 @@ export default function SingleStarPage() {
             </div>
           </Panel>
 
-          <Panel variant="muted" className="fx-chamfer p-5">
+          <Panel variant="muted" className="fx-chamfer p-4 md:p-5">
             <SectionHeader icon="icarus-terminal-info" title="Stellar Zones" />
             <div className="space-y-3 text-xs uppercase tracking-wide text-neutral-500">
               <p>
@@ -133,7 +133,7 @@ export default function SingleStarPage() {
             </div>
           </Panel>
 
-          <Panel variant="muted" className="fx-chamfer p-5">
+          <Panel variant="muted" className="fx-chamfer p-4 md:p-5">
             <SectionHeader icon="icarus-terminal-planet" title="Body Classifications" />
             <div className="space-y-2 text-xs uppercase tracking-wide text-neutral-600">
               {[
