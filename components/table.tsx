@@ -1,7 +1,6 @@
-import type { JSX } from "react";
+import type { CSSProperties, JSX } from "react";
 import type { Meta, Links } from "@/core/interfaces/Pagination";
-import { useEffect, useState } from "react";
-import { useAnimateTable } from "@/core/hooks/animate";
+import { useState } from "react";
 import PaginationLinks from "./pagination-links";
 import Panel from "./panel";
 
@@ -46,8 +45,6 @@ function Table<T extends RequiredAttribute>({
 
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
 
-  useEffect(useAnimateTable);
-
   const renderBody = (data: any) => {
     if (!data || data.length === 0) {
       return (
@@ -68,8 +65,11 @@ function Table<T extends RequiredAttribute>({
     return (
       <tbody className="fx-fade-in">
         <>
-          {data.map((item: T) => (
-            <tr key={`row_${item.id}`}>
+          {data.map((item: T, index: number) => (
+            <tr
+              key={`row_${item.id}`}
+              style={{ "--row-index": index } as CSSProperties}
+            >
               {Object.keys(columns).map((key) => (
                 <td
                   key={`rowColumn_${item.id}_${key}`}

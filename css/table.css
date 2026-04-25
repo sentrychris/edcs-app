@@ -225,12 +225,8 @@ table.table--flex-inline.table--interactive
 
 table.table--animated tbody tr {
   opacity: 0;
-}
-
-table.table--animated tbody tr.--shown {
-  animation: fx-flash-in-animation 0.5s;
-  animation-fill-mode: forwards;
-  opacity: 0;
+  animation: fx-flash-in-animation 0.5s forwards;
+  animation-delay: min(calc(var(--row-index, 0) * 0.03s), 0.6s);
 }
 
 table.table--flex-inline.table--animated tbody tr {
