@@ -47,6 +47,15 @@ const topics = [
     tags:        ["Roche Lobe", "Accretion", "Type Ia SN"],
     status:      "available",
   },
+  {
+    href:        "/learning/stellar-physics/supernovae",
+    icon:        "icarus-terminal-star",
+    title:       "Supernovae",
+    subtitle:    "How Stars Explode",
+    description: "The four major explosion pathways — Type Ia thermonuclear, core-collapse Type II/Ib/Ic, and hypernovae. Animated comparison showing progenitor, blast, and remnant.",
+    tags:        ["Type Ia", "Core Collapse", "Hypernova"],
+    status:      "available",
+  },
 ];
 
 export default function StellarPhysicsPage() {

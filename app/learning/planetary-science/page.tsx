@@ -47,6 +47,15 @@ const topics = [
     tags:        ["Cross-sections", "Cores", "Tidal Heating"],
     status:      "available",
   },
+  {
+    href:        "/learning/planetary-science/magnetospheres",
+    icon:        "icarus-terminal-shield",
+    title:       "Magnetospheres",
+    subtitle:    "Magnetic Fields, Solar Wind & Auroras",
+    description: "How a planet's dynamo creates a magnetic shield against the solar wind. Bow shock, magnetotail, polar cusps, and the auroras lit by particles that leak through.",
+    tags:        ["Dynamo", "Solar Wind", "Auroras"],
+    status:      "available",
+  },
 ];
 
 export default function PlanetarySciencePage() {

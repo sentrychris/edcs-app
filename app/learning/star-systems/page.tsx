@@ -51,6 +51,16 @@ const configurations = [
     frequency:   "Rare — ~1% of binary systems",
     status:      "available",
   },
+  {
+    href:        "/learning/star-systems/quadruple-system",
+    icon:        "icarus-terminal-system-orbits",
+    title:       "Quadruple System",
+    subtitle:    "Two Binaries Orbiting a Common Barycentre",
+    description: "Hierarchical four-star systems — two tight binary pairs co-orbiting a system-wide barycentre. The Mizar archetype, requiring strong separation hierarchy for stability.",
+    tags:        ["Hierarchical", "2+2", "Mizar"],
+    frequency:   "~3% of known systems",
+    status:      "available",
+  },
 ];
 
 export default function StarSystemsIndexPage() {

@@ -47,6 +47,15 @@ const configurations = [
     tags:        ["Synchronous Rotation", "Near Side", "Habitability"],
     status:      "available",
   },
+  {
+    href:        "/learning/orbital-mechanics/kepler-laws",
+    icon:        "icarus-terminal-system-orbits",
+    title:       "Kepler's Laws",
+    subtitle:    "Three Rules That Govern Every Orbit",
+    description: "The foundations of orbital mechanics: orbits are ellipses, equal areas are swept in equal times, and period squared scales with semi-major axis cubed.",
+    tags:        ["Ellipses", "Equal Areas", "T² ∝ a³"],
+    status:      "available",
+  },
 ];
 
 export default function OrbitalMechanicsPage() {
