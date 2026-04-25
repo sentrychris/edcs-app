@@ -13,8 +13,9 @@ const navItems = [
   { name: "Galaxy Map", href: "/galaxy-map", icon: "icarus-terminal-star" },
   { name: "Route Plotter", href: "/route-plotter", icon: "icarus-terminal-route" },
   { name: "Distance Search", href: "/distance-search", icon: "icarus-terminal-scan" },
+  { name: "Trade Routes", href: "/market-search", icon: "icarus-terminal-economy" },
   { name: "Galnet News", href: "/galnet", icon: "icarus-terminal-notifications" },
-  { name: "Learning", href: "/learning", icon: "icarus-terminal-economy" },
+  { name: "Knowledge base", href: "/learning", icon: "icarus-terminal-planet" },
 ];
 
 const SidebarNav = ({ collapsed = false }: Props) => {
