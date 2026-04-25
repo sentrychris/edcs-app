@@ -37,6 +37,15 @@ const modules = [
     tags:        ["Spectral Types", "Main Sequence", "Stellar Evolution"],
     status:      "available",
   },
+  {
+    href:        "/learning/planetary-science",
+    icon:        "icarus-terminal-planet",
+    title:       "Planetary Science",
+    subtitle:    "Classification, Atmospheres & Habitability",
+    description: "How worlds are categorised by composition, atmosphere, and temperature. Covers rocky bodies, water worlds, Earth-likes, and the Sudarsky gas giant classes.",
+    tags:        ["Body Types", "Atmospheres", "Habitability"],
+    status:      "available",
+  },
 ];
 
 export default function LearningPage() {
