@@ -78,17 +78,17 @@ export default async function Page({ params }: Props) {
 
       {/* ── Hero panel ── */}
       <div className="fx-chamfer fx-panel-scan relative mb-5 border border-sky-900/40 bg-black/50 backdrop-blur backdrop-filter">
-        <div className="flex flex-col items-center gap-8 p-8 md:flex-row">
+        <div className="flex flex-col items-center gap-4 p-4 md:flex-row md:gap-8 md:p-8">
 
-          {/* SVG body */}
-          <div className="flex shrink-0 items-center justify-center">
+          {/* SVG body — width caps the rendered SVG via arbitrary child selectors */}
+          <div className="flex w-40 shrink-0 items-center justify-center md:w-[220px] [&>svg]:!h-auto [&>svg]:!w-full">
             <BodySvg body={body} size={220} />
           </div>
 
           {/* Identity */}
-          <div className="flex-1 space-y-4">
+          <div className="w-full flex-1 space-y-4">
             {/* Breadcrumb */}
-            <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-neutral-600">
+            <div className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-widest text-neutral-600">
               <Link href="/systems" className="transition-colors hover:text-sky-400">Systems</Link>
               <span>/</span>
               <Link href={`/systems/${params.slug}`} className="transition-colors hover:text-sky-400">
@@ -101,21 +101,21 @@ export default async function Page({ params }: Props) {
             {/* Name + type */}
             <div>
               <div className="mb-1 flex items-center gap-3">
-                <i className={`${bodyIcon} text-glow__blue`} style={{ fontSize: "2rem" }} />
-                <h1 className="text-glow__white text-2xl font-bold uppercase tracking-wide md:text-3xl">
+                <i className={`${bodyIcon} text-glow__blue text-2xl md:text-[2rem]`} />
+                <h1 className="text-glow__white text-xl font-bold uppercase tracking-wide md:text-3xl">
                   {body.name}
                 </h1>
               </div>
-              <p className="text-glow__blue text-sm font-bold uppercase tracking-widest">
+              <p className="text-glow__blue text-xs font-bold uppercase tracking-widest md:text-sm">
                 {body.sub_type}
                 {body.terraforming_state === "Candidate for terraforming" && (
-                  <span className="ml-3 text-green-400">— Terraforming Candidate</span>
+                  <span className="ml-2 block text-green-400 md:ml-3 md:inline">— Terraforming Candidate</span>
                 )}
               </p>
             </div>
 
             {/* Quick-stats row */}
-            <div className="flex flex-wrap gap-x-8 gap-y-3 border-t border-sky-900/20 pt-4 text-xs uppercase tracking-widest">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-3 border-t border-sky-900/20 pt-4 text-xs uppercase tracking-widest sm:flex sm:flex-wrap sm:gap-x-8">
               {body.distance_to_arrival ? (
                 <div>
                   <p className="mb-0.5 text-neutral-600">Dist. to Arrival</p>
@@ -166,7 +166,7 @@ export default async function Page({ params }: Props) {
           <i className="icarus-terminal-chevron-left text-xs" />
           Back to {body.system?.name}
         </Link>
-        <span className="flex items-center gap-2 text-neutral-700">
+        <span className="hidden items-center gap-2 text-neutral-700 sm:flex">
           <i className="icarus-terminal-scan text-sky-500/20" />
           SURVEY REPORT — {body.name}
         </span>
@@ -179,7 +179,7 @@ export default async function Page({ params }: Props) {
         <div className="space-y-5">
 
           {/* Discovery */}
-          <Panel variant="muted" className="fx-chamfer p-5">
+          <Panel variant="muted" className="fx-chamfer p-4 md:p-5">
             <SectionHeader icon="icarus-terminal-scan" title="Discovery Record" />
             <StatRow label="Discovered By" value={<span className="text-glow__blue">CMDR {body.discovery?.commander ?? "Unknown"}</span>} />
             <StatRow label="Discovery Date" value={formatDate(body.discovery?.date)} />
@@ -187,7 +187,7 @@ export default async function Page({ params }: Props) {
 
           {/* Star data */}
           {isStar && (
-            <Panel variant="muted" className="fx-chamfer p-5">
+            <Panel variant="muted" className="fx-chamfer p-4 md:p-5">
               <SectionHeader icon="icarus-terminal-star" title="Stellar Data" />
               <StatRow label="Spectral Class"  value={body.spectral_class  ?? "—"} />
               <StatRow label="Luminosity"      value={body.luminosity      ?? "—"} />
@@ -200,7 +200,7 @@ export default async function Page({ params }: Props) {
 
           {/* Surface data */}
           {!isStar && (
-            <Panel variant="muted" className="fx-chamfer p-5">
+            <Panel variant="muted" className="fx-chamfer p-4 md:p-5">
               <SectionHeader icon="icarus-terminal-planet" title="Surface Data" />
               <StatRow label="Atmosphere"    value={body.atmosphere_type  || "None"} />
               <StatRow label="Volcanism"     value={body.volcanism_type   || "None"} />
@@ -219,7 +219,7 @@ export default async function Page({ params }: Props) {
         <div className="space-y-5">
 
           {/* Orbital mechanics */}
-          <Panel variant="muted" className="fx-chamfer p-5">
+          <Panel variant="muted" className="fx-chamfer p-4 md:p-5">
             <SectionHeader icon="icarus-terminal-system-orbits" title="Orbital Mechanics" />
             <StatRow label="Orbital Period"    value={formatOrbitalPeriod(body.orbital?.orbital_period)} />
             <StatRow label="Inclination"       value={body.orbital?.orbital_inclination != null ? `${body.orbital.orbital_inclination.toFixed(4)}°` : "—"} />
@@ -234,7 +234,7 @@ export default async function Page({ params }: Props) {
 
           {/* Ring system */}
           {body.rings && body.rings.length > 0 && (
-            <Panel variant="muted" className="fx-chamfer p-5">
+            <Panel variant="muted" className="fx-chamfer p-4 md:p-5">
               <SectionHeader icon="icarus-terminal-planet-ringed" title="Ring System" />
               <div className="space-y-4">
                 {body.rings.map((ring: SystemBodyRing) => (
@@ -254,7 +254,7 @@ export default async function Page({ params }: Props) {
 
       {/* ── Planetary settlements ── */}
       {settlements.length > 0 && (
-        <Panel variant="muted" className="fx-chamfer mt-5 p-5">
+        <Panel variant="muted" className="fx-chamfer mt-5 p-4 md:p-5">
           <SectionHeader icon="icarus-terminal-settlement" title="Planetary Settlements" />
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
             {settlements.map((settlement) => (
