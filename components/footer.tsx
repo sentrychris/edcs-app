@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, type FunctionComponent } from "react";
+import { useEffect, useState, type FunctionComponent } from "react";
 import Link from "next/link";
+
+const STORAGE_KEY = "edcs:footer-collapsed";
 
 const statusReadouts = [
   { icon: "icarus-terminal-shield", label: "CMDR Verified", color: "bg-green-400", pulse: false },
@@ -13,7 +15,30 @@ const statusReadouts = [
 ];
 
 const Footer: FunctionComponent = () => {
+  // Default to expanded for SSR; hydrate the persisted value on mount.
   const [collapsed, setCollapsed] = useState(false);
+
+  useEffect(() => {
+    try {
+      if (window.localStorage.getItem(STORAGE_KEY) === "1") {
+        setCollapsed(true);
+      }
+    } catch {
+      // localStorage may be unavailable (private mode, etc.) — fall back to default
+    }
+  }, []);
+
+  const toggle = () => {
+    setCollapsed((prev) => {
+      const next = !prev;
+      try {
+        window.localStorage.setItem(STORAGE_KEY, next ? "1" : "0");
+      } catch {
+        // ignore — state still toggles in-memory
+      }
+      return next;
+    });
+  };
 
   return (
     <footer className="mt-6 border-t border-sky-900/20 bg-transparent backdrop-blur backdrop-filter">
@@ -21,7 +46,7 @@ const Footer: FunctionComponent = () => {
       {/* ── Collapse Toggle ── */}
       <button
         type="button"
-        onClick={() => setCollapsed((c) => !c)}
+        onClick={toggle}
         aria-expanded={!collapsed}
         aria-controls="footer-content"
         className="group flex w-full items-center justify-center gap-3 border-b border-sky-900/20 py-1.5 text-[0.6rem] uppercase tracking-widest text-neutral-600 transition-colors hover:bg-sky-950/20 hover:text-sky-400"
