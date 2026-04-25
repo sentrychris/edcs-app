@@ -27,6 +27,14 @@ export default function BinaryPairPage() {
         statusLabel="SIMULATION: ACTIVE"
       />
 
+      {/* ── Breadcrumb ── */}
+      <BreadcrumbNav
+        backHref="/learning/star-systems"
+        backLabel="Star Systems"
+        rightIcon="icarus-terminal-system-orbits"
+        rightLabel="CONFIGURATION — BINARY PAIR"
+      />
+
       {/* ── Hero ── */}
       <Panel className="fx-chamfer fx-panel-scan mb-5 px-4 py-4 md:px-6 md:py-5">
         <div className="flex items-start gap-3">
@@ -41,14 +49,6 @@ export default function BinaryPairPage() {
           </div>
         </div>
       </Panel>
-
-      {/* ── Breadcrumb ── */}
-      <BreadcrumbNav
-        backHref="/learning/star-systems"
-        backLabel="Star Systems"
-        rightIcon="icarus-terminal-system-orbits"
-        rightLabel="CONFIGURATION — BINARY PAIR"
-      />
 
       {/* ── Main content ── */}
       <div className="grid grid-cols-1 items-stretch gap-5 lg:grid-cols-3">

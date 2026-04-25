@@ -6,6 +6,7 @@ import { getResource } from "@/core/api";
 import StationDetail from "../components/station/station-detail";
 import StationMarket from "../components/station/station-market";
 import Panel from "@/components/panel";
+import BreadcrumbNav from "@/components/breadcrumb-nav";
 
 interface Props {
   params: {
@@ -43,6 +44,7 @@ export async function generateMetadata(
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const station = await getStation(params.slug);
+  const system  = station?.data?.system;
 
   return (
     <>
@@ -63,6 +65,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
         </div>
       </Panel>
+
+      {/* ── Breadcrumb / docking nav ── */}
+      <BreadcrumbNav
+        backHref={system?.slug ? `/systems/${system.slug}` : "/systems"}
+        backLabel={system?.name ? `Back to ${system.name}` : "Back to Systems"}
+        rightIcon="icarus-terminal-station"
+        rightLabel={station?.data?.name ? `DOCKING FACILITY — ${station.data.name}` : "DOCKING FACILITY"}
+      />
 
       <StationDetail params={params} initialData={station?.data ?? null} />
       {station?.data?.has_market && <StationMarket slug={params.slug} />}

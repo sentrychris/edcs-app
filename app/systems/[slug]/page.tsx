@@ -5,6 +5,7 @@ import { settings } from "@/core/config";
 import { getResource } from "@/core/api";
 import SystemDetail from "../components/system/system-detail";
 import Panel from "@/components/panel";
+import BreadcrumbNav from "@/components/breadcrumb-nav";
 
 /**
  * Define the page properties.
@@ -77,6 +78,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
         </div>
       </Panel>
+
+      {/* ── Breadcrumb / cartographic nav ── */}
+      <BreadcrumbNav
+        backHref="/systems"
+        backLabel="Back to Star Systems"
+        rightIcon="icarus-terminal-star"
+        rightLabel={system?.data?.name ? `SYSTEM REPORT — ${system.data.name}` : "SYSTEM REPORT"}
+      />
 
       <SystemDetail params={params} initialData={system?.data ?? null} />
     </>

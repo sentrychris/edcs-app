@@ -68,6 +68,14 @@ export default async function Page({ params }: Props) {
         statusLabel="SCAN: COMPLETE"
       />
 
+      {/* ── Breadcrumb / survey nav ── */}
+      <BreadcrumbNav
+        backHref={`/systems/${params.slug}`}
+        backLabel={`Back to ${body.system?.name}`}
+        rightIcon="icarus-terminal-scan"
+        rightLabel={`SURVEY REPORT — ${body.name}`}
+      />
+
       {/* ── Hero panel ── */}
       <div className="fx-chamfer fx-panel-scan relative mb-5 border border-sky-900/40 bg-black/50 backdrop-blur backdrop-filter">
         <div className="flex flex-col items-center gap-4 p-4 md:flex-row md:gap-8 md:p-8">
@@ -148,14 +156,6 @@ export default async function Page({ params }: Props) {
           </div>
         </div>
       </div>
-
-      {/* ── Breadcrumb / survey nav ── */}
-      <BreadcrumbNav
-        backHref={`/systems/${params.slug}`}
-        backLabel={`Back to ${body.system?.name}`}
-        rightIcon="icarus-terminal-scan"
-        rightLabel={`SURVEY REPORT — ${body.name}`}
-      />
 
       {/* ── Stats grid ── */}
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">

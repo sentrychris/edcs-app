@@ -83,6 +83,14 @@ export default function StarSystemsIndexPage() {
         statusLabel={`${configurations.length} configurations indexed`}
       />
 
+      {/* ── Breadcrumb ── */}
+      <BreadcrumbNav
+        backHref="/learning"
+        backLabel="Learning Resources"
+        rightIcon="icarus-terminal-star"
+        rightLabel="MODULE — STAR SYSTEMS"
+      />
+
       {/* ── Hero ── */}
       <Panel className="fx-chamfer fx-panel-scan mb-5 px-4 py-4 md:px-6 md:py-5">
         <div className="flex items-start gap-3">
@@ -97,14 +105,6 @@ export default function StarSystemsIndexPage() {
           </div>
         </div>
       </Panel>
-
-      {/* ── Breadcrumb ── */}
-      <BreadcrumbNav
-        backHref="/learning"
-        backLabel="Learning Resources"
-        rightIcon="icarus-terminal-star"
-        rightLabel="MODULE — STAR SYSTEMS"
-      />
 
       {/* ── Configuration list ── */}
       <Panel variant="muted" className="fx-chamfer p-4 md:p-5">

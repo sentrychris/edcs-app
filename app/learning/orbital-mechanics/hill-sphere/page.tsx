@@ -29,6 +29,14 @@ export default function HillSpherePage() {
         statusLabel="SIMULATION: ACTIVE"
       />
 
+      {/* ── Breadcrumb ── */}
+      <BreadcrumbNav
+        backHref="/learning/orbital-mechanics"
+        backLabel="Orbital Mechanics"
+        rightIcon="icarus-terminal-system-orbits"
+        rightLabel="TOPIC — HILL SPHERE"
+      />
+
       {/* ── Hero ── */}
       <Panel className="fx-chamfer fx-panel-scan mb-5 px-4 py-4 md:px-6 md:py-5">
         <div className="flex items-start gap-3">
@@ -43,14 +51,6 @@ export default function HillSpherePage() {
           </div>
         </div>
       </Panel>
-
-      {/* ── Breadcrumb ── */}
-      <BreadcrumbNav
-        backHref="/learning/orbital-mechanics"
-        backLabel="Orbital Mechanics"
-        rightIcon="icarus-terminal-system-orbits"
-        rightLabel="TOPIC — HILL SPHERE"
-      />
 
       {/* ── Main content ── */}
       <div className="grid grid-cols-1 items-stretch gap-5 lg:grid-cols-3">
