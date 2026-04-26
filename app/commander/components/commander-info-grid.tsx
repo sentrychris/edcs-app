@@ -29,8 +29,8 @@ const CommanderInfoGrid: FunctionComponent<Props> = ({ system, profile }) => {
         {/* Last system */}
         <div className="border border-sky-900/20 bg-black/40 p-3">
           <p className="mb-1 text-[0.65rem] uppercase tracking-widest text-neutral-700">Last Known System</p>
-          <p className="text-sm font-bold uppercase tracking-wide text-sky-400/80">
-            <Link href={system ? `/systems/${system.slug}` : '#'}>
+          <p className="text-sm font-bold uppercase tracking-wide text-sky-400/80 hover:text-glow__blue hover:underline">
+            <Link prefetch={false} href={system ? `/systems/${system.slug}` : '#'}>
               {system ? system.name : lastSystem.name}
             </Link>
           </p>
