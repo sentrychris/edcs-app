@@ -5,8 +5,10 @@ import Link from "next/link";
 import type { SystemDistance } from "@/core/interfaces/SystemDistance";
 import Panel from "@/components/panel";
 import Heading from "@/components/heading";
+import { cn } from "@/core/cn";
 
 interface Props {
+  className?: string;
   results: SystemDistance[];
   originName: string;
   searchLy: number;
@@ -46,7 +48,7 @@ function truncateName(name: string, max = 14): string {
   return name.length > max ? name.slice(0, max - 1) + "…" : name;
 }
 
-export default function DistanceResults3D({ results, originName, searchLy }: Props) {
+export default function DistanceResults3D({ className, results, originName, searchLy }: Props) {
   const [rotX, setRotX] = useState(-0.35);
   const [rotY, setRotY] = useState(0.4);
   const [zoom, setZoom] = useState(1);
@@ -184,7 +186,7 @@ export default function DistanceResults3D({ results, originName, searchLy }: Pro
     .map((d) => d.i);
 
   return (
-    <Panel className="overflow-hidden">
+    <Panel className={cn("overflow-hidden", className)}>
       {/* ── Header ── */}
       <div className="flex items-center justify-between border-b border-sky-900/20 px-4 py-3 md:px-5 md:py-4">
         <Heading

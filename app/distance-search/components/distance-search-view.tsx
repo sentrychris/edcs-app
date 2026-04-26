@@ -89,15 +89,17 @@ export default function DistanceSearchView({ initialSlug, initialLy, initialSyst
       {/* ── Results ── */}
       {pagination && !isLoading && (
         <div className="grid grid-cols-1 gap-5 xl:grid-cols-3 xl:items-stretch">
-          <div className="xl:col-span-2">
+          <div className="xl:col-span-2 flex">
             <DistanceResults3D
+              className="h-full flex-1"
               results={pagination.data}
               originName={originName}
               searchLy={currentLy}
             />
           </div>
-          <div className="flex flex-col">
+          <div className="flex">
             <DistanceResultsList
+              className="h-full flex-1"
               pagination={pagination}
               originName={originName}
               searchLy={currentLy}

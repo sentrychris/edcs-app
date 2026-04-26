@@ -2,17 +2,19 @@ import Link from "next/link";
 import type { SystemRouteWaypoint } from "@/core/interfaces/SystemRoute";
 import Panel from "@/components/panel";
 import Heading from "@/components/heading";
+import { cn } from "@/core/cn";
 
 interface Props {
+  className?: string;
   waypoints: SystemRouteWaypoint[];
 }
 
-export default function RouteJumpList({ waypoints }: Props) {
+export default function RouteJumpList({ className, waypoints }: Props) {
   const totalJumps = waypoints.length - 1;
   const totalDistance = waypoints[waypoints.length - 1].total_distance;
 
   return (
-    <Panel className="overflow-hidden">
+    <Panel className={cn("overflow-hidden", className)}>
       {/* ── Header ── */}
       <div className="border-b border-sky-900/20 px-4 py-3 md:px-5 md:py-4">
         <Heading

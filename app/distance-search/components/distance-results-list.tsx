@@ -5,15 +5,17 @@ import type { Pagination } from "@/core/interfaces/Pagination";
 import type { SystemDistance } from "@/core/interfaces/SystemDistance";
 import Panel from "@/components/panel";
 import Heading from "@/components/heading";
+import { cn } from "@/core/cn";
 
 interface Props {
+  className?: string;
   pagination: Pagination<SystemDistance>;
   originName: string;
   searchLy: number;
   onPageChange: (page: number) => void;
 }
 
-export default function DistanceResultsList({ pagination, originName, searchLy, onPageChange }: Props) {
+export default function DistanceResultsList({ className, pagination, originName, searchLy, onPageChange }: Props) {
   const { data: results, meta, links } = pagination;
   const nonOrigin = results.filter((s) => s.distance >= 0.01);
   const farthest = nonOrigin[nonOrigin.length - 1] ?? null;
@@ -22,7 +24,7 @@ export default function DistanceResultsList({ pagination, originName, searchLy, 
   const currentPage = meta.current_page;
 
   return (
-    <Panel className="flex h-full flex-col overflow-hidden">
+    <Panel className={cn("overflow-hidden", className)}>
       {/* ── Header ── */}
       <div className="shrink-0 border-b border-sky-900/20 px-4 py-3 md:px-5 md:py-4">
         <Heading

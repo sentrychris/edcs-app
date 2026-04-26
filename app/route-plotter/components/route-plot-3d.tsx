@@ -4,8 +4,10 @@ import { useCallback, useRef, useState } from "react";
 import type { SystemRouteWaypoint } from "@/core/interfaces/SystemRoute";
 import Panel from "@/components/panel";
 import Heading from "@/components/heading";
+import { cn } from "@/core/cn";
 
 interface Props {
+  className?: string;
   waypoints: SystemRouteWaypoint[];
 }
 
@@ -44,7 +46,7 @@ function project(cx: number, cy: number, cz: number, rotX: number, rotY: number,
   return { x: px, y: py, depth: z2 };
 }
 
-export default function RoutePlot3D({ waypoints }: Props) {
+export default function RoutePlot3D({ className, waypoints }: Props) {
   const [rotX, setRotX] = useState(-0.35);
   const [rotY, setRotY] = useState(0.4);
   const [zoom, setZoom] = useState(1);
@@ -138,7 +140,7 @@ export default function RoutePlot3D({ waypoints }: Props) {
     .map((d) => d.i);
 
   return (
-    <Panel className="overflow-hidden">
+    <Panel className={cn("overflow-hidden", className)}>
       {/* ── Header ── */}
       <div className="flex items-center justify-between border-b border-sky-900/20 px-4 py-3 md:px-5 md:py-4">
         <Heading

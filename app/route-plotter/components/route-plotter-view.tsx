@@ -74,12 +74,12 @@ export default function RoutePlotterView({ initialFrom, initialTo, initialLy, in
 
       {/* ── Results ── */}
       {route && !isLoading && (
-        <div className="grid grid-cols-1 gap-5 xl:grid-cols-3">
-          <div className="xl:col-span-2">
-            <RoutePlot3D waypoints={route} />
+        <div className="grid grid-cols-1 gap-5 xl:grid-cols-3 xl:items-stretch">
+          <div className="xl:col-span-2 flex">
+            <RoutePlot3D className="h-full flex-1" waypoints={route} />
           </div>
-          <div>
-            <RouteJumpList waypoints={route} />
+          <div className="flex">
+            <RouteJumpList className="h-full flex-1" waypoints={route} />
           </div>
         </div>
       )}
