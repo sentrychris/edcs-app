@@ -39,10 +39,10 @@ function drawWheel(canvas: HTMLCanvasElement, hue: number) {
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.clearRect(0, 0, WHEEL_SIZE, WHEEL_SIZE);
 
-  // Ring track background
+  // Ring track background — dark blue-grey, matches the modal panel ink
   ctx.beginPath();
   ctx.arc(W_C, W_C, W_TRACK_MID, 0, Math.PI * 2);
-  ctx.strokeStyle = "rgba(60,35,10,0.85)";
+  ctx.strokeStyle = "rgba(10,18,30,0.85)";
   ctx.lineWidth = W_OUTER_R - W_INNER_R;
   ctx.stroke();
 
