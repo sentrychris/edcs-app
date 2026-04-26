@@ -2,12 +2,15 @@ import type { FunctionComponent } from "react";
 import type { CAPIProfile } from "@/core/interfaces/CAPIProfile";
 import Panel from "@/components/panel";
 import SectionHeader from "@/components/section-header";
+import { CommanderLastSystem } from "@/core/interfaces/Commander";
+import Link from "next/link";
 
 interface Props {
+  system: CommanderLastSystem | null;
   profile: CAPIProfile;
 }
 
-const CommanderInfoGrid: FunctionComponent<Props> = ({ profile }) => {
+const CommanderInfoGrid: FunctionComponent<Props> = ({ system, profile }) => {
   const { commander, lastSystem, squadron } = profile;
 
   return (
@@ -27,7 +30,9 @@ const CommanderInfoGrid: FunctionComponent<Props> = ({ profile }) => {
         <div className="border border-sky-900/20 bg-black/40 p-3">
           <p className="mb-1 text-[0.65rem] uppercase tracking-widest text-neutral-700">Last Known System</p>
           <p className="text-sm font-bold uppercase tracking-wide text-sky-400/80">
-            {lastSystem.name}
+            <Link href={system ? `/systems/${system.slug}` : '#'}>
+              {system ? system.name : lastSystem.name}
+            </Link>
           </p>
         </div>
 

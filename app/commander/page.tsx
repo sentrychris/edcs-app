@@ -65,7 +65,7 @@ export default async function Page() {
   let error: string | null = null;
   let requiresReauth = false;
 
-  const lastSystem    = session?.user?.commander?.last_system ?? null;
+  const lastSystem = session.user.commander?.last_system ?? null;
 
   const [capiResult, apiKeyStatus] = await Promise.allSettled([
     getCAPIProfile(session.user.accessToken),
@@ -124,7 +124,7 @@ export default async function Page() {
               {profile.loadout && <CommanderLoadout loadout={profile.loadout} />}
             </div>
             <div className="space-y-5">
-              <CommanderInfoGrid profile={profile} />
+              <CommanderInfoGrid system={lastSystem} profile={profile} />
               <CommanderApiKeys
                 accessToken={session.user.accessToken}
                 hasInaraKey={hasInaraKey}

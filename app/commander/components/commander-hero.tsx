@@ -112,8 +112,8 @@ const CommanderHero: FunctionComponent<Props> = ({ system, profile }) => {
             <div className="border border-sky-900/20 bg-black/40 p-3">
               <SectionHeader icon="icarus-terminal-route" title="Current System" className="mb-2" />
               <p className="text-sm font-bold uppercase tracking-wide text-sky-400/80">
-                <Link href={system?.slug ?? '#'}>
-                  {lastSystem.name}
+                <Link href={system ? `/systems/${system.slug}` : '#'}>
+                  {system ? system.name : lastSystem.name}
                 </Link>
               </p>
               {ship.starsystem && ship.starsystem.name !== lastSystem.name && (
