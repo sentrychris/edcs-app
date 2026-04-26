@@ -5,6 +5,7 @@ import { getCollection, getResource } from "@/core/api";
 import dynamic from "next/dynamic";
 import GalnetSidebar from "../../components/galnet-sidebar";
 import Panel from "@/components/panel";
+import BreadcrumbNav from "@/components/breadcrumb-nav";
 
 const GalnetArticle = dynamic(() => import("../../components/galnet-article"), {
   ssr: false,
@@ -76,6 +77,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
         </div>
       </Panel>
+
+      <BreadcrumbNav
+        backHref="/galnet"
+        backLabel="Galnet News"
+        rightIcon="icarus-terminal-notifications"
+        rightLabel="ARTICLE - GALNET TRANSMISSION"
+      />
 
       <div className="grid grid-cols-12 gap-5">
         {/* ── Sidebar ── */}
