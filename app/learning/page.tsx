@@ -17,7 +17,7 @@ const modules = [
     title:       "Star Systems",
     subtitle:    "Gravitational Mechanics & Stability",
     description: "Explore how multiple stars remain gravitationally stable. Interactive simulations covering binary pairs, hierarchical triples, and orbital resonance.",
-    tags:        ["Simulation", "Astrophysics", "Multi-Star"],
+    tags:        ["Simulation", "Astrophysics", "Multi-Star", "Hierarchy"],
     status:      "available",
   },
   {
@@ -26,7 +26,7 @@ const modules = [
     title:       "Galactic Cartography",
     subtitle:    "Coordinates, Regions & Exploration Scale",
     description: "Learn how commanders read the galaxy as a navigable dataset: X/Y/Z coordinates, spiral arms, stellar density, nebulae, permit locks, and map scale.",
-    tags:        ["Coordinates", "Galaxy Map", "Exploration"],
+    tags:        ["Field Guide", "Coordinates", "Galaxy Map", "Exploration"],
     status:      "available",
   },
   {
@@ -35,7 +35,7 @@ const modules = [
     title:       "Exploration & Surveying",
     subtitle:    "Scanning, Mapping & Data Value",
     description: "Practical field guides for exploration workflow, high-value worlds, DSS efficiency, discovery tags, neutron routing, and survey payouts.",
-    tags:        ["Exploration", "DSS", "Survey Data"],
+    tags:        ["Field Guide", "Exploration", "DSS", "Survey Data"],
     status:      "available",
   },
   {
@@ -44,7 +44,7 @@ const modules = [
     title:       "Exobiology",
     subtitle:    "Biological Signals & Sampling",
     description: "Odyssey biology guides covering signal detection, atmospheric constraints, genetic sampling, species families, surface conditions, and efficient bio-survey routes.",
-    tags:        ["Biology", "Odyssey", "Sampling"],
+    tags:        ["Field Guide", "Biology", "Odyssey", "Sampling"],
     status:      "available",
   },
   {
@@ -53,7 +53,7 @@ const modules = [
     title:       "Stations, Settlements & Infrastructure",
     subtitle:    "Ports, Services & Surface Facilities",
     description: "Operational guides for station types, economies, services, planetary ports, fleet carriers, and Odyssey settlement layouts.",
-    tags:        ["Stations", "Services", "Settlements"],
+    tags:        ["Field Guide", "Stations", "Services", "Settlements"],
     status:      "available",
   },
   {
@@ -62,7 +62,7 @@ const modules = [
     title:       "Market & Economy",
     subtitle:    "Commodity Flow & Trade Context",
     description: "Learn how supply, demand, economy pairings, rare goods, BGS states, carrier markets, and trade margins shape profitable routes.",
-    tags:        ["Markets", "Trade Routes", "BGS"],
+    tags:        ["Field Guide", "Markets", "Trade Routes", "BGS"],
     status:      "available",
   },
   {
@@ -71,7 +71,7 @@ const modules = [
     title:       "Thargoids & Guardians",
     subtitle:    "Xeno Sites, Artefacts & Conflict",
     description: "A lore-and-practice archive for Thargoid contacts, Guardian structures, artefacts, AX combat, war sites, and human-xeno history.",
-    tags:        ["Xeno", "Guardian", "AX"],
+    tags:        ["Field Guide", "Xeno", "Guardian", "AX Combat"],
     status:      "available",
   },
   {
@@ -80,7 +80,7 @@ const modules = [
     title:       "Engineering & Materials",
     subtitle:    "Blueprints, Unlocks & Gathering",
     description: "Practical guides for material categories, traders, blueprint grades, experimental effects, Guardian unlocks, Odyssey gear, and gathering loops.",
-    tags:        ["Engineering", "Materials", "Unlocks"],
+    tags:        ["Field Guide", "Engineering", "Materials", "Unlocks"],
     status:      "available",
   },
   {
@@ -89,7 +89,7 @@ const modules = [
     title:       "Orbital Mechanics",
     subtitle:    "Forces, Equilibria & Resonance",
     description: "Dive into the physics governing how bodies move through space. Lagrange points, orbital resonance, tidal locking, and the forces that shape every system.",
-    tags:        ["Simulation", "Physics", "Orbital Mechanics"],
+    tags:        ["Simulation", "Physics", "Resonance", "Orbits"],
     status:      "available",
   },
   {
@@ -98,7 +98,7 @@ const modules = [
     title:       "Stellar Physics",
     subtitle:    "Classification, Evolution & Remnants",
     description: "Explore the science of stars themselves — how they are classified by temperature and colour, how they evolve over billions of years, and what they leave behind.",
-    tags:        ["Spectral Types", "Main Sequence", "Stellar Evolution"],
+    tags:        ["Simulation", "Spectral Types", "Main Sequence", "Evolution"],
     status:      "available",
   },
   {
@@ -107,7 +107,7 @@ const modules = [
     title:       "Planetary Science",
     subtitle:    "Classification, Atmospheres & Habitability",
     description: "How worlds are categorised by composition, atmosphere, and temperature. Covers rocky bodies, water worlds, Earth-likes, and the Sudarsky gas giant classes.",
-    tags:        ["Body Types", "Atmospheres", "Habitability"],
+    tags:        ["Simulation", "Body Types", "Atmospheres", "Habitability"],
     status:      "available",
   },
 ];
