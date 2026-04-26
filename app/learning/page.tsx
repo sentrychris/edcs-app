@@ -20,6 +20,15 @@ const modules = [
     status:      "available",
   },
   {
+    href:        "/learning/galactic-cartography",
+    icon:        "icarus-terminal-route",
+    title:       "Galactic Cartography",
+    subtitle:    "Coordinates, Regions & Exploration Scale",
+    description: "Learn how commanders read the galaxy as a navigable dataset: X/Y/Z coordinates, spiral arms, stellar density, nebulae, permit locks, and map scale.",
+    tags:        ["Coordinates", "Galaxy Map", "Exploration"],
+    status:      "available",
+  },
+  {
     href:        "/learning/orbital-mechanics",
     icon:        "icarus-terminal-system-orbits",
     title:       "Orbital Mechanics",

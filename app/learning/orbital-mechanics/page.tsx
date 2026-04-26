@@ -4,6 +4,7 @@ import Panel from "@/components/panel";
 import SectionHeader from "@/components/section-header";
 import TerminalHeader from "@/components/terminal-header";
 import BreadcrumbNav from "@/components/breadcrumb-nav";
+import LearningModuleSidebar from "../components/learning-module-sidebar";
 
 export const metadata: Metadata = {
   title: "Orbital Mechanics | Learning Resources | ED:CS",
@@ -67,6 +68,11 @@ const configurations = [
   },
 ];
 
+const sidebarSignals = configurations.map((config) => ({
+  title: config.title,
+  signal: config.subtitle,
+}));
+
 export default function OrbitalMechanicsPage() {
   return (
     <>
@@ -100,51 +106,63 @@ export default function OrbitalMechanicsPage() {
         </div>
       </Panel>
 
-      {/* ── Simulation list ── */}
-      <Panel variant="muted" className="fx-chamfer p-4 md:p-5">
-        <SectionHeader icon="icarus-terminal-scan" title="Simulations" />
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          {configurations.map((config) => (
-            <Link key={config.href} href={config.href} className="group flex h-full flex-col">
-              <div className="relative flex h-full flex-col border border-sky-900/20 p-4 transition-colors hover:border-sky-700/40 hover:bg-sky-950/10">
-                <span className="pointer-events-none absolute -left-px -top-px h-2.5 w-2.5 border-l border-t border-sky-500/40 transition-colors group-hover:border-sky-500/70" />
-                <span className="pointer-events-none absolute -right-px -top-px h-2.5 w-2.5 border-r border-t border-sky-500/40 transition-colors group-hover:border-sky-500/70" />
-                <span className="pointer-events-none absolute -bottom-px -left-px h-2.5 w-2.5 border-b border-l border-sky-500/40 transition-colors group-hover:border-sky-500/70" />
-                <span className="pointer-events-none absolute -bottom-px -right-px h-2.5 w-2.5 border-b border-r border-sky-500/40 transition-colors group-hover:border-sky-500/70" />
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+        {/* ── Simulation list ── */}
+        <Panel variant="muted" className="fx-chamfer p-4 md:p-5 lg:col-span-2">
+          <SectionHeader icon="icarus-terminal-scan" title="Simulations" />
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {configurations.map((config) => (
+              <Link key={config.href} href={config.href} className="group flex h-full flex-col">
+                <div className="relative flex h-full flex-col border border-sky-900/20 p-4 transition-colors hover:border-sky-700/40 hover:bg-sky-950/10">
+                  <span className="pointer-events-none absolute -left-px -top-px h-2.5 w-2.5 border-l border-t border-sky-500/40 transition-colors group-hover:border-sky-500/70" />
+                  <span className="pointer-events-none absolute -right-px -top-px h-2.5 w-2.5 border-r border-t border-sky-500/40 transition-colors group-hover:border-sky-500/70" />
+                  <span className="pointer-events-none absolute -bottom-px -left-px h-2.5 w-2.5 border-b border-l border-sky-500/40 transition-colors group-hover:border-sky-500/70" />
+                  <span className="pointer-events-none absolute -bottom-px -right-px h-2.5 w-2.5 border-b border-r border-sky-500/40 transition-colors group-hover:border-sky-500/70" />
 
-                <div className="mb-3 flex items-start justify-between gap-2">
-                  <i className={`${config.icon} text-glow__blue text-xl`} />
-                  {config.status === "available" && (
-                    <span className="text-[0.6rem] uppercase tracking-widest text-green-500/70">Available</span>
-                  )}
+                  <div className="mb-3 flex items-start justify-between gap-2">
+                    <i className={`${config.icon} text-glow__blue text-xl`} />
+                    {config.status === "available" && (
+                      <span className="text-[0.6rem] uppercase tracking-widest text-green-500/70">Available</span>
+                    )}
+                  </div>
+
+                  <p className="text-glow__white mb-0.5 text-sm font-bold uppercase tracking-wide">
+                    {config.title}
+                  </p>
+                  <p className="mb-3 text-[0.65rem] uppercase tracking-widest text-sky-400/60">
+                    {config.subtitle}
+                  </p>
+
+                  <p className="mb-3 flex-1 text-xs uppercase tracking-wide text-neutral-500">
+                    {config.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-1.5">
+                    {config.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="border border-sky-900/30 px-2 py-0.5 text-[0.6rem] uppercase tracking-widest text-neutral-600"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
+              </Link>
+            ))}
+          </div>
+        </Panel>
 
-                <p className="text-glow__white mb-0.5 text-sm font-bold uppercase tracking-wide">
-                  {config.title}
-                </p>
-                <p className="mb-3 text-[0.65rem] uppercase tracking-widest text-sky-400/60">
-                  {config.subtitle}
-                </p>
-
-                <p className="mb-3 flex-1 text-xs uppercase tracking-wide text-neutral-500">
-                  {config.description}
-                </p>
-
-                <div className="flex flex-wrap gap-1.5">
-                  {config.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="border border-sky-900/30 px-2 py-0.5 text-[0.6rem] uppercase tracking-widest text-neutral-600"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </Panel>
+        <LearningModuleSidebar
+          lensIcon="icarus-terminal-info"
+          lensTitle="Orbital Lens"
+          paragraphs={[
+            "This module treats motion as a readable system: every orbit is shaped by force, energy, angular momentum, resonance, and the limits of gravitational control.",
+            "The simulations are built to make invisible mechanics visible, from equilibrium points to the tidal forces that sculpt rings and locked worlds.",
+          ]}
+          signals={sidebarSignals}
+        />
+      </div>
     </>
   );
 }
