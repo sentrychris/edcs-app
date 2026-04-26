@@ -4,7 +4,8 @@ import type { FunctionComponent } from "react";
 import type { SessionUser } from "@/core/interfaces/Auth";
 import type { AuthorizationServerInformation } from "@/core/interfaces/Auth";
 import { getResource } from "@/core/api";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { settings } from "@/core/config";
 import Link from "next/link";
 
 interface Props {
@@ -13,12 +14,23 @@ interface Props {
 }
 
 const SidebarUser: FunctionComponent<Props> = ({ user, collapsed }) => {
+  const { data: session } = useSession();
+
   const login = async () => {
     const { data } = await getResource<AuthorizationServerInformation>("auth/frontier/login");
     window.location.href = data.authorization_url;
   };
 
   const logout = async () => {
+    // Revoke the Sanctum token on the backend before clearing local state.
+    // Best-effort: a network failure here should not prevent the local logout.
+    if (session?.user?.accessToken) {
+      await fetch(`${settings.api.url}/auth/logout`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${session.user.accessToken}` },
+      }).catch(() => {});
+    }
+
     document.cookie = "cmdr_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     await signOut({ callbackUrl: "/" });
   };
