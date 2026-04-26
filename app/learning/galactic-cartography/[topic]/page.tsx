@@ -132,8 +132,8 @@ export default function GalacticCartographyTopicPage({ params }: Props) {
           </Panel>
         </div>
 
-        <div className="flex h-full flex-col space-y-5">
-          <Panel variant="muted" className="fx-chamfer p-4 md:p-5">
+        <div className="flex h-full flex-col gap-5 lg:self-stretch">
+          <Panel variant="muted" className="fx-chamfer flex flex-1 basis-0 flex-col p-4 md:p-5">
             <SectionHeader icon="icarus-terminal-info" title="Key Concepts" />
             <div className="space-y-2 text-xs uppercase tracking-wide text-neutral-600">
               {topic.keyPoints.map((point) => (
@@ -147,7 +147,7 @@ export default function GalacticCartographyTopicPage({ params }: Props) {
             </div>
           </Panel>
 
-          <Panel variant="muted" className="fx-chamfer p-4 md:p-5">
+          <Panel variant="muted" className="fx-chamfer flex flex-1 basis-0 flex-col p-4 md:p-5">
             <SectionHeader icon="icarus-terminal-scan" title="Field Notes" />
             <div className="space-y-3 text-xs uppercase tracking-wide text-neutral-500">
               {topic.fieldNotes.map((note) => (
