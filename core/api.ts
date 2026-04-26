@@ -1,6 +1,18 @@
 import type { Pagination } from "./interfaces/Pagination";
 import { settings } from "./config";
 
+export class ApiError extends Error {
+  constructor(
+    public readonly status: number,
+    public readonly body: unknown,
+    message: string,
+  ) {
+    super(message);
+    this.name = "ApiError";
+    Object.setPrototypeOf(this, ApiError.prototype);
+  }
+}
+
 export const pagination = {
   data: [],
   links: {
@@ -41,7 +53,13 @@ export async function request<T = unknown>(uri: string, options?: RequestOptions
   const response = await fetch(`${url}${query}`, fetchOptions);
 
   if (!response.ok) {
-    throw new Error("Failed to fetch data");
+    let body: unknown = null;
+    try {
+      body = await response.json();
+    } catch {
+      // non-JSON error body
+    }
+    throw new ApiError(response.status, body, "Failed to fetch data");
   }
 
   return response.json();

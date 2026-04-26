@@ -3,7 +3,7 @@ import type { CAPIProfile } from "@/core/interfaces/CAPIProfile";
 import { redirect } from "next/navigation";
 import { settings } from "@/core/config";
 import { auth } from "@/core/auth";
-import { getResource, request } from "@/core/api";
+import { ApiError, getResource, request } from "@/core/api";
 import Panel from "@/components/panel";
 import CommanderHero from "./components/commander-hero";
 import CommanderRanksBar from "./components/commander-ranks-bar";
@@ -11,6 +11,7 @@ import CommanderFleet from "./components/commander-fleet";
 import CommanderInfoGrid from "./components/commander-info-grid";
 import CommanderLoadout from "./components/commander-loadout";
 import CommanderApiKeys from "./components/commander-api-keys";
+import CommanderReauth from "./components/commander-reauth";
 
 export async function generateMetadata(
   _props: unknown,
@@ -62,6 +63,7 @@ export default async function Page() {
 
   let profile: CAPIProfile | null = null;
   let error: string | null = null;
+  let requiresReauth = false;
 
   const [capiResult, apiKeyStatus] = await Promise.allSettled([
     getCAPIProfile(session.user.accessToken),
@@ -71,7 +73,12 @@ export default async function Page() {
   if (capiResult.status === "fulfilled") {
     profile = capiResult.value;
   } else {
-    error = "Unable to load commander profile. Please try again later.";
+    const err = capiResult.reason;
+    if (err instanceof ApiError && err.status === 401) {
+      requiresReauth = true;
+    } else {
+      error = "Unable to load commander profile. Please try again later.";
+    }
   }
 
   const { hasInaraKey, hasEdsmKey } =
@@ -98,7 +105,9 @@ export default async function Page() {
         </div>
       </Panel>
 
-      {error ? (
+      {requiresReauth ? (
+        <CommanderReauth />
+      ) : error ? (
         <Panel className="px-6 py-8 text-center">
           <i className="icarus-terminal-warning mb-3 text-2xl text-sky-500/40"></i>
           <p className="text-xs uppercase tracking-widest text-neutral-600">{error}</p>
