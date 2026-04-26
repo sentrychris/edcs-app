@@ -4,6 +4,7 @@ import Panel from "@/components/panel";
 import SectionHeader from "@/components/section-header";
 import TerminalHeader from "@/components/terminal-header";
 import BreadcrumbNav from "@/components/breadcrumb-nav";
+import { cn } from "@/core/cn";
 
 export const metadata: Metadata = {
   title: "Learning Resources | ED:CS",
@@ -186,7 +187,11 @@ export default function LearningPage() {
                   {mod.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="border border-sky-900/30 px-2 py-0.5 text-[0.6rem] uppercase tracking-widest text-neutral-600"
+                      className={cn("border border-sky-900/30 px-2 py-0.5 text-[0.6rem] uppercase tracking-widest text-neutral-600",
+                        tag == "Simulation"
+                          ? "bg-green-900/20"
+                          : tag === "Field Guide"
+                            ? "bg-orange-900/20": "bg-sky-900/10")}
                     >
                       {tag}
                     </span>
