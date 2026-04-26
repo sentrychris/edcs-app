@@ -11,9 +11,10 @@ import TradeRouteList from "./trade-route-list";
 
 interface Props {
   initialNearSystem: string;
+  initialNearSystemDetail?: { name: string; slug: string } | null;
 }
 
-export default function TradeRoutePanel({ initialNearSystem }: Props) {
+export default function TradeRoutePanel({ initialNearSystem, initialNearSystemDetail }: Props) {
   const [routes, setRoutes] = useState<MarketTradeRoute[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -57,6 +58,7 @@ export default function TradeRoutePanel({ initialNearSystem }: Props) {
         />
         <TradeRouteForm
           initialNearSystem={initialNearSystem}
+          initialNearSystemDetail={initialNearSystemDetail ?? null}
           onSubmit={handleSubmit}
           isLoading={isLoading}
         />

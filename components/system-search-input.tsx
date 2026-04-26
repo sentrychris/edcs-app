@@ -9,14 +9,16 @@ interface Props {
   placeholder?: string;
   onSelect: (slug: string) => void;
   disabled?: boolean;
+  /** Pre-filled system to display + emit on mount (e.g. commander's last known system). */
+  initialSystem?: { name: string; slug: string } | null;
 }
 
-export default function SystemSearchInput({ label, placeholder, onSelect, disabled }: Props) {
-  const [query, setQuery] = useState("");
+export default function SystemSearchInput({ label, placeholder, onSelect, disabled, initialSystem }: Props) {
+  const [query, setQuery] = useState(initialSystem?.name ?? "");
   const [results, setResults] = useState<Pick<System, "name" | "slug">[]>([]);
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
-  const [confirmed, setConfirmed] = useState(false);
+  const [confirmed, setConfirmed] = useState(!!initialSystem);
 
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);

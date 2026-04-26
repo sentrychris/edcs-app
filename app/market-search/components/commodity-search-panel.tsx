@@ -12,9 +12,10 @@ import CommodityListingTable from "./commodity-listing-table";
 interface Props {
   initialCommodity: string;
   initialNearSystem: string;
+  initialNearSystemDetail?: { name: string; slug: string } | null;
 }
 
-export default function CommoditySearchPanel({ initialCommodity, initialNearSystem }: Props) {
+export default function CommoditySearchPanel({ initialCommodity, initialNearSystem, initialNearSystemDetail }: Props) {
   const [result, setResult] = useState<CommoditySearchResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -65,6 +66,7 @@ export default function CommoditySearchPanel({ initialCommodity, initialNearSyst
         <CommoditySearchForm
           initialCommodity={initialCommodity}
           initialNearSystem={initialNearSystem}
+          initialNearSystemDetail={initialNearSystemDetail ?? null}
           onSubmit={handleSubmit}
           isLoading={isLoading}
         />

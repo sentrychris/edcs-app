@@ -8,6 +8,7 @@ import NumberField from "./number-field";
 interface Props {
   initialCommodity: string;
   initialNearSystem: string;
+  initialNearSystemDetail?: { name: string; slug: string } | null;
   onSubmit: (filters: CommodityFilters) => void;
   isLoading: boolean;
 }
@@ -19,7 +20,7 @@ const DEFAULTS = {
   limit: 20,
 };
 
-export default function CommoditySearchForm({ initialCommodity, initialNearSystem, onSubmit, isLoading }: Props) {
+export default function CommoditySearchForm({ initialCommodity, initialNearSystem, initialNearSystemDetail, onSubmit, isLoading }: Props) {
   const [commodity, setCommodity] = useState(initialCommodity);
   const [nearSystemSlug, setNearSystemSlug] = useState(initialNearSystem);
   const [ly, setLy] = useState(String(DEFAULTS.ly));
@@ -117,6 +118,7 @@ export default function CommoditySearchForm({ initialCommodity, initialNearSyste
               placeholder="Search for a reference system..."
               onSelect={setNearSystemSlug}
               disabled={isLoading}
+              initialSystem={initialNearSystemDetail ?? null}
             />
           </div>
 

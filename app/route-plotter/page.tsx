@@ -1,5 +1,6 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { settings } from "@/core/config";
+import { auth } from "@/core/auth";
 import TerminalHeader from "@/components/terminal-header";
 import RoutePlotterView from "./components/route-plotter-view";
 
@@ -23,8 +24,16 @@ export async function generateMetadata(
   };
 }
 
-export default function Page({ searchParams }: Props) {
+export default async function Page({ searchParams }: Props) {
   const initialLy = searchParams.ly ? parseInt(searchParams.ly, 10) : 30;
+
+  // Pre-fill the FROM (origin) field from the commander's last known system.
+  // Only when ?from= isn't supplied — URL takes precedence. Destination is
+  // never pre-filled.
+  const session            = await auth();
+  const lastSystem         = session?.user?.commander?.last_system ?? null;
+  const initialFromSystem  = !searchParams.from && lastSystem ? lastSystem : null;
+  const initialFrom        = searchParams.from ?? lastSystem?.slug ?? "";
 
   return (
     <>
@@ -37,7 +46,8 @@ export default function Page({ searchParams }: Props) {
       />
 
       <RoutePlotterView
-        initialFrom={searchParams.from ?? ""}
+        initialFrom={initialFrom}
+        initialFromSystem={initialFromSystem}
         initialTo={searchParams.to ?? ""}
         initialLy={Number.isNaN(initialLy) ? 30 : initialLy}
       />

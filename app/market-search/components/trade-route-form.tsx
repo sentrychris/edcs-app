@@ -7,6 +7,7 @@ import NumberField from "./number-field";
 
 interface Props {
   initialNearSystem: string;
+  initialNearSystemDetail?: { name: string; slug: string } | null;
   onSubmit: (filters: TradeRouteFilters) => void;
   isLoading: boolean;
 }
@@ -19,7 +20,7 @@ const DEFAULTS = {
   limit: 20,
 };
 
-export default function TradeRouteForm({ initialNearSystem, onSubmit, isLoading }: Props) {
+export default function TradeRouteForm({ initialNearSystem, initialNearSystemDetail, onSubmit, isLoading }: Props) {
   const [nearSystemSlug, setNearSystemSlug] = useState(initialNearSystem);
   const [ly, setLy] = useState(String(DEFAULTS.ly));
   const [minStock, setMinStock] = useState(String(DEFAULTS.min_stock));
@@ -51,6 +52,7 @@ export default function TradeRouteForm({ initialNearSystem, onSubmit, isLoading 
             placeholder="Constrain both ends to systems near here..."
             onSelect={setNearSystemSlug}
             disabled={isLoading}
+            initialSystem={initialNearSystemDetail ?? null}
           />
         </div>
 

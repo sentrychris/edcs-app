@@ -1,5 +1,6 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { settings } from "@/core/config";
+import { auth } from "@/core/auth";
 import TerminalHeader from "@/components/terminal-header";
 import MarketSearchView from "./components/market-search-view";
 
@@ -23,8 +24,15 @@ export async function generateMetadata(
   };
 }
 
-export default function Page({ searchParams }: Props) {
+export default async function Page({ searchParams }: Props) {
   const initialMode = searchParams.mode === "trade-route" ? "trade-route" : "commodity";
+
+  // Pre-fill the "near system" field from the commander's last known system,
+  // unless the URL has its own ?near_system= override.
+  const session            = await auth();
+  const lastSystem         = session?.user?.commander?.last_system ?? null;
+  const initialNearSystemDetail = !searchParams.near_system && lastSystem ? lastSystem : null;
+  const initialNearSystem  = searchParams.near_system ?? lastSystem?.slug ?? "";
 
   return (
     <>
@@ -39,7 +47,8 @@ export default function Page({ searchParams }: Props) {
       <MarketSearchView
         initialMode={initialMode}
         initialCommodity={searchParams.commodity ?? ""}
-        initialNearSystem={searchParams.near_system ?? ""}
+        initialNearSystem={initialNearSystem}
+        initialNearSystemDetail={initialNearSystemDetail}
       />
     </>
   );

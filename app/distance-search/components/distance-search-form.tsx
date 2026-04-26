@@ -8,13 +8,14 @@ import { getResource } from "@/core/api";
 interface Props {
   initialSlug: string;
   initialLy: number;
+  initialSystem?: { name: string; slug: string } | null;
   onSubmit: (slug: string, name: string, ly: number) => void;
   isLoading: boolean;
 }
 
-export default function DistanceSearchForm({ initialSlug, initialLy, onSubmit, isLoading }: Props) {
+export default function DistanceSearchForm({ initialSlug, initialLy, initialSystem, onSubmit, isLoading }: Props) {
   const [slug, setSlug] = useState(initialSlug);
-  const [name, setName] = useState("");
+  const [name, setName] = useState(initialSystem?.name ?? "");
   const [ly, setLy] = useState(String(initialLy));
 
   const canSubmit = !isLoading && slug !== "";
@@ -48,6 +49,7 @@ export default function DistanceSearchForm({ initialSlug, initialLy, onSubmit, i
         placeholder="Search for a system..."
         onSelect={handleSelect}
         disabled={isLoading}
+        initialSystem={initialSystem ?? null}
       />
 
       {/* Search radius */}

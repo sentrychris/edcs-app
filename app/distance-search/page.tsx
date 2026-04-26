@@ -1,5 +1,6 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { settings } from "@/core/config";
+import { auth } from "@/core/auth";
 import TerminalHeader from "@/components/terminal-header";
 import DistanceSearchView from "./components/distance-search-view";
 
@@ -23,8 +24,15 @@ export async function generateMetadata(
   };
 }
 
-export default function Page({ searchParams }: Props) {
+export default async function Page({ searchParams }: Props) {
   const initialLy = searchParams.ly ? parseInt(searchParams.ly, 10) : 50;
+
+  // Pre-fill origin from the commander's last known system, but only when the
+  // URL hasn't supplied its own slug (URL takes precedence).
+  const session       = await auth();
+  const lastSystem    = session?.user?.commander?.last_system ?? null;
+  const initialSystem = !searchParams.slug && lastSystem ? lastSystem : null;
+  const initialSlug   = searchParams.slug ?? lastSystem?.slug ?? "";
 
   return (
     <>
@@ -37,7 +45,8 @@ export default function Page({ searchParams }: Props) {
       />
 
       <DistanceSearchView
-        initialSlug={searchParams.slug ?? ""}
+        initialSlug={initialSlug}
+        initialSystem={initialSystem}
         initialLy={Number.isNaN(initialLy) ? 50 : initialLy}
       />
     </>

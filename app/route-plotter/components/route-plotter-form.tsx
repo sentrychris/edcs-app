@@ -7,6 +7,7 @@ interface Props {
   initialFrom: string;
   initialTo: string;
   initialLy: number;
+  initialFromSystem?: { name: string; slug: string } | null;
   onSubmit: (from: string, to: string, ly: number) => void;
   isLoading: boolean;
 }
@@ -15,6 +16,7 @@ export default function RoutePlotterForm({
   initialFrom,
   initialTo,
   initialLy,
+  initialFromSystem,
   onSubmit,
   isLoading,
 }: Props) {
@@ -39,6 +41,7 @@ export default function RoutePlotterForm({
         placeholder="Search for a system..."
         onSelect={setFromSlug}
         disabled={isLoading}
+        initialSystem={initialFromSystem ?? null}
       />
 
       <SystemSearchInput

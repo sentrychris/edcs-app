@@ -12,9 +12,10 @@ interface Props {
   initialMode: Mode;
   initialCommodity: string;
   initialNearSystem: string;
+  initialNearSystemDetail?: { name: string; slug: string } | null;
 }
 
-export default function MarketSearchView({ initialMode, initialCommodity, initialNearSystem }: Props) {
+export default function MarketSearchView({ initialMode, initialCommodity, initialNearSystem, initialNearSystemDetail }: Props) {
   const [mode, setMode] = useState<Mode>(initialMode);
 
   return (
@@ -51,9 +52,13 @@ export default function MarketSearchView({ initialMode, initialCommodity, initia
         <CommoditySearchPanel
           initialCommodity={initialCommodity}
           initialNearSystem={initialNearSystem}
+          initialNearSystemDetail={initialNearSystemDetail ?? null}
         />
       ) : (
-        <TradeRoutePanel initialNearSystem={initialNearSystem} />
+        <TradeRoutePanel
+          initialNearSystem={initialNearSystem}
+          initialNearSystemDetail={initialNearSystemDetail ?? null}
+        />
       )}
     </div>
   );

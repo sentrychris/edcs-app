@@ -3,7 +3,13 @@ export interface CommanderApi {
   edsm: string;
 }
 
+export interface CommanderLastSystem {
+  name: string;
+  slug: string;
+}
+
 export interface Commander {
   name: string;
   api?: CommanderApi;
+  last_system?: CommanderLastSystem;
 }

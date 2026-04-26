@@ -14,11 +14,12 @@ import DistanceResultsList from "./distance-results-list";
 interface Props {
   initialSlug: string;
   initialLy: number;
+  initialSystem?: { name: string; slug: string } | null;
 }
 
-export default function DistanceSearchView({ initialSlug, initialLy }: Props) {
+export default function DistanceSearchView({ initialSlug, initialLy, initialSystem }: Props) {
   const [pagination, setPagination] = useState<Pagination<SystemDistance> | null>(null);
-  const [originName, setOriginName] = useState("");
+  const [originName, setOriginName] = useState(initialSystem?.name ?? "");
   const [currentSlug, setCurrentSlug] = useState(initialSlug);
   const [currentLy, setCurrentLy] = useState(initialLy);
   const [isLoading, setIsLoading] = useState(false);
@@ -66,6 +67,7 @@ export default function DistanceSearchView({ initialSlug, initialLy }: Props) {
         />
         <DistanceSearchForm
           initialSlug={initialSlug}
+          initialSystem={initialSystem ?? null}
           initialLy={initialLy}
           onSubmit={handleSubmit}
           isLoading={isLoading}

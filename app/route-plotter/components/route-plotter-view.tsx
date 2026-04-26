@@ -14,9 +14,10 @@ interface Props {
   initialFrom: string;
   initialTo: string;
   initialLy: number;
+  initialFromSystem?: { name: string; slug: string } | null;
 }
 
-export default function RoutePlotterView({ initialFrom, initialTo, initialLy }: Props) {
+export default function RoutePlotterView({ initialFrom, initialTo, initialLy, initialFromSystem }: Props) {
   const [route, setRoute] = useState<SystemRouteWaypoint[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -51,6 +52,7 @@ export default function RoutePlotterView({ initialFrom, initialTo, initialLy }: 
         />
         <RoutePlotterForm
           initialFrom={initialFrom}
+          initialFromSystem={initialFromSystem ?? null}
           initialTo={initialTo}
           initialLy={initialLy}
           onSubmit={handleSubmit}
