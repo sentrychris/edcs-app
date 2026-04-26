@@ -2,6 +2,7 @@ import type { Metadata, ResolvingMetadata } from "next";
 import { settings } from "@/core/config";
 import { auth } from "@/core/auth";
 import TerminalHeader from "@/components/terminal-header";
+import BreadcrumbNav from "@/components/breadcrumb-nav";
 import RoutePlotterView from "./components/route-plotter-view";
 
 interface Props {
@@ -43,6 +44,13 @@ export default async function Page({ searchParams }: Props) {
         moduleLabel="MODULE:NAVIGATION"
         protocolLabel="PROTOCOL:ROUTE-PLANNER"
         statusLabel="NAVIGATION: ACTIVE"
+      />
+
+      <BreadcrumbNav
+        backHref="/"
+        backLabel="Home"
+        rightIcon="icarus-terminal-route"
+        rightLabel="MODULE - ROUTE PLOTTER"
       />
 
       <RoutePlotterView

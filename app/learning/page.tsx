@@ -3,6 +3,7 @@ import Link from "next/link";
 import Panel from "@/components/panel";
 import SectionHeader from "@/components/section-header";
 import TerminalHeader from "@/components/terminal-header";
+import BreadcrumbNav from "@/components/breadcrumb-nav";
 
 export const metadata: Metadata = {
   title: "Learning Resources | ED:CS",
@@ -65,6 +66,13 @@ export default function LearningPage() {
         moduleLabel="MODULE:LEARNING"
         protocolLabel="DATABASE:EDUCATIONAL"
         statusLabel="INDEX: LOADED"
+      />
+
+      <BreadcrumbNav
+        backHref="/"
+        backLabel="Home"
+        rightIcon="icarus-terminal-planet"
+        rightLabel="MODULE - KNOWLEDGE BASE"
       />
 
       {/* ── Hero ── */}

@@ -2,6 +2,7 @@ import type { Metadata, ResolvingMetadata } from "next";
 import { settings } from "@/core/config";
 import { auth } from "@/core/auth";
 import TerminalHeader from "@/components/terminal-header";
+import BreadcrumbNav from "@/components/breadcrumb-nav";
 import MarketSearchView from "./components/market-search-view";
 
 interface Props {
@@ -42,6 +43,13 @@ export default async function Page({ searchParams }: Props) {
         moduleLabel="MODULE:COMMERCE"
         protocolLabel="PROTOCOL:MARKET-SCAN"
         statusLabel="MARKET FEED: LIVE"
+      />
+
+      <BreadcrumbNav
+        backHref="/"
+        backLabel="Home"
+        rightIcon="icarus-terminal-economy"
+        rightLabel="MODULE - MARKET SEARCH"
       />
 
       <MarketSearchView

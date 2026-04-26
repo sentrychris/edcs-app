@@ -5,6 +5,7 @@ import { settings } from "@/core/config";
 import { auth } from "@/core/auth";
 import { ApiError, getResource, request } from "@/core/api";
 import Panel from "@/components/panel";
+import BreadcrumbNav from "@/components/breadcrumb-nav";
 import CommanderHero from "./components/commander-hero";
 import CommanderRanksBar from "./components/commander-ranks-bar";
 import CommanderFleet from "./components/commander-fleet";
@@ -130,6 +131,13 @@ export default async function Page() {
           </div>
         </div>
       </Panel>
+
+      <BreadcrumbNav
+        backHref="/"
+        backLabel="Home"
+        rightIcon="icarus-terminal-shield"
+        rightLabel="MODULE - COMMANDER"
+      />
 
       {requiresReauth ? (
         <CommanderReauth />

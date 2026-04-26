@@ -1,6 +1,7 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { settings } from "@/core/config";
 import Panel from "@/components/panel";
+import BreadcrumbNav from "@/components/breadcrumb-nav";
 import GalaxyMapCanvas from "./components/galaxy-map-canvas";
 
 interface Props {
@@ -43,6 +44,13 @@ export default function Page() {
           </div>
         </div>
       </Panel>
+
+      <BreadcrumbNav
+        backHref="/"
+        backLabel="Home"
+        rightIcon="icarus-terminal-star"
+        rightLabel="MODULE - GALAXY MAP"
+      />
 
       {/* ── Galaxy map panel ── */}
       <Panel className="overflow-hidden">

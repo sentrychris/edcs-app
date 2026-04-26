@@ -5,6 +5,7 @@ import { getCollection } from "@/core/api";
 import GalnetList from "./components/galnet-list";
 import Panel from "@/components/panel";
 import Heading from "@/components/heading";
+import BreadcrumbNav from "@/components/breadcrumb-nav";
 
 interface Props {
   params: {
@@ -54,6 +55,13 @@ export default async function Page() {
           </div>
         </div>
       </Panel>
+
+      <BreadcrumbNav
+        backHref="/"
+        backLabel="Home"
+        rightIcon="icarus-terminal-notifications"
+        rightLabel="MODULE - GALNET NEWS"
+      />
 
       {/* ── Article list ── */}
       <Panel>

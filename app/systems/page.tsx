@@ -5,6 +5,7 @@ import { getCollection } from "@/core/api";
 import SystemsStatisticsBar from "./components/systems-statistics-bar";
 import SystemsTable from "./components/systems-table";
 import Panel from "@/components/panel";
+import BreadcrumbNav from "@/components/breadcrumb-nav";
 
 interface Props {
   params: {
@@ -59,6 +60,13 @@ export default async function Page() {
           </div>
         </div>
       </Panel>
+
+      <BreadcrumbNav
+        backHref="/"
+        backLabel="Home"
+        rightIcon="icarus-terminal-system-orbits"
+        rightLabel="MODULE - STAR SYSTEMS"
+      />
 
       <SystemsStatisticsBar className="fx-fade-in" callInterval={30000} flushCache={0} />
       <SystemsTable className="mt-5" systems={systems} />

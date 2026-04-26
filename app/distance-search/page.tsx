@@ -2,6 +2,7 @@ import type { Metadata, ResolvingMetadata } from "next";
 import { settings } from "@/core/config";
 import { auth } from "@/core/auth";
 import TerminalHeader from "@/components/terminal-header";
+import BreadcrumbNav from "@/components/breadcrumb-nav";
 import DistanceSearchView from "./components/distance-search-view";
 
 interface Props {
@@ -42,6 +43,13 @@ export default async function Page({ searchParams }: Props) {
         moduleLabel="MODULE:SCANNER"
         protocolLabel="PROTOCOL:PROXIMITY-SCAN"
         statusLabel="SCANNER: ACTIVE"
+      />
+
+      <BreadcrumbNav
+        backHref="/"
+        backLabel="Home"
+        rightIcon="icarus-terminal-scan"
+        rightLabel="MODULE - DISTANCE SEARCH"
       />
 
       <DistanceSearchView
