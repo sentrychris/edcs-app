@@ -32,7 +32,7 @@ const SidebarUser: FunctionComponent<Props> = ({ user, collapsed }) => {
     }
 
     document.cookie = "cmdr_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    await signOut({ callbackUrl: "/" });
+    await signOut({ redirectTo: settings.app.url });
   };
 
   /* ── Collapsed state ── */
