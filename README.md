@@ -28,7 +28,7 @@ Run the development server
 npm run dev
 ```
 
-Buiild a production-ready release
+Build a production-ready release
 ```sh
 npm run build
 ```
@@ -36,16 +36,6 @@ npm run build
 Run a production-ready release
 ```sh
 npm start
-```
-
-Lint your code:
-```sh
-npm run lint
-```
-
-Format your code:
-```sh
-npm run prettier:fix
 ```
 
 ### Credits

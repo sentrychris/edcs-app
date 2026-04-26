@@ -1,8 +1,0 @@
-
-.next
-bin
-coverage
-node_modules
-public
-
-**/__tests__
