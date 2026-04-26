@@ -3,12 +3,15 @@ import type { CAPIProfile } from "@/core/interfaces/CAPIProfile";
 import Panel from "@/components/panel";
 import Heading from "@/components/heading";
 import SectionHeader from "@/components/section-header";
+import Link from "next/link";
+import { CommanderLastSystem } from "@/core/interfaces/Commander";
 
 interface Props {
+  system: CommanderLastSystem | null;
   profile: CAPIProfile;
 }
 
-const CommanderHero: FunctionComponent<Props> = ({ profile }) => {
+const CommanderHero: FunctionComponent<Props> = ({ system, profile }) => {
   const { commander, ship, lastSystem, squadron } = profile;
 
   return (
@@ -109,7 +112,9 @@ const CommanderHero: FunctionComponent<Props> = ({ profile }) => {
             <div className="border border-sky-900/20 bg-black/40 p-3">
               <SectionHeader icon="icarus-terminal-route" title="Current System" className="mb-2" />
               <p className="text-sm font-bold uppercase tracking-wide text-sky-400/80">
-                {lastSystem.name}
+                <Link href={system?.slug ?? '#'}>
+                  {lastSystem.name}
+                </Link>
               </p>
               {ship.starsystem && ship.starsystem.name !== lastSystem.name && (
                 <p className="mt-1 text-[0.6rem] uppercase tracking-widest text-neutral-600">

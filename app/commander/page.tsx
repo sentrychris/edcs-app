@@ -65,6 +65,8 @@ export default async function Page() {
   let error: string | null = null;
   let requiresReauth = false;
 
+  const lastSystem    = session?.user?.commander?.last_system ?? null;
+
   const [capiResult, apiKeyStatus] = await Promise.allSettled([
     getCAPIProfile(session.user.accessToken),
     getCommanderApiKeyStatus(session.user.accessToken),
@@ -114,7 +116,7 @@ export default async function Page() {
         </Panel>
       ) : profile ? (
         <div className="space-y-5">
-          <CommanderHero profile={profile} />
+          <CommanderHero system={lastSystem} profile={profile} />
           <CommanderRanksBar rank={profile.commander.rank} />
           <div className="grid grid-cols-1 gap-5 xl:grid-cols-3">
             <div className="xl:col-span-2 space-y-5">
