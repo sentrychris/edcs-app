@@ -66,6 +66,7 @@ export default function RouteJumpList({ className, waypoints }: Props) {
               {/* System info */}
               <div className="min-w-0 flex-1">
                 <Link
+                  prefetch={false}
                   href={`/systems/${waypoint.slug}`}
                   className="block truncate text-xs font-bold uppercase tracking-widest text-neutral-300 transition-colors hover:text-sky-400"
                 >

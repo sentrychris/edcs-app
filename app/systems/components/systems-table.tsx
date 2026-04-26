@@ -95,6 +95,7 @@ const SystemsTable: FunctionComponent<Props> = ({ className = "", systems }) => 
       title: "Designation",
       render: (system: System) => (
         <Link
+          prefetch={false}
           className="hover:text-glow__blue text-blue-200 flex items-center gap-2"
           href={`/systems/${system.slug}`}
         >

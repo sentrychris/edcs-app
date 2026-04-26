@@ -398,6 +398,7 @@ export default function DistanceResults3D({ className, results, originName, sear
           <div className="pointer-events-none absolute right-3 top-3 w-52 border border-sky-500/30 bg-black/85 p-3 backdrop-blur-sm">
             <div className="mb-2 flex items-start justify-between gap-2">
               <Link
+                prefetch={false}
                 href={`/systems/${selected.slug}`}
                 className="pointer-events-auto block truncate text-xs font-bold uppercase tracking-widest text-sky-400 transition-colors hover:text-sky-300"
               >

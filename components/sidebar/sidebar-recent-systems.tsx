@@ -32,6 +32,7 @@ const SidebarRecentSystems = () => {
           {systems.map(({ name, slug }) => (
             <Link
               key={slug}
+              prefetch={false}
               href={`/systems/${slug}`}
               className="group flex items-center gap-2.5 border-l-2 border-transparent py-2 pl-3 pr-2 text-xs uppercase tracking-widest text-neutral-500 transition-all hover:border-sky-900/40 hover:bg-sky-900/5 hover:text-neutral-200"
             >

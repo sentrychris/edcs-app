@@ -59,6 +59,7 @@ export default function TradeRouteList({ routes }: Props) {
                   {route.buy_from.station.name}
                 </Link>
                 <Link
+                  prefetch={false}
                   href={`/systems/${route.buy_from.system.slug}`}
                   className="block truncate text-xs uppercase tracking-widest text-neutral-500 transition-colors hover:text-sky-400"
                 >
@@ -87,6 +88,7 @@ export default function TradeRouteList({ routes }: Props) {
                   {route.sell_to.station.name}
                 </Link>
                 <Link
+                  prefetch={false}
                   href={`/systems/${route.sell_to.system.slug}`}
                   className="block truncate text-xs uppercase tracking-widest text-neutral-500 transition-colors hover:text-sky-400"
                 >

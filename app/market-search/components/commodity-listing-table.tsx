@@ -83,6 +83,7 @@ export default function CommodityListingTable({
 
                 <div className="mt-1 flex flex-wrap items-center gap-2 text-xs uppercase tracking-widest text-neutral-600">
                   <Link
+                    prefetch={false}
                     href={`/systems/${listing.system.slug}`}
                     className="text-neutral-500 transition-colors hover:text-sky-400"
                   >
