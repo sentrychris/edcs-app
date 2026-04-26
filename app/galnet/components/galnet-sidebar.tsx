@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FunctionComponent } from "react";
+import { useEffect, useMemo, useState, type FunctionComponent } from "react";
 import type { Pagination } from "@/core/interfaces/Pagination";
 import type { Galnet } from "@/core/interfaces/Galnet";
 import Link from "next/link";
@@ -11,14 +11,48 @@ import { cn } from "@/core/cn";
 interface Props {
   className?: string;
   articles: Pagination<Galnet>;
+  currentArticleSlug?: string;
+  initialSlice?: number;
+  returnPage?: number;
 }
 
-const GalnetSidebar: FunctionComponent<Props> = ({ className, articles }) => {
-  const [currentSlice, setCurrentSlice] = useState(0);
-  const itemsPerSlice = 5;
+const ITEMS_PER_SLICE = 5;
+
+function clampSlice(slice: number, totalSlices: number) {
+  return Math.min(Math.max(slice, 0), Math.max(totalSlices - 1, 0));
+}
+
+const GalnetSidebar: FunctionComponent<Props> = ({
+  className,
+  articles,
+  currentArticleSlug,
+  initialSlice,
+  returnPage,
+}) => {
+  const totalSlices = Math.max(1, Math.ceil(articles.data.length / ITEMS_PER_SLICE));
+  const resolvedInitialSlice = useMemo(() => {
+    if (typeof initialSlice === "number" && Number.isFinite(initialSlice)) {
+      return clampSlice(initialSlice, totalSlices);
+    }
+
+    if (currentArticleSlug) {
+      const articleIndex = articles.data.findIndex((article) => article.slug === currentArticleSlug);
+      if (articleIndex >= 0) {
+        return clampSlice(Math.floor(articleIndex / ITEMS_PER_SLICE), totalSlices);
+      }
+    }
+
+    return 0;
+  }, [articles.data, currentArticleSlug, initialSlice, totalSlices]);
+
+  const [currentSlice, setCurrentSlice] = useState(resolvedInitialSlice);
+
+  useEffect(() => {
+    setCurrentSlice(resolvedInitialSlice);
+  }, [resolvedInitialSlice]);
 
   const handleNextSlice = () => {
-    if ((currentSlice + 1) * itemsPerSlice < articles.data.length) {
+    if ((currentSlice + 1) * ITEMS_PER_SLICE < articles.data.length) {
       setCurrentSlice((prev) => prev + 1);
     }
   };
@@ -29,9 +63,17 @@ const GalnetSidebar: FunctionComponent<Props> = ({ className, articles }) => {
     }
   };
 
-  const startIndex = currentSlice * itemsPerSlice;
-  const slicedArticles = articles.data.slice(startIndex, startIndex + itemsPerSlice);
-  const totalSlices = Math.ceil(articles.data.length / itemsPerSlice);
+  const startIndex = currentSlice * ITEMS_PER_SLICE;
+  const slicedArticles = articles.data.slice(startIndex, startIndex + ITEMS_PER_SLICE);
+  const articleHref = (slug: string) => {
+    const params = new URLSearchParams({ galnetSlice: String(currentSlice) });
+
+    if (typeof returnPage === "number" && Number.isFinite(returnPage)) {
+      params.set("galnetPage", String(returnPage));
+    }
+
+    return `/galnet/news/${slug}?${params.toString()}`;
+  };
 
   return (
     <Panel variant="muted" className={cn("", className)} cornerClassName="z-10">
@@ -64,7 +106,7 @@ const GalnetSidebar: FunctionComponent<Props> = ({ className, articles }) => {
 
           {/* Read more */}
           <Link
-            href={`/galnet/news/${article.slug}`}
+            href={articleHref(article.slug)}
             className="flex items-center gap-2 text-xs uppercase tracking-widest text-glow__blue font-bold transition-colors hover:text-sky-300"
           >
             Access Report <span>{">>"}</span>
@@ -86,7 +128,7 @@ const GalnetSidebar: FunctionComponent<Props> = ({ className, articles }) => {
         </span>
         <button
           onClick={handleNextSlice}
-          disabled={(currentSlice + 1) * itemsPerSlice >= articles.data.length}
+          disabled={(currentSlice + 1) * ITEMS_PER_SLICE >= articles.data.length}
           className="flex items-center gap-2 text-glow__blue uppercase transition-colors hover:text-glow__blue disabled:cursor-not-allowed disabled:opacity-30"
         >
           Next

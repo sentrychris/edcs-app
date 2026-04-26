@@ -13,6 +13,25 @@ interface Props {
 
 const GalnetList: FunctionComponent<Props> = ({ articles }) => {
   const { rows, meta, links, paginate } = usePaginatedCollection<Galnet>(articles);
+  const startIndex = Math.max((meta.from ?? 1) - 1, 0);
+
+  const handlePaginate = async (link: string) => {
+    await paginate(link);
+
+    const page = new URL(link, window.location.origin).searchParams.get("page");
+    if (page) {
+      window.history.replaceState(null, "", `/galnet?galnetPage=${page}`);
+    }
+  };
+
+  const articleHref = (article: Galnet, index: number) => {
+    const params = new URLSearchParams({
+      galnetPage: String(meta.current_page),
+      galnetSlice: String(Math.floor((startIndex + index) / 5)),
+    });
+
+    return `/galnet/news/${article.slug}?${params.toString()}`;
+  };
 
   return (
     <>
@@ -38,7 +57,7 @@ const GalnetList: FunctionComponent<Props> = ({ articles }) => {
 
             {/* Access link */}
             <Link
-              href={`/galnet/news/${article.slug}`}
+              href={articleHref(article, i)}
               className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-glow__blue transition-colors hover:text-sky-300"
             >
               Access Report <span>{">>"}</span>
@@ -48,7 +67,7 @@ const GalnetList: FunctionComponent<Props> = ({ articles }) => {
       </div>
 
       <div className="py-4">
-        <PaginationLinks metadata={meta} links={links} paginate={paginate} />
+        <PaginationLinks metadata={meta} links={links} paginate={handlePaginate} />
       </div>
     </>
   );

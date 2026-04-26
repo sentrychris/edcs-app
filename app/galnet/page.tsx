@@ -14,8 +14,17 @@ interface Props {
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
-const getPageData = async () => {
-  return await getCollection<Galnet>("galnet/news");
+const getFirstSearchValue = (value: string | string[] | undefined) => {
+  return Array.isArray(value) ? value[0] : value;
+};
+
+const parsePositiveInteger = (value: string | string[] | undefined) => {
+  const parsed = Number.parseInt(getFirstSearchValue(value) ?? "", 10);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : undefined;
+};
+
+const getPageData = async (page?: number) => {
+  return await getCollection<Galnet>("galnet/news", page ? { params: { page } } : undefined);
 };
 
 export async function generateMetadata(
@@ -34,8 +43,9 @@ export async function generateMetadata(
   };
 }
 
-export default async function Page() {
-  const articles = await getPageData();
+export default async function Page({ searchParams }: Props) {
+  const page = parsePositiveInteger(searchParams.galnetPage ?? searchParams.page);
+  const articles = await getPageData(page);
 
   return (
     <>

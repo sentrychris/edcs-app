@@ -15,7 +15,25 @@ interface Props {
   params: {
     slug: string;
   };
+  searchParams?: {
+    galnetPage?: string | string[];
+    galnetSlice?: string | string[];
+  };
 }
+
+const getFirstSearchValue = (value: string | string[] | undefined) => {
+  return Array.isArray(value) ? value[0] : value;
+};
+
+const parseIndex = (value: string | string[] | undefined) => {
+  const parsed = Number.parseInt(getFirstSearchValue(value) ?? "", 10);
+  return Number.isFinite(parsed) && parsed >= 0 ? parsed : undefined;
+};
+
+const parsePage = (value: string | string[] | undefined) => {
+  const parsed = Number.parseInt(getFirstSearchValue(value) ?? "", 10);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : undefined;
+};
 
 const getPageData = async ({ params }: Props) => {
   const articles = await getCollection<Galnet>("galnet/news", {
@@ -55,8 +73,11 @@ export async function generateMetadata(
   };
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page({ params, searchParams }: Props) {
   const galnet = await getPageData({ params });
+  const galnetPage = parsePage(searchParams?.galnetPage);
+  const galnetSlice = parseIndex(searchParams?.galnetSlice);
+  const backHref = galnetPage ? `/galnet?galnetPage=${galnetPage}` : "/galnet";
 
   return (
     <>
@@ -79,7 +100,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
       </Panel>
 
       <BreadcrumbNav
-        backHref="/galnet"
+        backHref={backHref}
         backLabel="Galnet News"
         rightIcon="icarus-terminal-notifications"
         rightLabel="ARTICLE - GALNET TRANSMISSION"
@@ -88,7 +109,12 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <div className="grid grid-cols-12 gap-5">
         {/* ── Sidebar ── */}
         <div className="order-last col-span-12 md:order-first md:col-span-3">
-          <GalnetSidebar articles={galnet.articles} />
+          <GalnetSidebar
+            articles={galnet.articles}
+            currentArticleSlug={galnet.article.slug}
+            initialSlice={galnetSlice}
+            returnPage={galnetPage}
+          />
         </div>
 
         {/* ── Article ── */}
