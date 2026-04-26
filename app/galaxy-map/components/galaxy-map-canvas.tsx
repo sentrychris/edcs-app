@@ -17,7 +17,7 @@ const SOL_ID64 = 10477373803n;
 // Below 8000 ly we use full-detail per-sector tiles; above 60000 ly we serve
 // only the single sampled global tile. The mid-zoom band uses LOD 1.
 const LOD0_MIN_RADIUS = 80000;
-// const LOD1_MIN_RADIUS = 12000;
+const LOD1_MIN_RADIUS = 12000;
 
 function id64ToCoords(id64: bigint): [number, number, number] | null {
   try {
@@ -191,7 +191,7 @@ function starAppearance(seed: number): [number, number, number, number] {
   for (let i = 0; i < STAR_CLASSES.length; i++) {
     const [thr, r, g, b, sz] = STAR_CLASSES[i];
     if (h1 < thr) {
-      const lum = 0.18 + h2 * 0.05;
+      const lum = 0.2 + h2 * 0.05;
       // const lum = 0.15 + h2 * 0.05;
       return [r * lum, g * lum, b * lum, sz * (0.8 + h3 * 0.4)];
     }
@@ -284,10 +284,10 @@ function makeGalaxyTexture(gl: WebGLRenderingContext): WebGLTexture {
 
   // Inner bulge — warm orange disk
   const bulge = ctx.createRadialGradient(cx, cy, 0, cx, cy, SIZE * 0.22);
-  bulge.addColorStop(0,    "rgba(255,232,128,0.92)");
-  bulge.addColorStop(0.10, "rgba(255,168,52,0.78)");
-  bulge.addColorStop(0.26, "rgba(212,108,22,0.42)");
-  bulge.addColorStop(0.52, "rgba(145,68,10,0.16)");
+  bulge.addColorStop(0,    "rgba(255,232,128,0.2)");
+  bulge.addColorStop(0.10, "rgba(255,168,52,0.28)");
+  bulge.addColorStop(0.26, "rgba(212,108,22,0.12)");
+  bulge.addColorStop(0.52, "rgba(145,68,10,0.06)");
   bulge.addColorStop(0.80, "rgba(80,38,6,0.05)");
   bulge.addColorStop(1,    "rgba(0,0,0,0)");
   ctx.fillStyle = bulge;
@@ -295,9 +295,9 @@ function makeGalaxyTexture(gl: WebGLRenderingContext): WebGLTexture {
 
   // Bright core point
   const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, SIZE * 0.052);
-  core.addColorStop(0,    "rgba(255,255,238,1.0)");
-  core.addColorStop(0.22, "rgba(255,246,165,0.92)");
-  core.addColorStop(0.56, "rgba(255,192,68,0.46)");
+  core.addColorStop(0,    "rgba(255,255,238,0.5)");
+  core.addColorStop(0.22, "rgba(255,246,165,0.12)");
+  core.addColorStop(0.56, "rgba(255,192,68,0.06)");
   core.addColorStop(1,    "rgba(255,132,14,0)");
   ctx.fillStyle = core;
   ctx.fillRect(0, 0, SIZE, SIZE);
@@ -456,7 +456,7 @@ function tileKeysForView(
   tileSize: number,
   populated: Iterable<string>,
 ): Set<string> {
-  const reach = radius * 1.5 + tileSize;
+  const reach = radius * 12 + tileSize;
   const reach2 = reach * reach;
   const half = tileSize / 2;
 
@@ -551,10 +551,11 @@ export default function GalaxyMapCanvas() {
     } else if (lod === 1) {
       const keys = tileKeysForView(targetRef.current, radiusRef.current, m.lod1_size, lod1Pop.current);
       for (const k of keys) desired.add(`lod1:${k}`);
-    } else {
-      const keys = tileKeysForView(targetRef.current, radiusRef.current, m.sector_size, lod2Pop.current);
-      for (const k of keys) desired.add(`lod2:${k}`);
     }
+    // else {
+    //   const keys = tileKeysForView(targetRef.current, radiusRef.current, m.sector_size, lod2Pop.current);
+    //   for (const k of keys) desired.add(`lod2:${k}`);
+    // }
 
     // Evict tiles not in the desired set
     for (const [key, buf] of s.tiles) {
@@ -857,12 +858,8 @@ export default function GalaxyMapCanvas() {
           {/* Bottom-left: counts + legend */}
           <div className="absolute bottom-4 left-4 flex flex-col gap-1 text-xs uppercase tracking-widest text-neutral-600">
             <div className="flex items-center gap-2">
-              <span className="fx-dot-blue h-1.5 w-1.5" />
-              <span>{count.toLocaleString()} systems plotted</span>
-            </div>
-            <div className="flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-yellow-200/60" />
-              <span>Sol (origin)</span>
+              <span>Sgr A* (origin)</span>
             </div>
           </div>
 

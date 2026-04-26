@@ -111,6 +111,15 @@ const modules = [
     tags:        ["Simulation", "Body Types", "Atmospheres", "Habitability"],
     status:      "available",
   },
+  {
+    href:        "/learning/relativity-spacetime",
+    icon:        "icarus-terminal-system-orbits",
+    title:       "Relativity & Spacetime",
+    subtitle:    "Time Dilation, Curvature & Warp",
+    description: "From special relativity's light cones to general relativity's curved spacetime. Covers gravitational time dilation, lensing, black-hole geometry, and the speculative physics behind the Frame Shift Drive.",
+    tags:        ["Simulation", "Relativity", "Spacetime", "FSD"],
+    status:      "available",
+  },
 ];
 
 export default function LearningPage() {
