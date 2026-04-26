@@ -100,3 +100,21 @@ export interface CAPIProfile {
   ships: Record<string, CAPIShipSummary>;
   loadout?: CAPILoadout;
 }
+
+export interface CAPICommunityGoal {
+  id: number;
+  title: string;
+  expiry: string;
+  market_name: string;
+  starsystem_name: string;
+  activityType: string;
+  target_qty: number;
+  qty: number;
+  objective: string;
+  news: string;
+  bulletin: string;
+}
+
+export interface CAPICommunityGoals {
+  activeCommunityGoals: CAPICommunityGoal[];
+}

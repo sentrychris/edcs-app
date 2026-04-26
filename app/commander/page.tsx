@@ -1,5 +1,5 @@
 import type { Metadata, ResolvingMetadata } from "next";
-import type { CAPIProfile } from "@/core/interfaces/CAPIProfile";
+import type { CAPICommunityGoals, CAPIProfile } from "@/core/interfaces/CAPIProfile";
 import { redirect } from "next/navigation";
 import { settings } from "@/core/config";
 import { auth } from "@/core/auth";
@@ -11,6 +11,7 @@ import CommanderFleet from "./components/commander-fleet";
 import CommanderInfoGrid from "./components/commander-info-grid";
 import CommanderLoadout from "./components/commander-loadout";
 import CommanderApiKeys from "./components/commander-api-keys";
+import CommanderCommunityGoals from "./components/commander-community-goals";
 import CommanderReauth from "./components/commander-reauth";
 
 export async function generateMetadata(
@@ -39,6 +40,21 @@ async function getCAPIProfile(accessToken: string): Promise<CAPIProfile> {
   return data;
 }
 
+async function getCAPICommunityGoals(accessToken: string): Promise<CAPICommunityGoals> {
+  const { data } = await getResource<CAPICommunityGoals | []>(
+    "frontier/capi/communitygoals",
+    authOptions(accessToken),
+  );
+
+  if (Array.isArray(data)) {
+    return { activeCommunityGoals: [] };
+  }
+
+  return {
+    activeCommunityGoals: data.activeCommunityGoals ?? [],
+  };
+}
+
 async function getCommanderApiKeyStatus(accessToken: string): Promise<{ hasInaraKey: boolean; hasEdsmKey: boolean }> {
   try {
     const { commander } = await request<{ commander: { api: { inara: string | null; edsm: string | null } } | null }>(
@@ -62,13 +78,15 @@ export default async function Page() {
   }
 
   let profile: CAPIProfile | null = null;
+  let communityGoals: CAPICommunityGoals = { activeCommunityGoals: [] };
   let error: string | null = null;
   let requiresReauth = false;
 
   const lastSystem = session.user.commander?.last_system ?? null;
 
-  const [capiResult, apiKeyStatus] = await Promise.allSettled([
+  const [capiResult, communityGoalsResult, apiKeyStatus] = await Promise.allSettled([
     getCAPIProfile(session.user.accessToken),
+    getCAPICommunityGoals(session.user.accessToken),
     getCommanderApiKeyStatus(session.user.accessToken),
   ]);
 
@@ -81,6 +99,12 @@ export default async function Page() {
     } else {
       error = "Unable to load commander profile. Please try again later.";
     }
+  }
+
+  if (communityGoalsResult.status === "fulfilled") {
+    communityGoals = communityGoalsResult.value;
+  } else if (communityGoalsResult.reason instanceof ApiError && communityGoalsResult.reason.status === 401) {
+    requiresReauth = true;
   }
 
   const { hasInaraKey, hasEdsmKey } =
@@ -125,6 +149,7 @@ export default async function Page() {
             </div>
             <div className="space-y-5">
               <CommanderInfoGrid system={lastSystem} profile={profile} />
+              <CommanderCommunityGoals goals={communityGoals.activeCommunityGoals} />
               <CommanderApiKeys
                 accessToken={session.user.accessToken}
                 hasInaraKey={hasInaraKey}
