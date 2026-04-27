@@ -5,6 +5,7 @@ export interface AppSettings {
   app: {
     name: string;
     url: string;
+    maintenanceMode: boolean;
   };
   api: {
     url: string;

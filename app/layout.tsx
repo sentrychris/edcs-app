@@ -12,6 +12,7 @@ import Sidebar from "@/components/sidebar";
 import MobileNav from "@/components/mobile-nav";
 import NewsTicker from "./galnet/components/galnet-ticker";
 import Footer from "@/components/footer";
+import MaintenanceModePage from "@/components/maintenance-mode-page";
 import { SettingsProvider } from "@/core/contexts/settings-context";
 import ThemeWrapper from "@/components/theme-wrapper";
 import "@/css/main.css";
@@ -56,6 +57,22 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  if (settings.app.maintenanceMode) {
+    return (
+      <html lang="en" data-fx-crt-text="true" className="scroll-smooth">
+        <body className={jura.className + " overlay text-glow relative antialiased"}>
+          <SettingsProvider>
+            <ThemeWrapper>
+              <SvgFilters />
+              <MainBackground />
+              <MaintenanceModePage />
+            </ThemeWrapper>
+          </SettingsProvider>
+        </body>
+      </html>
+    );
+  }
+
   const session = await auth();
 
   const news = await getCollection<Galnet>("galnet/news");
