@@ -19,6 +19,20 @@ const SOL_ID64 = 10477373803n;
 const LOD0_MIN_RADIUS = 80000;
 const LOD1_MIN_RADIUS = 12000;
 
+// ── Star brightness by zoom level (tweak these) ──────────────────────────────
+// Stars fade as the camera pulls back so the galaxy-disk texture dominates at
+// wide zoom and individual stars pop as you close in.
+//
+// STAR_BRIGHT_NEAR   — radius (ly) where stars are at full brightness (1.0)
+// STAR_BRIGHT_FAR    — radius (ly) where stars reach the minimum
+// STAR_BRIGHT_MIN    — floor brightness fraction [0 = black, 1 = always full]
+// STAR_BRIGHT_CURVE  — power applied to the ramp (>1 = dim faster when zooming
+//                       out from NEAR; <1 = hold bright longer before fading)
+const STAR_BRIGHT_NEAR  = 20000;
+const STAR_BRIGHT_FAR   = 120000;
+const STAR_BRIGHT_MIN   = 0.10;
+const STAR_BRIGHT_CURVE = 1.6;
+
 function id64ToCoords(id64: bigint): [number, number, number] | null {
   try {
     const { sector, boxel } = getBoxelDataFromId64(id64);
@@ -83,19 +97,46 @@ function mat4LookAt(
   ]);
 }
 
+// ── Vec3 helpers for trackball orbit ──
+
+type Vec3 = [number, number, number];
+
+function v3normalize(v: Vec3): Vec3 {
+  const m = Math.hypot(v[0], v[1], v[2]) || 1;
+  return [v[0] / m, v[1] / m, v[2] / m];
+}
+
+function v3cross(a: Vec3, b: Vec3): Vec3 {
+  return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+}
+
+// Rodrigues' formula — rotate `v` around unit-length `axis` by `angle` radians.
+function v3rotateAxis(v: Vec3, axis: Vec3, angle: number): Vec3 {
+  const c  = Math.cos(angle);
+  const s  = Math.sin(angle);
+  const oc = 1 - c;
+  const [ax, ay, az] = axis;
+  const dot = ax * v[0] + ay * v[1] + az * v[2];
+  return [
+    v[0] * c + (ay * v[2] - az * v[1]) * s + ax * dot * oc,
+    v[1] * c + (az * v[0] - ax * v[2]) * s + ay * dot * oc,
+    v[2] * c + (ax * v[1] - ay * v[0]) * s + az * dot * oc,
+  ];
+}
+
 // ── Shared MVP calculation ──
 
 function buildMvp(
-  theta: number, phi: number, radius: number,
+  eyeDir: Vec3, up: Vec3, radius: number,
   tx: number, ty: number, tz: number,
   aspect: number,
 ): Float32Array {
-  const ex = tx + radius * Math.sin(phi) * Math.sin(theta);
-  const ey = ty + radius * Math.cos(phi);
-  const ez = tz + radius * Math.sin(phi) * Math.cos(theta);
+  const ex = tx + radius * eyeDir[0];
+  const ey = ty + radius * eyeDir[1];
+  const ez = tz + radius * eyeDir[2];
   return mat4Multiply(
     mat4Perspective(Math.PI / 4, aspect, 100, 600000),
-    mat4LookAt(ex, ey, ez, tx, ty, tz, 0, 1, 0),
+    mat4LookAt(ex, ey, ez, tx, ty, tz, up[0], up[1], up[2]),
   );
 }
 
@@ -126,10 +167,11 @@ const VERT_SRC = `
   attribute float a_size;
   uniform mat4 u_mvp;
   uniform float u_fixedSize;
+  uniform float u_brightness;
   varying vec3 v_color;
   void main() {
     gl_Position = u_mvp * vec4(a_position, 1.0);
-    v_color = a_color;
+    v_color = a_color * u_brightness;
     gl_PointSize = u_fixedSize > 0.0 ? u_fixedSize
                  : clamp(a_size * (8000.0 / max(gl_Position.w, 1.0)), 0.5, 8.0);
   }
@@ -486,6 +528,7 @@ interface GlState {
   prog: WebGLProgram;
   uMvp: WebGLUniformLocation;
   uFixed: WebGLUniformLocation;
+  uBrightness: WebGLUniformLocation;
   aPos: number; aColor: number; aSize: number;
   // Tile registries — keyed by `lod{N}:{tileKey}` (or `lod0:global`)
   tiles: Map<string, TileBuffers>;
@@ -510,8 +553,16 @@ export default function GalaxyMapCanvas() {
   const lod1Pop    = useRef<Set<string>>(new Set());
   const lod2Pop    = useRef<Set<string>>(new Set());
   const rafRef     = useRef<number>(0);
-  const thetaRef   = useRef(0.5);
-  const phiRef     = useRef(0.45);
+  // Trackball orbit state — eyeDir is a unit vector from target to camera,
+  // up is the camera's local up vector. Storing them directly (instead of
+  // spherical θ/φ) lets us rotate continuously through the poles without
+  // singularities or the galaxy flipping upside down.
+  const eyeDirRef  = useRef<Vec3>([
+    Math.sin(0.45) * Math.sin(0.5),
+    Math.cos(0.45),
+    Math.sin(0.45) * Math.cos(0.5),
+  ]);
+  const upRef      = useRef<Vec3>([0, 1, 0]);
   const radiusRef  = useRef(85000);
   const targetRef  = useRef({ x: 0, y: 0, z: 0 });
   const dragRef    = useRef<{ x: number; y: number; button: number } | null>(null);
@@ -624,7 +675,7 @@ export default function GalaxyMapCanvas() {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     const { x: tx, y: ty, z: tz } = targetRef.current;
-    const mvp = buildMvp(thetaRef.current, phiRef.current, radiusRef.current, tx, ty, tz, w / h);
+    const mvp = buildMvp(eyeDirRef.current, upRef.current, radiusRef.current, tx, ty, tz, w / h);
 
     // ── Pass 0: galaxy disk — normal alpha blend so it sits behind stars ──
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
@@ -644,9 +695,17 @@ export default function GalaxyMapCanvas() {
     gl.disableVertexAttribArray(s.diskAUv);
 
     // ── Passes 1 & 2: stars — additive blend for glow ──
+    // Brightness ramps from 1.0 at STAR_BRIGHT_NEAR down to STAR_BRIGHT_MIN at
+    // STAR_BRIGHT_FAR, following a power curve so close-in stars pop clearly.
+    const zoomT = Math.max(0, Math.min(1,
+      (radiusRef.current - STAR_BRIGHT_NEAR) / (STAR_BRIGHT_FAR - STAR_BRIGHT_NEAR),
+    ));
+    const brightness = STAR_BRIGHT_MIN + (1.0 - STAR_BRIGHT_MIN) * Math.pow(1.0 - zoomT, STAR_BRIGHT_CURVE);
+
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
     gl.useProgram(s.prog);
     gl.uniformMatrix4fv(s.uMvp, false, mvp);
+    gl.uniform1f(s.uBrightness, brightness);
 
     const bindCol = (buf: WebGLBuffer) => {
       gl.bindBuffer(gl.ARRAY_BUFFER, buf);
@@ -681,7 +740,13 @@ export default function GalaxyMapCanvas() {
     let lastRadius = radiusRef.current;
     let lastTarget = { ...targetRef.current };
     const loop = () => {
-      if (autoRef.current) thetaRef.current += 0.0003;
+      if (autoRef.current) {
+        // Auto-rotate spins around world Y so the galaxy continues to turn
+        // about its own axis regardless of how the user has tipped the view.
+        const worldY: Vec3 = [0, 1, 0];
+        eyeDirRef.current = v3rotateAxis(eyeDirRef.current, worldY, 0.0003);
+        upRef.current     = v3rotateAxis(upRef.current,     worldY, 0.0003);
+      }
       // Trigger tile reconcile if camera moved enough to matter
       const r = radiusRef.current;
       const dx = targetRef.current.x - lastTarget.x;
@@ -729,16 +794,33 @@ export default function GalaxyMapCanvas() {
     const dx = e.clientX - dragRef.current.x;
     const dy = e.clientY - dragRef.current.y;
     dragRef.current = { x: e.clientX, y: e.clientY, button: dragRef.current.button };
+    const eyeDir = eyeDirRef.current;
+    const up     = upRef.current;
+    const forward: Vec3 = [-eyeDir[0], -eyeDir[1], -eyeDir[2]];
+    const right  = v3normalize(v3cross(forward, up));
+
     if (dragRef.current.button === 2) {
-      // Right-drag: pan camera
-      const theta = thetaRef.current, phi = phiRef.current, panScale = radiusRef.current * 0.0006;
-      targetRef.current.x += (dx *  Math.cos(theta) - dy * -Math.sin(theta) * Math.cos(phi)) * panScale;
-      targetRef.current.y += (-dy * Math.sin(phi)) * panScale;
-      targetRef.current.z += (dx * -Math.sin(theta) - dy * -Math.cos(theta) * Math.cos(phi)) * panScale;
+      // Right-drag: pan target along the screen plane
+      const screenUp = v3cross(right, forward); // already unit (right ⟂ forward, both unit)
+      const panScale = radiusRef.current * 0.0006;
+      targetRef.current.x += (-dx * right[0] + dy * screenUp[0]) * panScale;
+      targetRef.current.y += (-dx * right[1] + dy * screenUp[1]) * panScale;
+      targetRef.current.z += (-dx * right[2] + dy * screenUp[2]) * panScale;
     } else {
-      // Left-drag: orbit
-      thetaRef.current -= dx * 0.005;
-      phiRef.current = Math.max(0.05, Math.min(Math.PI - 0.05, phiRef.current + dy * 0.005));
+      // Left-drag: trackball orbit. Vertical drag rotates around the screen-
+      // right axis (tip up/down); horizontal drag rotates around the current
+      // up axis (azimuth). Up tracks the rotation, so the galaxy stays
+      // right-side up through a full 360° vertical orbit.
+      const angleY = dy *  0.005; // drag down → tip down
+      const angleX = -dx * 0.005; // drag right → orbit clockwise from above
+
+      let newEye = v3rotateAxis(eyeDir, right, angleY);
+      let newUp  = v3rotateAxis(up,     right, angleY);
+      newEye     = v3rotateAxis(newEye, newUp, angleX);
+      // up unchanged by rotation around itself
+
+      eyeDirRef.current = v3normalize(newEye);
+      upRef.current     = v3normalize(newUp);
     }
   };
 
@@ -781,8 +863,9 @@ export default function GalaxyMapCanvas() {
 
     glRef.current = {
       gl, prog,
-      uMvp:   gl.getUniformLocation(prog, "u_mvp")!,
-      uFixed: gl.getUniformLocation(prog, "u_fixedSize")!,
+      uMvp:        gl.getUniformLocation(prog, "u_mvp")!,
+      uFixed:      gl.getUniformLocation(prog, "u_fixedSize")!,
+      uBrightness: gl.getUniformLocation(prog, "u_brightness")!,
       aPos:   gl.getAttribLocation(prog, "a_position"),
       aColor: gl.getAttribLocation(prog, "a_color"),
       aSize:  gl.getAttribLocation(prog, "a_size"),
