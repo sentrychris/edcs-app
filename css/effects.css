@@ -234,6 +234,7 @@ span.absolute.pointer-events-none {
 .text-glow__blue {
   transition: color 0.2s ease;
   color: rgb(170 218 225 / 1);
+  /* color: rgb(200, 90, 0); */
   text-shadow: none;
 }
 .text-glow__orange:hover,
