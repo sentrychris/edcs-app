@@ -6,6 +6,8 @@ import GalnetList from "./components/galnet-list";
 import Panel from "@/components/panel";
 import Heading from "@/components/heading";
 import BreadcrumbNav from "@/components/breadcrumb-nav";
+import GalnetPowerplay from "./components/galnet-powerplay";
+import GalnetLiveFeed from "./components/galnet-live-feed";
 
 interface Props {
   params: {
@@ -73,20 +75,35 @@ export default async function Page({ searchParams }: Props) {
         rightLabel="MODULE - GALNET NEWS"
       />
 
-      {/* ── Article list ── */}
-      <Panel>
+      {/* ── Two-column layout ── */}
+      <div className="grid grid-cols-1 gap-5 xl:grid-cols-3">
 
-        <Heading bordered icon="icarus-terminal-notifications" title="Galnet Network" subtitle="Vox Galactica Transmissions" className="px-5 py-4">
-          <span className="flex items-center gap-1.5 text-xs uppercase tracking-widest text-neutral-500">
-            <span className="fx-dot-blue h-1.5 w-1.5"></span>
-            Live
-          </span>
-        </Heading>
+        {/* Article list */}
+        <Panel className="xl:col-span-2">
+          <Heading bordered icon="icarus-terminal-notifications" title="Galnet Network" subtitle="Vox Galactica Transmissions" className="px-5 py-4">
+            <span className="flex items-center gap-1.5 text-xs uppercase tracking-widest text-neutral-500">
+              <span className="fx-dot-blue h-1.5 w-1.5"></span>
+              Live
+            </span>
+          </Heading>
+          <div className="px-5">
+            <GalnetList articles={articles} />
+          </div>
+        </Panel>
 
-        <div className="px-5">
-          <GalnetList articles={articles} />
+        {/* Sidebar */}
+        <div className="flex flex-col gap-5 xl:col-span-1">
+
+          {/* Live feed video panel */}
+          <GalnetLiveFeed src="/videos/space1_compressed.mp4" />
+
+          {/* Powerplay rankings */}
+          <Panel variant="muted" className="fx-chamfer">
+            <GalnetPowerplay />
+          </Panel>
+
         </div>
-      </Panel>
+      </div>
     </>
   );
 }

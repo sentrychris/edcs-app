@@ -4,6 +4,7 @@ import { settings } from "@/core/config";
 import { getCollection, getResource } from "@/core/api";
 import dynamic from "next/dynamic";
 import GalnetSidebar from "../../components/galnet-sidebar";
+import GalnetLiveFeed from "../../components/galnet-live-feed";
 import Panel from "@/components/panel";
 import BreadcrumbNav from "@/components/breadcrumb-nav";
 
@@ -106,20 +107,27 @@ export default async function Page({ params, searchParams }: Props) {
         rightLabel="ARTICLE - GALNET TRANSMISSION"
       />
 
-      <div className="grid grid-cols-12 gap-5">
+      <div className="grid grid-cols-1 gap-5 xl:grid-cols-3">
+
+        {/* ── Article ── */}
+        <div className="xl:col-span-2">
+          <GalnetArticle article={galnet.article} />
+        </div>
+
         {/* ── Sidebar ── */}
-        <div className="order-last col-span-12 md:order-first md:col-span-3">
+        <div className="flex flex-col gap-5 xl:col-span-1">
+
+          {/* Live feed video panel */}
+          <GalnetLiveFeed src="/videos/space1_compressed.mp4" />
+
+          {/* Article index */}
           <GalnetSidebar
             articles={galnet.articles}
             currentArticleSlug={galnet.article.slug}
             initialSlice={galnetSlice}
             returnPage={galnetPage}
           />
-        </div>
 
-        {/* ── Article ── */}
-        <div className="order-first col-span-12 md:order-last md:col-span-9">
-          <GalnetArticle article={galnet.article} />
         </div>
       </div>
     </>

@@ -4,7 +4,7 @@ import { getCollection } from "@/core/api";
 import GalnetList from "./galnet/components/galnet-sidebar";
 import SystemsTable from "./systems/components/systems-table";
 import SystemsStatisticsBar from "./systems/components/systems-statistics-bar";
-import ShipDisplay from "@/components/ship-display";
+import GalnetLiveFeed from "./galnet/components/galnet-live-feed";
 import Panel from "@/components/panel";
 
 export default async function Home() {
@@ -66,16 +66,16 @@ export default async function Home() {
 
       {/* ── Content Grid ── */}
       <div className="grid grid-cols-1 gap-x-5 md:grid-cols-2 lg:grid-cols-3">
-        {/* ── Galnet Panel ── */}
-        <div className="order-2 col-span-1 pt-3 md:order-none">
-          <ShipDisplay />
-          <GalnetList className="mt-5" articles={news} />
-        </div>
-
         {/* ── Systems Panel ── */}
-        <div className="order-1 col-span-1 pt-3 md:order-none lg:col-span-2">
+        <div className="order-1 col-span-1 pt-3 lg:col-span-2">
           <SystemsStatisticsBar className="fx-fade-in" callInterval={10000} flushCache={0} />
           <SystemsTable className="mt-5" systems={systems} />
+        </div>
+
+        {/* ── Galnet Panel ── */}
+        <div className="order-2 col-span-1 pt-3">
+          <GalnetLiveFeed src="/videos/space1_compressed.mp4" />
+          <GalnetList className="mt-5" articles={news} />
         </div>
       </div>
     </>

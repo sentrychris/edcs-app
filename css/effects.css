@@ -550,3 +550,9 @@ html.phosphor-enabled * {
 @keyframes fx-border-breathe { from {} to {} }
 @keyframes fx-glitch { from {} to {} }
 @keyframes fx-holo-shift { from {} to {} }
+
+/* ── Live feed signal bars ──────────────────────────────── */
+@keyframes signal-bar {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.2; }
+}
