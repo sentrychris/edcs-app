@@ -1,6 +1,7 @@
 import type { FunctionComponent } from "react";
 import type { System } from "@/core/interfaces/System";
 import Panel from "@/components/panel";
+import SystemBookmarkToggle from "./system-bookmark-toggle";
 
 interface Props {
   system: System;
@@ -16,10 +17,13 @@ const SystemHeader: FunctionComponent<Props> = ({ system, special }) => {
           <i className="icarus-terminal-system-orbits text-glow__blue" style={{ fontSize: "2.5rem" }}></i>
           <div>
             <p className="mb-1 text-xs uppercase tracking-[0.4em] text-neutral-500">star system</p>
-            <h2 className="text-glow__white text-2xl font-bold tracking-wide md:text-3xl">
-              {system.name}
-              {special && <span className="ml-2 text-xs text-neutral-400">{special}</span>}
-            </h2>
+            <div className="flex items-center gap-2">
+              <h2 className="text-glow__white text-2xl font-bold tracking-wide md:text-3xl">
+                {system.name}
+                {special && <span className="ml-2 text-xs text-neutral-400">{special}</span>}
+              </h2>
+              {system.slug && <SystemBookmarkToggle name={system.name} slug={system.slug} />}
+            </div>
             <p className="text-glow__blue text-xs font-bold tracking-wider">
               {system.bodies.length ?? 0} bodies surveyed
             </p>

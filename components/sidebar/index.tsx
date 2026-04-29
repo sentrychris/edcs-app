@@ -4,6 +4,7 @@ import { type FunctionComponent, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { Galnet } from "@/core/interfaces/Galnet";
 import type { SessionUser } from "@/core/interfaces/Auth";
+import SidebarBookmarkedSystems from "./sidebar-bookmarked-systems";
 import SidebarNav from "./sidebar-nav";
 import SidebarRecentSystems from "./sidebar-recent-systems";
 import SidebarUser from "./sidebar-user";
@@ -76,9 +77,10 @@ const Sidebar: FunctionComponent<Props> = ({ articles, user }) => {
       {/* ── User / Commander ── */}
       <SidebarUser user={user} collapsed={collapsed} />
 
-      {/* ── Galnet Audio + Recent Systems (hidden when collapsed) ── */}
+      {/* ── Bookmarked + Recent Systems (hidden when collapsed) ── */}
       {!collapsed && (
         <>
+          {user && <SidebarBookmarkedSystems />}
           <SidebarRecentSystems />
         </>
       )}
