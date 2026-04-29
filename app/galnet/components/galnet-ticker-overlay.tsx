@@ -1,6 +1,6 @@
 "use client";
 
-import { useArticles } from "./articles-context";
+import { useArticles } from "../lib/articles-context";
 import NewsTicker from "./galnet-ticker";
 
 export default function GalnetTickerOverlay() {

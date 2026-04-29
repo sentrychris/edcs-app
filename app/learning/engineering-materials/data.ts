@@ -1,4 +1,4 @@
-import type { FieldGuideTopic } from "../components/field-guide-types";
+import type { FieldGuideTopic } from "../lib/field-guide-types";
 
 export const engineeringTopics: FieldGuideTopic[] = [
   {

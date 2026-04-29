@@ -3,7 +3,7 @@ import Panel from "@/components/panel";
 import SectionHeader from "@/components/section-header";
 import TerminalHeader from "@/components/terminal-header";
 import BreadcrumbNav from "@/components/breadcrumb-nav";
-import type { FieldGuideTopic } from "./field-guide-types";
+import type { FieldGuideTopic } from "../lib/field-guide-types";
 
 interface Props {
   topic: FieldGuideTopic | undefined;

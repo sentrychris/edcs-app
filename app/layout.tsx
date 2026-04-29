@@ -10,7 +10,7 @@ import SvgFilters from "@/components/svg-filters";
 import MainBackground from "@/components/main-background";
 import Sidebar from "@/components/sidebar";
 import MobileNav from "@/components/mobile-nav";
-import { ArticlesProvider } from "./galnet/components/articles-context";
+import { ArticlesProvider } from "./galnet/lib/articles-context";
 import NewsTicker from "./galnet/components/galnet-ticker";
 import Footer from "@/components/footer";
 import MaintenanceModePage from "@/components/maintenance-mode-page";
