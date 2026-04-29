@@ -7,11 +7,13 @@ import Link from "next/link";
 
 interface Props {
   articles: Pick<Galnet, "title" | "slug" | "audio_file" | "uploaded_at">[];
+  showClock?: boolean;
+  compact?: boolean;
 }
 
 const SCROLL_PX_PER_SEC = 50;
 
-const NewsTicker: FunctionComponent<Props> = ({ articles }) => {
+const NewsTicker: FunctionComponent<Props> = ({ articles, showClock = true, compact = false }) => {
   const [currentTime, setCurrentTime] = useState("00:00");
 
   const trackRef = useRef<HTMLDivElement>(null);
@@ -124,7 +126,7 @@ const NewsTicker: FunctionComponent<Props> = ({ articles }) => {
         <i className="icarus-terminal-notifications text-sky-500/50"></i>
         <Link
           href={`/galnet/news/${article.slug}`}
-          className="me-12 text-xs hover:underline flex items-center gap-x-3"
+          className="me-12 hover:underline flex items-center gap-x-3"
           aria-hidden={ariaHidden || undefined}
           tabIndex={ariaHidden ? -1 : undefined}
         >
@@ -135,15 +137,17 @@ const NewsTicker: FunctionComponent<Props> = ({ articles }) => {
 
   return (
     <div className="relative flex items-center bg-black/50 backdrop-filter backdrop-blur">
-      <span className="text-glow__blue border-b border-sky-900/20 ticker-label lg:px-18 z-10 text-xs uppercase">
-        <span className="ms-2 hidden sm:flex me-3">
-          {currentDate} {currentTime} UTC
+      {showClock && (
+        <span className="text-glow__blue border-b border-sky-900/20 ticker-label lg:px-18 z-10 text-xs uppercase">
+          <span className="ms-2 hidden sm:flex me-3">
+            {currentDate} {currentTime} UTC
+          </span>
         </span>
-      </span>
+      )}
       <div className="ticker flex flex-1 items-center overflow-hidden whitespace-nowrap border-b border-sky-900/20 uppercase">
         <div
           ref={trackRef}
-          className="text-glow__blue inline-flex whitespace-nowrap text-xs font-bold tracking-wide will-change-transform"
+          className={`text-glow__blue inline-flex whitespace-nowrap font-bold tracking-wide will-change-transform ${compact ? "text-[0.65rem]" : "text-xs"}`}
           style={{ transform: "translate3d(0,0,0)" }}
         >
           <span ref={firstCopyRef} className="inline-flex whitespace-nowrap">

@@ -1,4 +1,5 @@
 import Panel from "@/components/panel";
+import GalnetTickerOverlay from "./galnet-ticker-overlay";
 
 interface Props {
   src: string;
@@ -16,11 +17,14 @@ export default function GalnetLiveFeed({ src }: Props) {
           playsInline
           className="w-full object-cover p-1"
         />
-        <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between">
+        <div className="absolute left-2 right-2 top-2 flex items-center justify-between">
           <div className="flex items-center gap-1.5 bg-black/50 px-2 py-0.5">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-red-500" />
             <span className="text-[0.6rem] font-bold uppercase tracking-widest text-red-400">Live</span>
           </div>
+        </div>
+        <div className="absolute bottom-0 left-0 right-0">
+          <GalnetTickerOverlay />
         </div>
       </div>
       <div className="p-4">

@@ -74,7 +74,7 @@ export default async function Home() {
 
         {/* ── Galnet Panel ── */}
         <div className="order-2 col-span-1 pt-3">
-          <GalnetLiveFeed src="/videos/space1_compressed.mp4" />
+          <GalnetLiveFeed src="/videos/space7.mp4" />
           <GalnetList className="mt-5" articles={news} />
         </div>
       </div>

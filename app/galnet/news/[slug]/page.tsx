@@ -118,7 +118,7 @@ export default async function Page({ params, searchParams }: Props) {
         <div className="flex flex-col gap-5 xl:col-span-1">
 
           {/* Live feed video panel */}
-          <GalnetLiveFeed src="/videos/space1_compressed.mp4" />
+          <GalnetLiveFeed src="/videos/space4.mp4" />
 
           {/* Article index */}
           <GalnetSidebar

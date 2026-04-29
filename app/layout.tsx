@@ -10,6 +10,7 @@ import SvgFilters from "@/components/svg-filters";
 import MainBackground from "@/components/main-background";
 import Sidebar from "@/components/sidebar";
 import MobileNav from "@/components/mobile-nav";
+import { ArticlesProvider } from "./galnet/components/articles-context";
 import NewsTicker from "./galnet/components/galnet-ticker";
 import Footer from "@/components/footer";
 import MaintenanceModePage from "@/components/maintenance-mode-page";
@@ -91,19 +92,21 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <ThemeWrapper>
               <SvgFilters />
               <MainBackground />
-              <div className="relative z-10 flex h-screen flex-col overflow-hidden">
-                <NewsTicker articles={articles} />
-                <MobileNav user={(session?.user as SessionUser) ?? null} />
-                <div className="flex min-h-0 flex-1">
-                  <Sidebar articles={articles} user={(session?.user as SessionUser) ?? null} />
-                  <main className="main-content flex min-w-0 flex-1 flex-col overflow-y-auto p-3 text-neutral-200 text-glow__white">
-                    <div className="flex-1">
-                      {children}
-                    </div>
-                    <Footer />
-                  </main>
+              <ArticlesProvider articles={articles}>
+                <div className="relative z-10 flex h-screen flex-col overflow-hidden">
+                  <NewsTicker articles={articles} />
+                  <MobileNav user={(session?.user as SessionUser) ?? null} />
+                  <div className="flex min-h-0 flex-1">
+                    <Sidebar articles={articles} user={(session?.user as SessionUser) ?? null} />
+                    <main className="main-content flex min-w-0 flex-1 flex-col overflow-y-auto p-3 text-neutral-200 text-glow__white">
+                      <div className="flex-1">
+                        {children}
+                      </div>
+                      <Footer />
+                    </main>
+                  </div>
                 </div>
-              </div>
+              </ArticlesProvider>
             </ThemeWrapper>
           </SettingsProvider>
         </SessionProvider>

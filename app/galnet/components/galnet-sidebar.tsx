@@ -80,7 +80,7 @@ const GalnetSidebar: FunctionComponent<Props> = ({
 
       <div className="p-4">
         {/* Section header */}
-        <Heading bordered icon="icarus-terminal-notifications" title="Galnet Comms" subtitle="Uplink Channel" className="mb-4 pb-4">
+        <Heading bordered icon="icarus-terminal-notifications" title="Galnet News Feed" subtitle="Uplink Channel" className="mb-4 pb-4">
           <span className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-neutral-500">
             <span className="fx-dot-blue h-1.5 w-1.5"></span>
             Live
