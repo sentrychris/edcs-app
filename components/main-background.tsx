@@ -8,7 +8,7 @@ const MainBackground: FunctionComponent = () => {
         <Image
           width="100"
           height="100"
-          src="/tinyb.png"
+          src="/images/bg-glow-alt.png"
           className="w-[150rem] max-w-none"
           decoding="async"
           alt="glow"

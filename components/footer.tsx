@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type FunctionComponent } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const STORAGE_KEY = "edcs:footer-collapsed";
 
@@ -117,13 +118,16 @@ const Footer: FunctionComponent = () => {
             {/* Right — Attribution + Data Sources */}
             <div className="flex flex-col gap-3 text-[0.65em] uppercase tracking-widest items-center md:items-end">
               <div className="flex items-center gap-1 text-neutral-500">
-                <i className="icarus-terminal-shield text-glow__blue"></i>
-                <span>Developed by</span>
+                {/* <i className="icarus-terminal-shield text-glow__blue"></i> */}
+                <Image className="border border-sky-900/50 rounded me-2 grayscale"
+                  src="/images/author.jpg" alt="Author" width={30} height={30}
+                ></Image>
+                <span>Built by</span>
                 <a
                   href="https://github.com/sentrychris"
                   className="text-glow__blue"
                 >
-                  Chris
+                  CMDR Shaki Kazaro
                 </a>
               </div>
               <div className="flex flex-wrap gap-2 text-neutral-700">
