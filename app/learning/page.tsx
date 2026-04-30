@@ -182,7 +182,7 @@ export default function LearningPage() {
                     </div>
                   </div>
                   {mod.status === "available" && (
-                    <span className="shrink-0 text-[0.6rem] uppercase tracking-widest text-green-500/70">
+                    <span className="shrink-0 text-[0.7rem] uppercase tracking-widest text-green-500/70">
                       Available
                     </span>
                   )}
@@ -196,7 +196,7 @@ export default function LearningPage() {
                   {mod.tags.map((tag) => (
                     <span
                       key={tag}
-                      className={cn("border border-sky-900/30 px-2 py-0.5 text-[0.6rem] uppercase tracking-widest text-neutral-600",
+                      className={cn("border border-sky-900/30 px-2 py-0.5 text-[0.7rem] uppercase tracking-widest text-neutral-600",
                         tag == "Simulation"
                           ? "bg-green-900/20"
                           : tag === "Field Guide"

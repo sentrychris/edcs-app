@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const StatBadge = ({ label, value }: { label: string; value: string }) => (
   <div className="border border-sky-900/20 px-3 py-2">
-    <p className="mb-0.5 text-[0.6rem] uppercase tracking-widest text-neutral-600">{label}</p>
+    <p className="mb-0.5 text-[0.7rem] uppercase tracking-widest text-neutral-600">{label}</p>
     <p className="text-xs font-bold uppercase tracking-wider text-neutral-300">{value}</p>
   </div>
 );
@@ -156,7 +156,7 @@ export default function WarpWormholesPage() {
                 "Chronology Protection Conjecture (Hawking) suggests nature forbids them",
               ].map((item) => (
                 <div key={item} className="flex items-start gap-2">
-                  <i className="icarus-terminal-chevron-right mt-0.5 text-sky-500/40 text-[0.6rem]" />
+                  <i className="icarus-terminal-chevron-right mt-0.5 text-sky-500/40 text-[0.7rem]" />
                   <span>{item}</span>
                 </div>
               ))}
@@ -173,7 +173,7 @@ export default function WarpWormholesPage() {
             <div key={ex.name} className="border border-sky-900/20 p-3">
               <div className="mb-2 flex items-start justify-between gap-3">
                 <p className="text-xs font-bold uppercase tracking-wide text-neutral-300">{ex.name}</p>
-                <span className="shrink-0 text-[0.6rem] uppercase tracking-widest text-sky-400/60">{ex.badge}</span>
+                <span className="shrink-0 text-[0.7rem] uppercase tracking-widest text-sky-400/60">{ex.badge}</span>
               </div>
               <p className="text-xs uppercase tracking-wide text-neutral-600">{ex.detail}</p>
             </div>

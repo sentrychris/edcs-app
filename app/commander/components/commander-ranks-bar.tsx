@@ -58,7 +58,7 @@ const CommanderRanksBar: FunctionComponent<Props> = ({ rank }) => {
                   style={{ width: `${progress}%` }}
                 />
               </div>
-              <p className="mt-1 text-right text-[0.6rem] uppercase tracking-widest text-neutral-800">
+              <p className="mt-1 text-right text-[0.7rem] uppercase tracking-widest text-neutral-800">
                 {progress}%
               </p>
             </div>

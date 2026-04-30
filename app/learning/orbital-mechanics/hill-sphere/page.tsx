@@ -105,7 +105,7 @@ export default function HillSpherePage() {
                 { key: "Eccentric orbits", note: "Effective Hill radius shrinks with eccentricity" },
               ].map(({ key, note }) => (
                 <div key={key} className="flex items-start gap-2">
-                  <i className="icarus-terminal-chevron-right mt-0.5 text-[0.6rem] text-sky-500/40" />
+                  <i className="icarus-terminal-chevron-right mt-0.5 text-[0.7rem] text-sky-500/40" />
                   <span><span className="text-neutral-400">{key}</span> — {note}</span>
                 </div>
               ))}
@@ -150,7 +150,7 @@ export default function HillSpherePage() {
         <div className="overflow-x-auto">
           <table className="w-full text-xs uppercase tracking-wide">
             <thead>
-              <tr className="border-b border-sky-900/20 text-left text-[0.6rem] tracking-widest text-neutral-600">
+              <tr className="border-b border-sky-900/20 text-left text-[0.7rem] tracking-widest text-neutral-600">
                 <th className="pb-2 pr-4">Body</th>
                 <th className="pb-2 pr-4">Distance from Sun</th>
                 <th className="pb-2 pr-4">Hill Radius</th>

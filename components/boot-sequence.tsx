@@ -247,7 +247,7 @@ const BootSequence: FunctionComponent = () => {
         {/* ── Loader phase ── */}
         {showLoader && (
           <div className="relative z-10 flex flex-col items-center">
-            <p className="text-glow__blue mb-4 text-[0.6rem] uppercase tracking-widest fx-cursor">
+            <p className="text-glow__blue mb-4 text-[0.7rem] uppercase tracking-widest fx-cursor">
               INITIALIZING SYSTEMS
             </p>
             {/* Inline arrow loader — overrides .elite-loader absolute positioning */}

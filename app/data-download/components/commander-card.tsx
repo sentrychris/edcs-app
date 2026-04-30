@@ -59,12 +59,12 @@ export default function CommanderCard() {
             <p className="text-glow__white text-sm font-bold uppercase tracking-wide">
               Commander Profile Snapshot
             </p>
-            <p className="mt-0.5 text-[0.6rem] uppercase tracking-widest text-sky-400/60">
+            <p className="mt-0.5 text-[0.7rem] uppercase tracking-widest text-sky-400/60">
               Authenticated session
             </p>
           </div>
         </div>
-        <span className="border border-sky-900/30 bg-sky-950/40 px-2 py-0.5 text-[0.6rem] font-bold uppercase tracking-widest text-sky-400/70">
+        <span className="border border-sky-900/30 bg-sky-950/40 px-2 py-0.5 text-[0.7rem] font-bold uppercase tracking-widest text-sky-400/70">
           .json
         </span>
       </div>
@@ -78,8 +78,8 @@ export default function CommanderCard() {
 
       {/* Error */}
       {error && (
-        <p className="mb-3 flex items-center gap-1.5 text-[0.6rem] uppercase tracking-widest text-red-400/70">
-          <i className="icarus-terminal-warning text-[0.6rem]" />
+        <p className="mb-3 flex items-center gap-1.5 text-[0.7rem] uppercase tracking-widest text-red-400/70">
+          <i className="icarus-terminal-warning text-[0.7rem]" />
           {error}
         </p>
       )}
@@ -88,12 +88,12 @@ export default function CommanderCard() {
       <div className="flex items-center justify-between gap-3">
         {/* Status */}
         {isAuthenticated ? (
-          <span className="flex items-center gap-1.5 text-[0.6rem] uppercase tracking-widest text-emerald-500/70">
+          <span className="flex items-center gap-1.5 text-[0.7rem] uppercase tracking-widest text-emerald-500/70">
             <span className="h-1 w-1 rounded-full bg-emerald-500/70" />
             Session active
           </span>
         ) : (
-          <span className="flex items-center gap-1.5 text-[0.6rem] uppercase tracking-widest text-neutral-700">
+          <span className="flex items-center gap-1.5 text-[0.7rem] uppercase tracking-widest text-neutral-700">
             <span className="h-1 w-1 rounded-full bg-amber-500/40" />
             Login required
           </span>
@@ -104,17 +104,17 @@ export default function CommanderCard() {
           <button
             onClick={handleDownload}
             disabled={isDownloading}
-            className="flex items-center gap-2 border border-sky-700/40 px-3 py-1.5 text-[0.6rem] uppercase tracking-widest text-sky-400/80 transition-colors hover:border-sky-500 hover:text-sky-300 disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex items-center gap-2 border border-sky-700/40 px-3 py-1.5 text-[0.7rem] uppercase tracking-widest text-sky-400/80 transition-colors hover:border-sky-500 hover:text-sky-300 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            <i className="icarus-terminal-inventory text-[0.6rem]" />
+            <i className="icarus-terminal-inventory text-[0.7rem]" />
             {isDownloading ? "Fetching..." : "Download"}
           </button>
         ) : (
           <button
             disabled
-            className="flex cursor-not-allowed items-center gap-2 border border-sky-900/20 px-3 py-1.5 text-[0.6rem] uppercase tracking-widest text-neutral-700 opacity-50"
+            className="flex cursor-not-allowed items-center gap-2 border border-sky-900/20 px-3 py-1.5 text-[0.7rem] uppercase tracking-widest text-neutral-700 opacity-50"
           >
-            <i className="icarus-terminal-inventory text-[0.6rem]" />
+            <i className="icarus-terminal-inventory text-[0.7rem]" />
             Download
           </button>
         )}

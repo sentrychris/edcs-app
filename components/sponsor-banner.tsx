@@ -151,7 +151,7 @@ const SponsorBanner: FunctionComponent = () => {
         className="fx-fade-in flex min-w-0 flex-1 items-center justify-center gap-3"
       >
         {/* Category tag */}
-        <span className={`shrink-0 border bg-black/40 px-1.5 py-0.5 text-[0.55rem] uppercase tracking-widest ${tone.tagBorder} ${tone.tagText}`}>
+        <span className={`shrink-0 border bg-black/40 px-1.5 py-0.5 text-[0.6rem] uppercase tracking-widest ${tone.tagBorder} ${tone.tagText}`}>
           {banner.category}
         </span>
 

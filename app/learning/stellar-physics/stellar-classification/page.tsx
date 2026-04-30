@@ -114,7 +114,7 @@ export default function StellarClassificationPage() {
                   { types: "M",     note: "Slow scoop rate due to low luminosity"           },
                 ].map(({ types, note }) => (
                   <div key={types} className="mb-1.5 flex items-start gap-2">
-                    <i className="icarus-terminal-chevron-right mt-0.5 text-sky-500/40 text-[0.6rem]" />
+                    <i className="icarus-terminal-chevron-right mt-0.5 text-sky-500/40 text-[0.7rem]" />
                     <span><span className="text-neutral-400">{types}</span> — {note}</span>
                   </div>
                 ))}
@@ -132,7 +132,7 @@ export default function StellarClassificationPage() {
                 { type: "Black Hole",        note: "No emission, extreme tidal forces"              },
               ].map(({ type, note }) => (
                 <div key={type} className="flex items-start gap-2">
-                  <i className="icarus-terminal-chevron-right mt-0.5 text-amber-500/40 text-[0.6rem]" />
+                  <i className="icarus-terminal-chevron-right mt-0.5 text-amber-500/40 text-[0.7rem]" />
                   <span><span className="text-neutral-400">{type}</span> — {note}</span>
                 </div>
               ))}
@@ -147,7 +147,7 @@ export default function StellarClassificationPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-xs uppercase tracking-wide">
             <thead>
-              <tr className="border-b border-sky-900/20 text-left text-[0.6rem] tracking-widest text-neutral-600">
+              <tr className="border-b border-sky-900/20 text-left text-[0.7rem] tracking-widest text-neutral-600">
                 <th className="pb-2 pr-4">Class</th>
                 <th className="pb-2 pr-4">Temperature (K)</th>
                 <th className="pb-2 pr-4">Mass (M☉)</th>

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 const StatBadge = ({ label, value }: { label: string; value: string }) => (
   <div className="border border-sky-900/20 px-3 py-2">
-    <p className="mb-0.5 text-[0.6rem] uppercase tracking-widest text-neutral-600">{label}</p>
+    <p className="mb-0.5 text-[0.7rem] uppercase tracking-widest text-neutral-600">{label}</p>
     <p className="text-xs font-bold uppercase tracking-wider text-neutral-300">{value}</p>
   </div>
 );
@@ -131,7 +131,7 @@ export default function SingleStarPage() {
                 { label: "Ice Giant", desc: "Outer system, icy composition" },
               ].map(({ label, desc }) => (
                 <div key={label} className="flex items-start gap-2">
-                  <i className="icarus-terminal-chevron-right mt-0.5 text-sky-500/40 text-[0.6rem]" />
+                  <i className="icarus-terminal-chevron-right mt-0.5 text-sky-500/40 text-[0.7rem]" />
                   <span><span className="text-neutral-400">{label}</span> — {desc}</span>
                 </div>
               ))}

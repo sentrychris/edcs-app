@@ -115,7 +115,7 @@ export default function PlanetaryClassificationPage() {
                 { key: "Gas G. with Life", note: "Floating microbial life in cloud layers"           },
               ].map(({ key, note }) => (
                 <div key={key} className="flex items-start gap-2">
-                  <i className="icarus-terminal-chevron-right mt-0.5 text-[0.6rem] text-green-500/40" />
+                  <i className="icarus-terminal-chevron-right mt-0.5 text-[0.7rem] text-green-500/40" />
                   <span><span className="text-neutral-400">{key}</span> — {note}</span>
                 </div>
               ))}
@@ -160,7 +160,7 @@ export default function PlanetaryClassificationPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-xs uppercase tracking-wide">
             <thead>
-              <tr className="border-b border-sky-900/20 text-left text-[0.6rem] tracking-widest text-neutral-600">
+              <tr className="border-b border-sky-900/20 text-left text-[0.7rem] tracking-widest text-neutral-600">
                 <th className="pb-2 pr-4">Type</th>
                 <th className="pb-2 pr-4">Composition</th>
                 <th className="pb-2 pr-4">Atmosphere</th>

@@ -49,12 +49,12 @@ const CommanderFleet: FunctionComponent<Props> = ({ ships, currentShipId }) => {
                       {ship.name}
                     </p>
                     {ship.shipName && (
-                      <span className="text-[0.6rem] uppercase tracking-widest text-neutral-600">
+                      <span className="text-[0.7rem] uppercase tracking-widest text-neutral-600">
                         &quot;{ship.shipName}&quot;
                       </span>
                     )}
                     {isActive && (
-                      <span className="ml-auto shrink-0 border border-sky-500/30 px-1.5 py-0.5 text-[0.6rem] uppercase tracking-widest text-sky-400/70">
+                      <span className="ml-auto shrink-0 border border-sky-500/30 px-1.5 py-0.5 text-[0.7rem] uppercase tracking-widest text-sky-400/70">
                         Active
                       </span>
                     )}
@@ -80,7 +80,7 @@ const CommanderFleet: FunctionComponent<Props> = ({ ships, currentShipId }) => {
 
                 {/* Value */}
                 {ship.value?.total !== undefined && (
-                  <p className="shrink-0 text-right text-[0.6rem] uppercase tracking-widest text-neutral-600">
+                  <p className="shrink-0 text-right text-[0.7rem] uppercase tracking-widest text-neutral-600">
                     {ship.value.total.toLocaleString()} CR
                   </p>
                 )}

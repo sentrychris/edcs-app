@@ -59,13 +59,13 @@ const WeaponRow: FunctionComponent<{ weapon: CAPILoadoutWeapon; label: string }>
 
       {weapon.ammo && (
         <div className="mt-2 flex items-center gap-3 border-t border-sky-900/10 pt-2">
-          <span className="text-[0.6rem] uppercase tracking-widest text-neutral-700">Ammo</span>
-          <div className="flex items-center gap-1.5 text-[0.6rem] font-bold uppercase tracking-widest text-neutral-500">
+          <span className="text-[0.7rem] uppercase tracking-widest text-neutral-700">Ammo</span>
+          <div className="flex items-center gap-1.5 text-[0.7rem] font-bold uppercase tracking-widest text-neutral-500">
             <span>{weapon.ammo.clip}</span>
             <span className="text-neutral-800">/</span>
             <span>{weapon.ammo.hopper}</span>
           </div>
-          <span className="text-[0.6rem] uppercase tracking-widest text-neutral-800">clip / reserve</span>
+          <span className="text-[0.7rem] uppercase tracking-widest text-neutral-800">clip / reserve</span>
         </div>
       )}
     </div>
@@ -114,7 +114,7 @@ const CommanderLoadout: FunctionComponent<Props> = ({ loadout }) => {
         {/* Weapons */}
         {weapons.length > 0 && (
           <div className="space-y-2">
-            <p className="text-[0.6rem] uppercase tracking-[0.3em] text-neutral-800">Weapons</p>
+            <p className="text-[0.7rem] uppercase tracking-[0.3em] text-neutral-800">Weapons</p>
             {weapons.map(({ key, weapon, label }) => (
               <WeaponRow key={key} weapon={weapon} label={label} />
             ))}

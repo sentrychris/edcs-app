@@ -110,7 +110,7 @@ export default function FieldGuideTopicPage({
                     {topic.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="border border-sky-900/30 px-2 py-0.5 text-[0.6rem] uppercase tracking-widest text-neutral-600"
+                        className="border border-sky-900/30 px-2 py-0.5 text-[0.7rem] uppercase tracking-widest text-neutral-600"
                       >
                         {tag}
                       </span>
@@ -128,7 +128,7 @@ export default function FieldGuideTopicPage({
             <div className="space-y-2 text-xs uppercase tracking-wide text-neutral-600">
               {topic.keyPoints.map((point) => (
                 <div key={point.label} className="flex items-start gap-2">
-                  <i className="icarus-terminal-chevron-right mt-0.5 text-[0.6rem] text-sky-500/40" />
+                  <i className="icarus-terminal-chevron-right mt-0.5 text-[0.7rem] text-sky-500/40" />
                   <span>
                     <span className="text-neutral-400">{point.label}</span> - {point.detail}
                   </span>
@@ -153,7 +153,7 @@ export default function FieldGuideTopicPage({
         <div className="overflow-x-auto">
           <table className="w-full text-xs uppercase tracking-wide">
             <thead>
-              <tr className="border-b border-sky-900/20 text-left text-[0.6rem] tracking-widest text-neutral-600">
+              <tr className="border-b border-sky-900/20 text-left text-[0.7rem] tracking-widest text-neutral-600">
                 <th className="pb-2 pr-4">Signal</th>
                 <th className="pb-2 pr-4">Value</th>
                 <th className="pb-2">Use</th>

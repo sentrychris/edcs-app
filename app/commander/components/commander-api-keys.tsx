@@ -44,11 +44,11 @@ function KeyRow({
   return (
     <div className="border border-sky-900/20 bg-black/40 p-3">
       <div className="mb-2 flex items-center justify-between">
-        <p className="text-[0.75rem] uppercase tracking-widest text-neutral-700">{label}</p>
+        <p className="text-[0.7rem] uppercase tracking-widest text-neutral-700">{label}</p>
         {!state.unlocked && (
           <button
             onClick={onUnlock}
-            className="flex items-center gap-1 text-[0.75rem] uppercase tracking-widest text-neutral-700 transition-colors hover:text-sky-400"
+            className="flex items-center gap-1 text-[0.7rem] uppercase tracking-widest text-neutral-700 transition-colors hover:text-sky-400"
           >
             <i className={`${state.hasKey ? "icarus-terminal-lock" : "icarus-terminal-edit"} text-xs`} />
             <span>{state.hasKey ? "Edit" : "Set"}</span>
@@ -97,12 +97,12 @@ function KeyRow({
               </span>
             </>
           ) : (
-            <span className="text-[0.75rem] uppercase tracking-widest text-neutral-800">
+            <span className="text-[0.7rem] uppercase tracking-widest text-neutral-800">
               Not configured
             </span>
           )}
           {state.saved && (
-            <span className="ml-auto text-[0.75rem] uppercase tracking-widest text-green-400/60">
+            <span className="ml-auto text-[0.7rem] uppercase tracking-widest text-green-400/60">
               Saved
             </span>
           )}

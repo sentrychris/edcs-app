@@ -115,7 +115,7 @@ export default function StellarNucleosynthesisPage() {
             <div className="space-y-2 text-xs uppercase tracking-wide text-neutral-600">
               {origins.map(({ source, elements, color }) => (
                 <div key={source} className="flex items-start gap-2">
-                  <i className="icarus-terminal-chevron-right mt-0.5 text-[0.6rem] text-sky-500/40" />
+                  <i className="icarus-terminal-chevron-right mt-0.5 text-[0.7rem] text-sky-500/40" />
                   <span><span className={color}>{source}</span> — {elements}</span>
                 </div>
               ))}
@@ -157,7 +157,7 @@ export default function StellarNucleosynthesisPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-xs uppercase tracking-wide">
             <thead>
-              <tr className="border-b border-sky-900/20 text-left text-[0.6rem] tracking-widest text-neutral-600">
+              <tr className="border-b border-sky-900/20 text-left text-[0.7rem] tracking-widest text-neutral-600">
                 <th className="pb-2 pr-4">Stage</th>
                 <th className="pb-2 pr-4">Fuel</th>
                 <th className="pb-2 pr-4">Product</th>

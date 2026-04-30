@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const StatBadge = ({ label, value }: { label: string; value: string }) => (
   <div className="border border-sky-900/20 px-3 py-2">
-    <p className="mb-0.5 text-[0.6rem] uppercase tracking-widest text-neutral-600">{label}</p>
+    <p className="mb-0.5 text-[0.7rem] uppercase tracking-widest text-neutral-600">{label}</p>
     <p className="text-xs font-bold uppercase tracking-wider text-neutral-300">{value}</p>
   </div>
 );
@@ -143,15 +143,15 @@ export default function RocheLimitPage() {
             <SectionHeader icon="icarus-terminal-warning" title="Two Limits" />
             <div className="space-y-2 text-xs uppercase tracking-wide text-neutral-600">
               <div className="flex items-start gap-2">
-                <i className="icarus-terminal-chevron-right mt-0.5 text-sky-500/40 text-[0.6rem]" />
+                <i className="icarus-terminal-chevron-right mt-0.5 text-sky-500/40 text-[0.7rem]" />
                 <span><span className="text-neutral-400">Fluid body</span> — d ≈ 2.44 R. Lower density satellite disrupts at larger distance</span>
               </div>
               <div className="flex items-start gap-2">
-                <i className="icarus-terminal-chevron-right mt-0.5 text-sky-500/40 text-[0.6rem]" />
+                <i className="icarus-terminal-chevron-right mt-0.5 text-sky-500/40 text-[0.7rem]" />
                 <span><span className="text-neutral-400">Rigid body</span> — d ≈ 1.26 R. Structural strength adds resistance to tidal forces</span>
               </div>
               <div className="flex items-start gap-2">
-                <i className="icarus-terminal-chevron-right mt-0.5 text-sky-500/40 text-[0.6rem]" />
+                <i className="icarus-terminal-chevron-right mt-0.5 text-sky-500/40 text-[0.7rem]" />
                 <span><span className="text-neutral-400">Below both limits</span> — even rigid bodies are shredded; observed in tidal disruption events near black holes</span>
               </div>
             </div>

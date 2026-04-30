@@ -111,7 +111,7 @@ export default function BinaryStarsPage() {
                 { key: "X-ray binaries",  note: "Disk around NS/BH heats to millions of K → X-rays"        },
               ].map(({ key, note }) => (
                 <div key={key} className="flex items-start gap-2">
-                  <i className="icarus-terminal-chevron-right mt-0.5 text-[0.6rem] text-amber-500/40" />
+                  <i className="icarus-terminal-chevron-right mt-0.5 text-[0.7rem] text-amber-500/40" />
                   <span><span className="text-neutral-400">{key}</span> — {note}</span>
                 </div>
               ))}
@@ -152,7 +152,7 @@ export default function BinaryStarsPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-xs uppercase tracking-wide">
             <thead>
-              <tr className="border-b border-sky-900/20 text-left text-[0.6rem] tracking-widest text-neutral-600">
+              <tr className="border-b border-sky-900/20 text-left text-[0.7rem] tracking-widest text-neutral-600">
                 <th className="pb-2 pr-4">Type</th>
                 <th className="pb-2 pr-4">Description</th>
                 <th className="pb-2 pr-4">Outcome</th>

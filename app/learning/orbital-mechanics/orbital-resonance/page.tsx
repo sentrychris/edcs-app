@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const StatBadge = ({ label, value }: { label: string; value: string }) => (
   <div className="border border-sky-900/20 px-3 py-2">
-    <p className="mb-0.5 text-[0.6rem] uppercase tracking-widest text-neutral-600">{label}</p>
+    <p className="mb-0.5 text-[0.7rem] uppercase tracking-widest text-neutral-600">{label}</p>
     <p className="text-xs font-bold uppercase tracking-wider text-neutral-300">{value}</p>
   </div>
 );

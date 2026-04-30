@@ -127,7 +127,7 @@ export default function StellarRemnantsPage() {
                 { type: "Black Hole",    note: "Accretion X-rays, gravitational lensing, GW chirps" },
               ].map(({ type, note }) => (
                 <div key={type} className="flex items-start gap-2">
-                  <i className="icarus-terminal-chevron-right mt-0.5 text-sky-500/40 text-[0.6rem]" />
+                  <i className="icarus-terminal-chevron-right mt-0.5 text-sky-500/40 text-[0.7rem]" />
                   <span><span className="text-neutral-400">{type}</span> — {note}</span>
                 </div>
               ))}

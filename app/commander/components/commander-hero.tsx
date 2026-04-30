@@ -37,7 +37,7 @@ const CommanderHero: FunctionComponent<Props> = ({ system, profile }) => {
             className="mb-4 pb-4"
           >
             {squadron && (
-              <span className="ml-auto shrink-0 border border-sky-900/40 px-2 py-1 text-[0.6rem] uppercase tracking-widest text-sky-400/70">
+              <span className="ml-auto shrink-0 border border-sky-900/40 px-2 py-1 text-[0.7rem] uppercase tracking-widest text-sky-400/70">
                 [{squadron.tag}] {squadron.name}
               </span>
             )}
@@ -74,7 +74,7 @@ const CommanderHero: FunctionComponent<Props> = ({ system, profile }) => {
                 {ship.name}
               </p>
               {ship.station && (
-                <p className="mt-1 text-[0.6rem] uppercase tracking-widest text-neutral-600">
+                <p className="mt-1 text-[0.7rem] uppercase tracking-widest text-neutral-600">
                   <i className="icarus-terminal-station mr-1 text-sky-500/30"></i>
                   {ship.station.name}
                 </p>
@@ -117,11 +117,11 @@ const CommanderHero: FunctionComponent<Props> = ({ system, profile }) => {
                 </Link>
               </p>
               {ship.starsystem && ship.starsystem.name !== lastSystem.name && (
-                <p className="mt-1 text-[0.6rem] uppercase tracking-widest text-neutral-600">
+                <p className="mt-1 text-[0.7rem] uppercase tracking-widest text-neutral-600">
                   Ship last seen: {ship.starsystem.name}
                 </p>
               )}
-              <div className="mt-3 flex items-center gap-2 text-[0.6rem] uppercase tracking-widest text-neutral-700">
+              <div className="mt-3 flex items-center gap-2 text-[0.7rem] uppercase tracking-widest text-neutral-700">
                 <span className="fx-dot-blue h-1.5 w-1.5"></span>
                 <span>Telemetry active</span>
               </div>

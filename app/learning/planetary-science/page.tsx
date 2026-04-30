@@ -122,7 +122,7 @@ export default function PlanetarySciencePage() {
                   <div className="mb-3 flex items-start justify-between gap-2">
                     <i className={`${topic.icon} text-glow__blue text-xl`} />
                     {topic.status === "available" && (
-                      <span className="text-[0.6rem] uppercase tracking-widest text-green-500/70">Available</span>
+                      <span className="text-[0.7rem] uppercase tracking-widest text-green-500/70">Available</span>
                     )}
                   </div>
 
@@ -141,7 +141,7 @@ export default function PlanetarySciencePage() {
                     {topic.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="border border-sky-900/30 px-2 py-0.5 text-[0.6rem] uppercase tracking-widest text-neutral-600"
+                        className="border border-sky-900/30 px-2 py-0.5 text-[0.7rem] uppercase tracking-widest text-neutral-600"
                       >
                         {tag}
                       </span>

@@ -128,7 +128,7 @@ export default function StarSystemsIndexPage() {
                   <div className="mb-3 flex items-start justify-between gap-2">
                     <i className={`${config.icon} text-glow__blue text-xl`} />
                     {config.status === "available" && (
-                      <span className="text-[0.6rem] uppercase tracking-widest text-green-500/70">Available</span>
+                      <span className="text-[0.7rem] uppercase tracking-widest text-green-500/70">Available</span>
                     )}
                   </div>
 
@@ -144,7 +144,7 @@ export default function StarSystemsIndexPage() {
                   </p>
 
                   <div className="mb-3 border-t border-sky-900/20 pt-3">
-                    <span className="text-[0.6rem] uppercase tracking-widest text-neutral-700">
+                    <span className="text-[0.7rem] uppercase tracking-widest text-neutral-700">
                       {config.frequency}
                     </span>
                   </div>
@@ -153,7 +153,7 @@ export default function StarSystemsIndexPage() {
                     {config.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="border border-sky-900/30 px-2 py-0.5 text-[0.6rem] uppercase tracking-widest text-neutral-600"
+                        className="border border-sky-900/30 px-2 py-0.5 text-[0.7rem] uppercase tracking-widest text-neutral-600"
                       >
                         {tag}
                       </span>

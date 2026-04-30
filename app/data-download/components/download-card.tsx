@@ -55,15 +55,15 @@ export default function DownloadCard({
           <i className={`${icon} text-glow__blue text-xl`} />
           <div>
             <p className="text-glow__white text-sm font-bold uppercase tracking-wide">{title}</p>
-            <p className="mt-0.5 text-[0.6rem] uppercase tracking-widest text-sky-400/60">{scope}</p>
+            <p className="mt-0.5 text-[0.7rem] uppercase tracking-widest text-sky-400/60">{scope}</p>
           </div>
         </div>
         <div className="flex flex-col items-end gap-1">
-          <span className="border border-sky-900/30 bg-sky-950/40 px-2 py-0.5 text-[0.6rem] font-bold uppercase tracking-widest text-sky-400/70">
+          <span className="border border-sky-900/30 bg-sky-950/40 px-2 py-0.5 text-[0.7rem] font-bold uppercase tracking-widest text-sky-400/70">
             {format}
           </span>
           {note && (
-            <span className="text-[0.6rem] uppercase tracking-widest text-amber-500/60">{note}</span>
+            <span className="text-[0.7rem] uppercase tracking-widest text-amber-500/60">{note}</span>
           )}
         </div>
       </div>
@@ -103,17 +103,17 @@ export default function DownloadCard({
           <a
             href={downloadUrl}
             download
-            className="flex items-center gap-2 border border-sky-700/40 px-3 py-1.5 text-[0.6rem] uppercase tracking-widest text-sky-400/80 transition-colors hover:border-sky-500 hover:text-sky-300"
+            className="flex items-center gap-2 border border-sky-700/40 px-3 py-1.5 text-[0.7rem] uppercase tracking-widest text-sky-400/80 transition-colors hover:border-sky-500 hover:text-sky-300"
           >
-            <i className="icarus-terminal-inventory text-[0.6rem]" />
+            <i className="icarus-terminal-inventory text-[0.7rem]" />
             Download
           </a>
         ) : (
           <button
             disabled
-            className="flex cursor-not-allowed items-center gap-2 border border-sky-900/20 px-3 py-1.5 text-[0.6rem] uppercase tracking-widest text-neutral-700 opacity-50"
+            className="flex cursor-not-allowed items-center gap-2 border border-sky-900/20 px-3 py-1.5 text-[0.7rem] uppercase tracking-widest text-neutral-700 opacity-50"
           >
-            <i className="icarus-terminal-inventory text-[0.6rem]" />
+            <i className="icarus-terminal-inventory text-[0.7rem]" />
             Download
           </button>
         )}

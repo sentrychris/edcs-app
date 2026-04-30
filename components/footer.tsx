@@ -50,7 +50,7 @@ const Footer: FunctionComponent = () => {
         onClick={toggle}
         aria-expanded={!collapsed}
         aria-controls="footer-content"
-        className="group flex w-full items-center justify-center gap-3 border-b border-sky-900/20 py-1.5 text-[0.6rem] uppercase tracking-widest text-neutral-600 transition-colors hover:bg-sky-950/20 hover:text-sky-400"
+        className="group flex w-full items-center justify-center gap-3 border-b border-sky-900/20 py-1.5 text-[0.7rem] uppercase tracking-widest text-neutral-600 transition-colors hover:bg-sky-950/20 hover:text-sky-400"
       >
         <span className="h-px w-12 bg-sky-900/30 transition-colors group-hover:bg-sky-700/50" />
         <i

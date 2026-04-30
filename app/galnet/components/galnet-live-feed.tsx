@@ -21,7 +21,7 @@ export default function GalnetLiveFeed({ src }: Props) {
           <div className="absolute left-2 right-2 top-2 flex items-center justify-between">
             <div className="flex items-center gap-1.5 bg-black/50 px-2 py-0.5">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-red-500" />
-              <span className="text-[0.6rem] font-bold uppercase tracking-widest text-red-400">Live</span>
+              <span className="text-[0.7rem] font-bold uppercase tracking-widest text-red-400">Live</span>
             </div>
           </div>
           <div className="absolute bottom-0 -left-1 -right-1">

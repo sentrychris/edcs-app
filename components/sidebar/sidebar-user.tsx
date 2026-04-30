@@ -73,7 +73,7 @@ const SidebarUser: FunctionComponent<Props> = ({ user, collapsed }) => {
           <span>Commander Identified</span>
           <span className="ml-auto flex items-center gap-1.5">
             <span className="fx-dot-green h-1.5 w-1.5"></span>
-            <span className="text-[0.6rem]">Auth</span>
+            <span className="text-[0.7rem]">Auth</span>
           </span>
         </div>
 
@@ -83,7 +83,7 @@ const SidebarUser: FunctionComponent<Props> = ({ user, collapsed }) => {
         </p>
 
         {/* Status grid */}
-        <div className="mb-3 grid grid-cols-2 gap-x-3 gap-y-1 text-[0.6rem] uppercase tracking-widest text-neutral-700">
+        <div className="mb-3 grid grid-cols-2 gap-x-3 gap-y-1 text-[0.7rem] uppercase tracking-widest text-neutral-700">
           <span>ID: VERIFIED</span>
           <span>CLASS: PILOT</span>
           <span>NET: FRONTIER</span>
@@ -120,14 +120,14 @@ const SidebarUser: FunctionComponent<Props> = ({ user, collapsed }) => {
         <span>Commander</span>
         <span className="ml-auto flex items-center gap-1.5">
           <span className="h-1.5 w-1.5 rounded-full bg-neutral-800"></span>
-          <span className="text-[0.6rem]">Offline</span>
+          <span className="text-[0.7rem]">Offline</span>
         </span>
       </div>
 
       {/* Placeholder bars */}
       <div className="mb-3 space-y-1.5">
         <div className="h-px w-full bg-neutral-900"></div>
-        <div className="flex items-center gap-2 text-[0.6rem] uppercase tracking-widest text-neutral-800">
+        <div className="flex items-center gap-2 text-[0.7rem] uppercase tracking-widest text-neutral-800">
           <i className="icarus-terminal-route text-sky-500/10"></i>
           <span>No pilot profile linked</span>
         </div>

@@ -654,12 +654,12 @@ const SystemBodiesTree: FunctionComponent<Props> = ({ systemMap, height: heightO
               {n.body._label ?? n.body.name}
             </div>
             {n.body.sub_type && (
-              <div className="truncate text-[0.6rem] uppercase tracking-widest text-neutral-500">
+              <div className="truncate text-[0.7rem] uppercase tracking-widest text-neutral-500">
                 {n.body.sub_type}
               </div>
             )}
             {!n.body.sub_type && n.body._description && (
-              <div className="truncate text-[0.6rem] uppercase tracking-widest text-neutral-500">
+              <div className="truncate text-[0.7rem] uppercase tracking-widest text-neutral-500">
                 {n.body._description}
               </div>
             )}

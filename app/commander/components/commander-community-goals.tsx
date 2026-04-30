@@ -83,13 +83,13 @@ const CommanderCommunityGoals: FunctionComponent<Props> = ({ goals }) => (
                   <p className="text-[0.7rem] font-bold uppercase leading-tight tracking-wide text-sky-400/80">
                     {goal.title}
                   </p>
-                  <p className="mt-1 text-[0.6rem] uppercase tracking-widest text-neutral-700">
+                  <p className="mt-1 text-[0.7rem] uppercase tracking-widest text-neutral-700">
                     {goal.market_name} · {goal.starsystem_name}
                   </p>
                 </div>
               </div>
 
-              <div className="mb-3 grid grid-cols-2 gap-2 text-[0.6rem] uppercase tracking-widest">
+              <div className="mb-3 grid grid-cols-2 gap-2 text-[0.7rem] uppercase tracking-widest">
                 <div>
                   <p className="text-neutral-700">Expires</p>
                   <p className="mt-0.5 text-neutral-400">
@@ -113,7 +113,7 @@ const CommanderCommunityGoals: FunctionComponent<Props> = ({ goals }) => (
                     style={{ width: `${progress}%` }}
                   />
                 </div>
-                <p className="mt-1 text-[0.6rem] uppercase tracking-widest text-neutral-700">
+                <p className="mt-1 text-[0.7rem] uppercase tracking-widest text-neutral-700">
                   {numberFormatter.format(goal.qty)} / {numberFormatter.format(goal.target_qty)}
                 </p>
               </div>
@@ -123,7 +123,7 @@ const CommanderCommunityGoals: FunctionComponent<Props> = ({ goals }) => (
                   {objectives.map((objective) => (
                     <span
                       key={`${goal.id}_${objective}`}
-                      className="border border-sky-900/20 px-1.5 py-0.5 text-[0.55rem] uppercase tracking-widest text-neutral-600"
+                      className="border border-sky-900/20 px-1.5 py-0.5 text-[0.6rem] uppercase tracking-widest text-neutral-600"
                     >
                       {objective}
                     </span>

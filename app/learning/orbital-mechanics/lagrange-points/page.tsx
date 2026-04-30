@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const StatBadge = ({ label, value }: { label: string; value: string }) => (
   <div className="border border-sky-900/20 px-3 py-2">
-    <p className="mb-0.5 text-[0.6rem] uppercase tracking-widest text-neutral-600">{label}</p>
+    <p className="mb-0.5 text-[0.7rem] uppercase tracking-widest text-neutral-600">{label}</p>
     <p className="text-xs font-bold uppercase tracking-wider text-neutral-300">{value}</p>
   </div>
 );
@@ -175,7 +175,7 @@ export default function LagrangePointsPage() {
                 <span className={`text-sm font-bold uppercase tracking-widest ${pt.stable ? "text-green-400/90" : "text-amber-400/80"}`}>
                   {pt.label}
                 </span>
-                <span className={`text-[0.6rem] uppercase tracking-widest ${pt.stable ? "text-green-500/60" : "text-amber-500/50"}`}>
+                <span className={`text-[0.7rem] uppercase tracking-widest ${pt.stable ? "text-green-500/60" : "text-amber-500/50"}`}>
                   {pt.stable ? "Stable" : "Unstable"}
                 </span>
               </div>

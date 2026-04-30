@@ -66,28 +66,28 @@ export default function GalnetPowerplay() {
               className="flex items-center gap-2 border-b border-sky-900/10 py-1.5 last:border-b-0"
             >
               {/* Rank */}
-              <span className="w-4 shrink-0 text-[0.75rem] tabular-nums text-neutral-700">
+              <span className="w-4 shrink-0 text-[0.7rem] tabular-nums text-neutral-700">
                 {power.rank}
               </span>
 
               {/* Name + faction */}
               <div className="min-w-0 flex-1">
-                <p className="truncate text-[0.75rem] font-bold uppercase tracking-wide text-neutral-400">
+                <p className="truncate text-[0.7rem] font-bold uppercase tracking-wide text-neutral-400">
                   {power.short === power.name ? power.name : power.name}
                 </p>
-                <p className={`text-[0.6rem] uppercase tracking-widest ${factionColour[power.faction]}`}>
+                <p className={`text-[0.7rem] uppercase tracking-widest ${factionColour[power.faction]}`}>
                   {power.faction}
                 </p>
               </div>
 
               {/* Systems */}
               <div className="text-right">
-                <p className="text-[0.75rem] tabular-nums text-neutral-500">{power.systems}</p>
+                <p className="text-[0.7rem] tabular-nums text-neutral-500">{power.systems}</p>
                 <p className="text-[0.65rem] uppercase tracking-widest text-neutral-800">sys</p>
               </div>
 
               {/* Trend */}
-              <span className={`w-3 shrink-0 text-center text-[0.75rem] ${trend.colour}`}>
+              <span className={`w-3 shrink-0 text-center text-[0.7rem] ${trend.colour}`}>
                 {trend.glyph}
               </span>
             </div>

@@ -35,7 +35,7 @@ export default function LearningModuleSidebar({
         <div className="space-y-2 text-xs uppercase tracking-wide text-neutral-600">
           {signals.map((signal) => (
             <div key={`${signal.title}_${signal.signal}`} className="flex items-start gap-2">
-              <i className="icarus-terminal-chevron-right mt-0.5 text-[0.6rem] text-sky-500/40" />
+              <i className="icarus-terminal-chevron-right mt-0.5 text-[0.7rem] text-sky-500/40" />
               <span>
                 <span className="text-neutral-400">{signal.title}</span> - {signal.signal}
               </span>

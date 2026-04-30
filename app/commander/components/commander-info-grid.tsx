@@ -43,7 +43,7 @@ const CommanderInfoGrid: FunctionComponent<Props> = ({ system, profile }) => {
             <p className="mb-1 text-[0.7rem] font-bold uppercase tracking-wide text-sky-400/80">
               [{squadron.tag}] {squadron.name}
             </p>
-            <div className="flex items-center justify-between text-[0.6rem] uppercase tracking-widest text-neutral-600">
+            <div className="flex items-center justify-between text-[0.7rem] uppercase tracking-widest text-neutral-600">
               <span>Rank</span>
               <span>{squadron.rank}</span>
             </div>
@@ -51,7 +51,7 @@ const CommanderInfoGrid: FunctionComponent<Props> = ({ system, profile }) => {
         ) : (
           <div className="border border-sky-900/20 bg-black/40 p-3">
             <p className="mb-1 text-[0.65rem] uppercase tracking-widest text-neutral-700">Squadron</p>
-            <p className="text-[0.6rem] uppercase tracking-widest text-neutral-800">Not enlisted</p>
+            <p className="text-[0.7rem] uppercase tracking-widest text-neutral-800">Not enlisted</p>
           </div>
         )}
       </div>
