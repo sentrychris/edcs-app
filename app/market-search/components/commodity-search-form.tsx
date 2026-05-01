@@ -62,7 +62,7 @@ export default function CommoditySearchForm({ initialCommodity, initialNearSyste
             placeholder="e.g. gold, tritium, lowtemperaturediamond"
             autoComplete="off"
             spellCheck={false}
-            className="h-[37px] w-full border border-sky-900/20 bg-transparent pl-4 text-xs uppercase tracking-wider text-neutral-200 placeholder-neutral-600 outline-none transition-colors focus:border-sky-500/60 focus:outline-none"
+            className="h-[37px] w-full border border-sky-900/20 rounded-full bg-transparent pl-4 text-xs uppercase tracking-wider text-neutral-200 placeholder-neutral-600 outline-none transition-colors focus:border-sky-500/60 focus:outline-none"
           />
           <datalist id="market-commodity-suggestions">
             <option value="gold" />
@@ -86,7 +86,7 @@ export default function CommoditySearchForm({ initialCommodity, initialNearSyste
         <button
           type="submit"
           disabled={!canSubmit}
-          className="fx-btn-sweep h-[37px] shrink-0 border border-sky-900/40 px-6 text-xs font-bold uppercase tracking-widest text-sky-500/70 transition-colors hover:border-sky-500/60 hover:text-sky-400 disabled:pointer-events-none disabled:opacity-40"
+          className="fx-btn-sweep h-[37px] shrink-0 border border-sky-900/40 rounded-full px-6 text-xs font-bold uppercase tracking-widest text-sky-500/70 transition-colors hover:border-sky-500/60 hover:text-sky-400 disabled:pointer-events-none disabled:opacity-40"
         >
           {isLoading ? (
             <span className="flex items-center gap-2">

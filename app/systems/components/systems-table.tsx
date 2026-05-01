@@ -104,14 +104,14 @@ const SystemsTable: FunctionComponent<Props> = ({ className = "", systems }) => 
         </Link>
       ),
     },
-    government: {
-      title: "Government",
-      render: (system: System) => (
-        <span className="tracking-wide text-neutral-300">
-          {system.information?.government ?? "None"}
-        </span>
-      ),
-    },
+    // government: {
+    //   title: "Government",
+    //   render: (system: System) => (
+    //     <span className="tracking-wide text-neutral-300">
+    //       {system.information?.government ?? "None"}
+    //     </span>
+    //   ),
+    // },
     allegiance: {
       title: "Allegiance",
       render: (system: System) =>

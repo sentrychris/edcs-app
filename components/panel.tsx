@@ -20,8 +20,8 @@ const variantBorder: Record<NonNullable<Props["variant"]>, string> = {
 };
 
 const Panel = ({ variant = "default", corners = "md", cornerClassName, className, children }: Props) => (
-  <div className={cn("relative border", variantBorder[variant], "bg-black/50 backdrop-blur backdrop-filter", className)}>
-    <PanelCorners size={corners} className={cornerClassName} />
+  <div className={cn("relative border rounded-xl", variantBorder[variant], "bg-black/50 backdrop-blur backdrop-filter", className)}>
+    {/* <PanelCorners size={corners} className={cornerClassName} /> */}
     {children}
   </div>
 );

@@ -133,7 +133,7 @@ const SponsorBanner: FunctionComponent = () => {
     <div
       className={[
         "fx-btn-sweep relative hidden min-w-0 flex-1 items-center justify-center gap-3",
-        "overflow-hidden border px-4 py-1.5 backdrop-blur backdrop-filter",
+        "overflow-hidden border rounded-full px-4 py-1.5 backdrop-blur backdrop-filter",
         "transition-colors duration-500 lg:flex",
         tone.outerBorder, tone.outerBg,
       ].join(" ")}

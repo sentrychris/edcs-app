@@ -42,7 +42,7 @@ const Footer: FunctionComponent = () => {
   };
 
   return (
-    <footer className="mt-6 border-t border-sky-900/20 bg-transparent backdrop-blur backdrop-filter">
+    <footer className="mt-6 border-t border-sky-900/20 rounded-xl bg-transparent backdrop-blur backdrop-filter">
 
       {/* ── Collapse Toggle ── */}
       <button

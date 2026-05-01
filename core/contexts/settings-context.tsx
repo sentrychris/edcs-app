@@ -83,18 +83,18 @@ const STORAGE_KEY = "edcs_ui_settings";
 export const DEFAULT_SETTINGS: Settings = {
   themeId: "pioneer",
   hue: 0,
-  saturate: 0.75,
+  saturate: 0.85,
   brightness: 1.5,
   contrast: 0.95,
   greyscale: false,
-  crtMode: true,
+  crtMode: false,
   chromaticAberration: false,
   phosphorAfterglow: false,
   typewriterMode: false,
   bootSequence: false,
   dataDensity: "normal",
   grainIntensity: 0,
-  vignetteIntensity: 0.55,
+  vignetteIntensity: 0,
 };
 
 const SettingsContext = createContext<SettingsContextValue | null>(null);

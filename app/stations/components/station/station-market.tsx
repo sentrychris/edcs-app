@@ -173,7 +173,7 @@ const StationMarket: FunctionComponent<Props> = ({ slug }) => {
 
   const tabClass = (tab: MarketView) =>
     cn(
-      "whitespace-nowrap px-4 py-2.5 text-xs font-bold uppercase tracking-widest border transition-colors",
+      "whitespace-nowrap px-4 py-2.5 text-xs font-bold uppercase tracking-widest border transition-colors rounded-full",
       view === tab
         ? "border-sky-500/60 text-glow__blue bg-sky-900/20"
         : "border-sky-900/20 text-neutral-500 hover:border-neutral-600 hover:text-neutral-300",

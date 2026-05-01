@@ -17,7 +17,7 @@ const BreadcrumbNav = ({ backHref, backLabel, rightIcon, rightLabel }: Props) =>
     {/* ── Back button — terminal-style with corner brackets & light sweep ── */}
     <Link
       href={backHref}
-      className="fx-btn-sweep group relative flex items-center gap-2.5 border border-sky-900/40 bg-black/30 px-3.5 py-2 text-xs uppercase tracking-widest text-neutral-400 backdrop-blur backdrop-filter transition-colors hover:border-sky-700/60 hover:bg-sky-950/20 hover:text-sky-200"
+      className="fx-btn-sweep group relative flex items-center gap-2.5 border border-sky-900/40 rounded-full bg-black/30 px-3.5 py-2 text-xs uppercase tracking-widest text-neutral-400 backdrop-blur backdrop-filter transition-colors hover:border-sky-700/60 hover:bg-sky-950/20 hover:text-sky-200"
     >
       {/* Corner brackets — match topic-card aesthetic */}
       <span className="pointer-events-none absolute -left-px -top-px h-2.5 w-2.5 border-l border-t border-sky-500/40 transition-colors group-hover:border-sky-400/80" />
@@ -42,13 +42,7 @@ const BreadcrumbNav = ({ backHref, backLabel, rightIcon, rightLabel }: Props) =>
 
     {/* ── Context chip — current location indicator ── */}
     {rightLabel && (
-      <span className="relative hidden items-center gap-2 border border-sky-900/30 bg-black/20 px-3 py-1.5 text-[0.65rem] uppercase tracking-widest text-neutral-500 backdrop-blur backdrop-filter sm:flex">
-        {/* Smaller corner brackets to differentiate from button */}
-        <span className="pointer-events-none absolute -left-px -top-px h-1.5 w-1.5 border-l border-t border-sky-500/30" />
-        <span className="pointer-events-none absolute -right-px -top-px h-1.5 w-1.5 border-r border-t border-sky-500/30" />
-        <span className="pointer-events-none absolute -bottom-px -left-px h-1.5 w-1.5 border-b border-l border-sky-500/30" />
-        <span className="pointer-events-none absolute -bottom-px -right-px h-1.5 w-1.5 border-b border-r border-sky-500/30" />
-
+      <span className="relative hidden items-center gap-2 border border-sky-900/30 rounded-full bg-black/20 px-3 py-1.5 text-[0.65rem] uppercase tracking-widest text-neutral-500 backdrop-blur backdrop-filter sm:flex">
         <span className="fx-dot-blue h-1 w-1" />
         {rightIcon && <i className={`${rightIcon} text-sky-500/40`} />}
         {rightLabel}

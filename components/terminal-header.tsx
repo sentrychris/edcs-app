@@ -61,7 +61,7 @@ const TerminalHeader = ({
   }
 
   return (
-    <div className="fx-chamfer relative mb-5 border border-sky-900/40 bg-black/50 backdrop-blur backdrop-filter px-4 py-3 md:px-6 md:py-4">
+    <div className="fx-chamfer relative mb-5 border border-sky-900/40 rounded-xl bg-black/50 backdrop-blur backdrop-filter px-4 py-3 md:px-6 md:py-4">
       {inner}
     </div>
   );

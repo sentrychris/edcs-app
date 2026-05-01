@@ -8,7 +8,7 @@ interface Props {
 export default function GalnetLiveFeed({ src }: Props) {
   return (
     <Panel variant="muted" className="fx-chamfer overflow-hidden">
-      <div className="p-1">
+      <div className="rounded">
         <div className="relative">
           <video
             src={src}
@@ -16,7 +16,7 @@ export default function GalnetLiveFeed({ src }: Props) {
             loop
             muted
             playsInline
-            className="block w-full object-cover"
+            className="block w-full object-cover rounded-xl p-[2px]"
           />
           <div className="absolute left-2 right-2 top-2 flex items-center justify-between">
             <div className="flex items-center gap-1.5 bg-black/50 px-2 py-0.5">
@@ -24,7 +24,7 @@ export default function GalnetLiveFeed({ src }: Props) {
               <span className="text-[0.7rem] font-bold uppercase tracking-widest text-red-400">Live</span>
             </div>
           </div>
-          <div className="absolute bottom-0 -left-1 -right-1">
+          <div className="absolute bottom-0">
             <GalnetTickerOverlay />
           </div>
         </div>

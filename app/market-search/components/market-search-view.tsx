@@ -80,7 +80,7 @@ function ModeButton({ active, onClick, icon, label, description }: ModeButtonPro
       aria-selected={active}
       onClick={onClick}
       className={[
-        "flex items-center gap-3 border px-4 py-3 text-left transition-colors",
+        "flex items-center gap-3 border rounded-xl px-4 py-3 text-left transition-colors",
         active
           ? "border-sky-500/60 bg-sky-900/20"
           : "border-sky-900/20 hover:border-sky-900/40 hover:bg-sky-900/5",

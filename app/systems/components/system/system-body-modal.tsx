@@ -4,7 +4,6 @@ import { type FunctionComponent, useEffect, useRef, useState } from "react";
 import type { SystemBodyRing, MappedSystemBody } from "@/core/interfaces/SystemBody";
 import type SystemMap from "../../lib/system-map";
 import { XMarkIcon, CheckIcon } from "@heroicons/react/24/outline";
-import PanelCorners from "@/components/panel-corners";
 import SectionHeader from "@/components/section-header";
 import { SystemBodyType } from "@/core/constants/system";
 import { formatDate, formatNumber, formatOrbitalPeriod } from "@/core/string-utils";
@@ -134,7 +133,7 @@ const SystemBodyModal: FunctionComponent<Props> = ({ body, system, close }) => {
 
   return (
     <div
-      className={`fixed z-50 flex flex-col border border-sky-900/40 bg-black/70 shadow-2xl shadow-black/60 backdrop-blur ${
+      className={`fixed z-50 flex flex-col border border-sky-900/40 rounded-xl bg-black/90 shadow-2xl shadow-black/60 backdrop-blur ${
         isDragging ? "select-none shadow-sky-900/30" : ""
       } ${isResizing ? "select-none" : ""}`}
       style={{ left: position.x, top: position.y, width: size.width, height: size.height }}
@@ -146,7 +145,6 @@ const SystemBodyModal: FunctionComponent<Props> = ({ body, system, close }) => {
         }`}
         onMouseDown={onDragHandleMouseDown}
       >
-        <PanelCorners bottom={false} />
 
         <div className="flex items-start justify-between gap-3">
           <div className="flex min-w-0 items-center gap-3">

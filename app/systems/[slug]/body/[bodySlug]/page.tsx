@@ -77,7 +77,7 @@ export default async function Page({ params }: Props) {
       />
 
       {/* ── Hero panel ── */}
-      <div className="fx-chamfer fx-panel-scan relative mb-5 border border-sky-900/40 bg-black/50 backdrop-blur backdrop-filter">
+      <div className="fx-chamfer fx-panel-scan relative mb-5 border border-sky-900/40 rounded-xl bg-black/50 backdrop-blur backdrop-filter">
         <div className="flex flex-col items-center gap-4 p-4 md:flex-row md:gap-8 md:p-8">
 
           {/* SVG body — width caps the rendered SVG via arbitrary child selectors */}

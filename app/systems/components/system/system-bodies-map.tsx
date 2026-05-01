@@ -79,7 +79,7 @@ const SystemBodiesMap: FunctionComponent<Props> = ({
 
   const containerClass = isFullscreen
     ? "fixed inset-0 z-50 flex flex-col border border-sky-900/20 bg-black/95 backdrop-blur backdrop-filter"
-    : "mb-5 border border-sky-900/20 bg-black/50 backdrop-blur backdrop-filter";
+    : "mb-5 border border-sky-900/20 rounded-xl bg-black/50 backdrop-blur backdrop-filter";
 
   const showHeader = !isFullscreen;
   const showBody = isFullscreen || (!collapsed && !isLoading);

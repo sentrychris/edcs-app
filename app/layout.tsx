@@ -98,7 +98,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   <MobileNav user={(session?.user as SessionUser) ?? null} />
                   <div className="flex min-h-0 flex-1">
                     <Sidebar articles={articles} user={(session?.user as SessionUser) ?? null} />
-                    <main className="main-content flex min-w-0 flex-1 flex-col overflow-y-auto p-3 text-neutral-200 text-glow__white">
+                    <main className="main-content relative flex min-w-0 flex-1 flex-col overflow-y-auto p-3 text-neutral-200 text-glow__white">
                       <div className="flex-1">
                         {children}
                       </div>

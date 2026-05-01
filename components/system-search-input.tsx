@@ -113,7 +113,7 @@ export default function SystemSearchInput({ label, placeholder, onSelect, disabl
           spellCheck={false}
           aria-autocomplete="list"
           aria-expanded={open}
-          className={`h-[37px] w-full border bg-transparent pl-4 pr-8 text-xs uppercase tracking-wider placeholder-neutral-600 outline-none transition-colors focus:outline-none ${
+          className={`h-[37px] w-full border rounded-full bg-transparent pl-4 pr-8 text-xs uppercase tracking-wider placeholder-neutral-600 outline-none transition-colors focus:outline-none ${
             confirmed
               ? "border-sky-500/60 text-sky-300"
               : "border-sky-900/20 text-neutral-200 focus:border-sky-500/60"
@@ -132,7 +132,7 @@ export default function SystemSearchInput({ label, placeholder, onSelect, disabl
       {open && (
         <div
           role="listbox"
-          className="absolute left-0 right-0 top-full z-50 mt-px border border-sky-900/30 bg-black/95 backdrop-blur backdrop-filter"
+          className="absolute left-0 right-0 top-full z-50 mt-px border border-sky-900/30 rounded-xl bg-black/95 backdrop-blur backdrop-filter"
         >
           {results.map((system, i) => (
             <button
