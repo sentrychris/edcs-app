@@ -21,7 +21,7 @@ const navItems = [
   { name: "Distance Search", href: "/distance-search", icon: "icarus-terminal-scan" },
   { name: "Trade Routes", href: "/market-search", icon: "icarus-terminal-economy" },
   { name: "Galnet News", href: "/galnet", icon: "icarus-terminal-notifications" },
-  { name: "Knowledge base", href: "/learning", icon: "icarus-terminal-planet" },
+  { name: "Knowledge Base", href: "/knowledge-base", icon: "icarus-terminal-planet" },
   { name: "Engineers", href: "/engineering", icon: "icarus-terminal-engineering" },
 ];
 

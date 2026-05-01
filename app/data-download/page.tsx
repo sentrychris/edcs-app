@@ -6,7 +6,7 @@ import DownloadGrid from "./components/download-grid";
 import CommanderCard from "./components/commander-card";
 
 export const metadata: Metadata = {
-  title: "Data Download | ED:CS",
+  title: "Data Downloads | ED:CS",
   description:
     "Bulk exports of the ED:CS dataset — systems, bodies, stations, fleet carriers, and commander profiles.",
 };
@@ -24,7 +24,7 @@ export default function DataDownloadPage() {
         backHref="/"
         backLabel="Home"
         rightIcon="icarus-terminal-inventory"
-        rightLabel="MODULE — DATA DOWNLOAD"
+        rightLabel="MODULE — DATA DOWNLOADS"
       />
 
       {/* Hero */}
@@ -32,7 +32,7 @@ export default function DataDownloadPage() {
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <h1 className="text-glow__white mb-1 text-2xl font-bold uppercase tracking-wide md:text-3xl">
-              Data Download
+              Data Downloads
             </h1>
             <p className="text-glow__blue text-sm font-bold uppercase tracking-widest">
               Bulk Exports &amp; Dataset Archives

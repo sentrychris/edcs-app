@@ -5,7 +5,7 @@ type Variant = "chamfer" | "panel";
 type DotColor = "blue" | "green";
 
 interface Props {
-  /** Primary token, e.g. "MODULE:LEARNING". */
+  /** Primary token, e.g. "MODULE:KNOWLEDGE-BASE". */
   moduleLabel: string;
   /** Optional secondary token, e.g. "DATABASE:ORBITAL-MECHANICS" or "PROTOCOL:ROUTE-PLANNER". */
   protocolLabel?: string;

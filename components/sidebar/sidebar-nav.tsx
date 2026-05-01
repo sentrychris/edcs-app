@@ -16,8 +16,8 @@ const navItems = [
   { name: "Trade Routes", href: "/market-search", icon: "icarus-terminal-economy" },
   { name: "Engineers", href: "/engineering", icon: "icarus-terminal-engineering" },
   { name: "Galnet News", href: "/galnet", icon: "icarus-terminal-notifications" },
-  { name: "Knowledge base", href: "/learning", icon: "icarus-terminal-planet" },
-  { name: "Data Download",  href: "/data-download", icon: "icarus-terminal-inventory" },
+  { name: "Knowledge Base", href: "/knowledge-base", icon: "icarus-terminal-planet" },
+  { name: "Data Downloads",  href: "/data-download", icon: "icarus-terminal-inventory" },
 ];
 
 const SidebarNav = ({ collapsed = false }: Props) => {
