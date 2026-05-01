@@ -38,6 +38,21 @@ export function formatOrbitalPeriod(days: number | null | undefined): string {
   return parts.length > 0 ? parts.join(" ") : "<1h";
 }
 
+/**
+ * Format a rotational period (in days, negative for retrograde rotation) as an
+ * Earth-relative day length. Switches to hours below ~2 days so short rotations
+ * (e.g. fast spinners, hot stars) read naturally.
+ */
+export function formatRotationalPeriod(days: number | null | undefined): string {
+  if (days == null || !isFinite(days) || days === 0) return "—";
+  const retrograde = days < 0;
+  const abs = Math.abs(days);
+  const formatted = abs < 2
+    ? `${(abs * 24).toFixed(1)} hrs`
+    : `${abs.toFixed(2)} days`;
+  return retrograde ? `${formatted} (retro)` : formatted;
+}
+
 export function escapeRegExp(text: string) {
   return text.replace(/[[\]{}()*+?.,\-\\^$|#\s]/g, "\\$&");
 }

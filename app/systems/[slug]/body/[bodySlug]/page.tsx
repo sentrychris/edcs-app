@@ -3,13 +3,15 @@ import type { SystemBodyResource, SystemBodyRing } from "@/core/interfaces/Syste
 import type { Station } from "@/core/interfaces/Station";
 import { settings } from "@/core/config";
 import { getResource } from "@/core/api";
-import { formatDate, formatNumber, formatOrbitalPeriod } from "@/core/string-utils";
+import { formatDate, formatNumber, formatOrbitalPeriod, formatRotationalPeriod } from "@/core/string-utils";
 import { PLANETARY_BASES, SystemBodyType } from "@/core/constants/system";
 import { stationIconByType } from "@/core/render-utils";
+import { planetScanValue, starScanValue } from "@/core/scan-value";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Panel from "@/components/panel";
 import BodySvg from "./components/body-svg";
+import SiblingBodies from "./components/sibling-bodies";
 import SectionHeader from "@/components/section-header";
 import TerminalHeader from "@/components/terminal-header";
 import BreadcrumbNav from "@/components/breadcrumb-nav";
@@ -49,7 +51,7 @@ const No  = () => <span className="text-red-400/80">No</span>;
 
 export default async function Page({ params }: Props) {
   const { data: body } = await getResource<SystemBodyResource>(`bodies/${params.bodySlug}`, {
-    params: { withStations: 1 },
+    params: { withStations: 1, withBodies: 1 },
   });
 
   const isStar   = body.type === SystemBodyType.Star || body.sub_type?.includes("Star");
@@ -58,6 +60,10 @@ export default async function Page({ params }: Props) {
   const settlements: Station[] = (body.system?.stations ?? []).filter(
     (station) => station.body?.name === body.name && PLANETARY_BASES.includes(station.type),
   );
+
+  const scanPayout = isStar
+    ? starScanValue(body.sub_type, body.solar_masses)
+    : planetScanValue(body.sub_type, body.earth_masses, body.terraforming_state);
 
   return (
     <>
@@ -75,6 +81,21 @@ export default async function Page({ params }: Props) {
         rightIcon="icarus-terminal-scan"
         rightLabel={`SURVEY REPORT — ${body.name}`}
       />
+
+      {/* ── Sibling bodies ── */}
+      {body.system?.bodies && body.system.bodies.length > 1 && (
+        <div className="my-3">
+          <div className="mb-2 flex items-center gap-2 text-xs uppercase tracking-widest text-neutral-600">
+            <i className="icarus-terminal-system-bodies text-sky-500/50" />
+            <span>System Bodies</span>
+          </div>
+          <SiblingBodies
+            systemSlug={params.slug}
+            bodies={body.system.bodies}
+            currentBodySlug={body.slug}
+          />
+        </div>
+      )}
 
       {/* ── Hero panel ── */}
       <div className="fx-chamfer fx-panel-scan relative mb-5 border border-sky-900/40 rounded-xl bg-black/50 backdrop-blur backdrop-filter">
@@ -170,6 +191,18 @@ export default async function Page({ params }: Props) {
             <StatRow label="Discovery Date" value={formatDate(body.discovery?.date)} />
           </Panel>
 
+          {/* Estimated UC payout */}
+          {scanPayout && (
+            <Panel variant="muted" className="fx-chamfer p-4 md:p-5">
+              <SectionHeader icon="icarus-terminal-credits" title="Estimated Survey Value" />
+              <StatRow label="Base Scan" value={<span className="text-glow__blue">{formatNumber(scanPayout.base)} CR</span>} />
+              <StatRow label={scanPayout.bonusLabel} value={<span className="text-green-400">{formatNumber(scanPayout.bonus)} CR</span>} />
+              <p className="mt-3 text-[0.6rem] uppercase tracking-widest text-neutral-700">
+                Approximate. Live payouts vary with mapping efficiency and prior tags.
+              </p>
+            </Panel>
+          )}
+
           {/* Star data */}
           {isStar && (
             <Panel variant="muted" className="fx-chamfer p-4 md:p-5">
@@ -207,6 +240,7 @@ export default async function Page({ params }: Props) {
           <Panel variant="muted" className="fx-chamfer p-4 md:p-5">
             <SectionHeader icon="icarus-terminal-system-orbits" title="Orbital Mechanics" />
             <StatRow label="Orbital Period"    value={formatOrbitalPeriod(body.orbital?.orbital_period)} />
+            <StatRow label="Day Length"        value={formatRotationalPeriod(body.axial?.rotational_period)} />
             <StatRow label="Inclination"       value={body.orbital?.orbital_inclination != null ? `${body.orbital.orbital_inclination.toFixed(4)}°` : "—"} />
             <StatRow label="Eccentricity"      value={body.orbital?.orbital_eccentricity != null ? body.orbital.orbital_eccentricity.toFixed(6)     : "—"} />
             <StatRow label="Arg of Periapsis"  value={body.orbital?.arg_of_periapsis    != null ? body.orbital.arg_of_periapsis.toFixed(4)          : "—"} />
@@ -292,7 +326,6 @@ export default async function Page({ params }: Props) {
           </div>
         </Panel>
       )}
-
     </>
   );
 }
