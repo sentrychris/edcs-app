@@ -91,6 +91,7 @@ export default async function Page({ params }: Props) {
           </div>
           <SiblingBodies
             systemSlug={params.slug}
+            systemName={body.system.name}
             bodies={body.system.bodies}
             currentBodySlug={body.slug}
           />
