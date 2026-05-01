@@ -56,6 +56,7 @@ const SystemsStatisticsBar: FunctionComponent<Props> = ({
       icon: "icarus-terminal-system-orbits",
       label: "Systems Logged",
       value: formatNumber(statistics.cartographical.systems),
+      bg: "bg-sky-900/10",
     },
     {
       icon: "icarus-terminal-scan",
@@ -63,6 +64,7 @@ const SystemsStatisticsBar: FunctionComponent<Props> = ({
       value: <span className="text-green-400 uppercase text-sm">
         online
       </span>,
+      bg: "bg-green-900/10",
     },
     {
       icon: "icarus-terminal-system-bodies",
@@ -70,17 +72,18 @@ const SystemsStatisticsBar: FunctionComponent<Props> = ({
       value: <span className="text-green-400 uppercase text-sm">
         Online
       </span>,
+      bg: "bg-green-900/10",
     },
   ];
 
   return (
     <Panel variant="muted" className={cn("fx-panel-scan", className)} cornerClassName="z-10">
 
-      <Heading bordered icon="icarus-terminal-route" title="Cartographic Database" subtitle="Systems Intelligence" className="px-4 py-3 md:px-5 md:py-4" />
+      <Heading bordered icon="icarus-terminal-planet" title="Cartographic Database" subtitle="Systems Intelligence" className="px-4 py-3 md:px-5 md:py-4" />
 
       <div className="flex items-stretch divide-x divide-sky-900/20">
-        {stats.map(({ icon, label, value }) => (
-          <div key={label} className="flex flex-1 flex-col gap-2 px-3 py-3 md:px-5 md:py-4">
+        {stats.map(({ icon, label, value, bg }) => (
+          <div key={label} className={cn("flex flex-1 flex-col gap-2 px-3 py-3 md:px-5 md:py-4", bg)}>
             <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-neutral-600">
               <i className={`${icon} text-sky-500/60`}></i>
               {label}
@@ -89,7 +92,7 @@ const SystemsStatisticsBar: FunctionComponent<Props> = ({
           </div>
         ))}
 
-        <div className="hidden flex-col justify-center px-5 py-4 md:flex">
+        <div className="hidden flex-col justify-center px-5 py-4 md:flex bg-sky-900/10">
           <LatestSystem className="text-xs" />
         </div>
       </div>

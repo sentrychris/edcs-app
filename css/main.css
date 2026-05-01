@@ -180,7 +180,6 @@ nav.main-nav__nav .main-nav__menu {
     text-shadow: none;
   }
 
-  .text-glow__orange,
   .text-glow__blue {
     color: rgb(170 218 225 / 1);
     text-shadow: none;
@@ -191,8 +190,7 @@ nav.main-nav__nav .main-nav__menu {
     background-color: rgb(80 170 240 / 0.25);
   }
 
-  .border-t-glow__blue,
-  .border-t-glow__orange {
+  .border-t-glow__blue {
     border-top: 2px solid rgb(20, 60, 110);
   }
 

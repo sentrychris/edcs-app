@@ -20,12 +20,33 @@ export const renderAllegianceText = (value: string = "None") => (
     className={cn(
       "uppercase tracking-wide",
       ["Federation", "Alliance"].includes(value)
-        ? "text-glow__blue"
+        ? "text-sky-300"
         : value === "Empire"
-          ? "text-yellow-400"
+          ? "text-yellow-200/80"
           : value === "Independent"
             ? "text-green-300"
             : "text-stone-300",
+    )}
+  >
+    {value}
+  </span>
+);
+
+export const renderEconomyText = (value: string = "None") => (
+  <span
+    className={cn(
+      "uppercase tracking-wide",
+      value === "None"
+        ? "text-red-300"
+        : ["Agriculture", "Colony"].includes(value)
+          ? "text-green-300"
+          : ["Industrial", "Extraction", "Refinery"].includes(value)
+            ? "text-stone-400"
+            : ["High Tech", "Service"].includes(value)
+              ? "text-sky-300"
+              : value === "Military"
+                ? "text-orange-400"
+                : "text-stone-300",
     )}
   >
     {value}

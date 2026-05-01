@@ -7,7 +7,7 @@ import { useState } from "react";
 import { getCollection } from "@/core/api";
 import { useDebounce } from "@/core/hooks/debounce";
 import { usePaginatedCollection } from "@/core/hooks/paginated-collection";
-import { renderAllegianceText, renderSecurityText } from "@/core/render-utils";
+import { renderAllegianceText, renderEconomyText, renderSecurityText } from "@/core/render-utils";
 import Link from "next/link";
 import Panel from "@/components/panel";
 import Filter from "@/components/filter";
@@ -135,11 +135,8 @@ const SystemsTable: FunctionComponent<Props> = ({ className = "", systems }) => 
     },
     economy: {
       title: "Economy",
-      render: (system: System) => (
-        <span className="text-glow__blue tracking-wide">
-          {system.information?.economy ?? "None"}
-        </span>
-      ),
+      render: (system: System) =>
+        renderEconomyText(system.information?.economy ?? "None"),
     },
     security: {
       title: "Security",

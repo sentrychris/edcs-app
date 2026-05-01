@@ -197,7 +197,7 @@ const StationMarket: FunctionComponent<Props> = ({ slug }) => {
         <div className="mt-5">
           {/* ── Prohibited goods ── */}
           {market.prohibited.length > 0 && (
-            <div className="mb-5 border border-red-900/40 p-4">
+            <div className="mb-5 border border-red-900/40 bg-red-950/10 rounded-xl p-4">
               <div className="mb-3 flex items-center gap-2">
                 <i className="icarus-terminal-warning text-red-400"></i>
                 <span className="text-xs font-bold uppercase tracking-widest text-red-400">Prohibited Goods</span>
@@ -206,7 +206,7 @@ const StationMarket: FunctionComponent<Props> = ({ slug }) => {
                 {market.prohibited.map((item) => (
                   <span
                     key={item}
-                    className="border border-red-900/60 bg-red-900/10 px-2 py-1 text-xs uppercase tracking-widest text-red-300"
+                    className="border border-red-900/60 rounded-full bg-red-900/10 px-2 py-1 text-xs uppercase tracking-widest text-red-300"
                   >
                     {prettifyName(item)}
                   </span>

@@ -69,7 +69,7 @@ export default async function Home() {
         {/* ── Systems Panel ── */}
         <div className="order-1 col-span-1 pt-3 lg:col-span-2">
           <SystemsStatisticsBar className="fx-fade-in" callInterval={10000} flushCache={0} />
-          <SystemsTable className="mt-5" systems={systems} />
+          <SystemsTable className="mt-5 hidden md:block" systems={systems} />
         </div>
 
         {/* ── Galnet Panel ── */}

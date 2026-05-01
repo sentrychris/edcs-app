@@ -39,26 +39,24 @@ const LatestSystem: FunctionComponent<Props> = ({ className }) => {
         Last Telemetry Uplink
       </div>
       <Link
-        className="hover:text-glow__blue text-blue-200 mb-3 block text-sm font-bold tracking-wide transition-colors hover:text-white"
+        className=" text-sky-300 hover:text-glow__blue hover:underline mb-3 block text-sm font-bold tracking-wide transition-colors hover:text-white"
         href={`systems/${system.detail.slug}`}
       >
         {system.name}
       </Link>
-      <div className="space-y-1 text-xs tracking-wider text-neutral-500">
+      <div className="space-y-1 text-[0.7rem] tracking-wider text-neutral-500">
         <p>
           {system.detail.coords.x.toFixed(2)} /{" "}
           {system.detail.coords.y.toFixed(2)} /{" "}
           {system.detail.coords.z.toFixed(2)}
         </p>
-        <p>
-          {starCount}{" "}
-          {pluralizeTextFromArray(
-            system.stars.filter((s) => s._type === SystemBodyType.Star),
-            { singular: "star", plural: "stars" },
-          )}{" "}
-          ·{" "}
-          {system.planets.length}{" "}
-          {pluralizeTextFromArray(system.planets, { singular: "body", plural: "bodies" })}
+        <p className="flex items-center gap-x-3 text-[0.7rem]">
+          <span className="flex items-center gap-x-1">
+            {starCount} <i className="icarus-terminal-star text-sky-400/40"></i>
+          </span>
+          <span className="flex items-center gap-x-1">
+            {system.planets.length} <i className="icarus-terminal-planet text-sky-400/40"></i>
+          </span>
         </p>
       </div>
     </div>

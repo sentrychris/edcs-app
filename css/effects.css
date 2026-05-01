@@ -230,20 +230,16 @@ span.absolute.pointer-events-none {
    Both __orange and __blue class names retained; both now
    render as cool blue without text-shadow.
    ────────────────────────────────────────────────────── */
-.text-glow__orange,
 .text-glow__blue {
   transition: color 0.2s ease;
   color: rgb(170 218 225 / 1);
   /* color: rgb(200, 90, 0); */
   text-shadow: none;
 }
-.text-glow__orange:hover,
 .text-glow__blue:hover {
   color: rgb(210 235 245 / 1);
   text-shadow: none;
 }
-button .text-glow__orange:hover,
-button.text-glow__orange:hover,
 button .text-glow__blue:hover,
 button.text-glow__blue:hover {
   color: rgb(170 218 225 / 1);
