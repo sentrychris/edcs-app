@@ -14,6 +14,7 @@ const navItems = [
   { name: "Route Plotter", href: "/route-plotter", icon: "icarus-terminal-route" },
   { name: "Distance Search", href: "/distance-search", icon: "icarus-terminal-scan" },
   { name: "Trade Routes", href: "/market-search", icon: "icarus-terminal-economy" },
+  { name: "Engineers", href: "/engineering", icon: "icarus-terminal-engineering" },
   { name: "Galnet News", href: "/galnet", icon: "icarus-terminal-notifications" },
   { name: "Knowledge base", href: "/learning", icon: "icarus-terminal-planet" },
   { name: "Data Download",  href: "/data-download", icon: "icarus-terminal-inventory" },
